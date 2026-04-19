@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jaikar Pothula | Technical UI Designer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Space Grotesk', 'sans-serif'],
+                        serif: ['Instrument Serif', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #111111;
+        }
+        .dark {
+            --bg-color: #111111;
+            --text-color: #ffffff;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+        
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        canvas#mouse-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .name-title {
+            line-height: 0.85;
+            letter-spacing: -0.05em;
+        }
+
+        .theme-toggle-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+
+        /* Marquee Animation */
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            animation: marquee 25s linear infinite;
+        }
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        /* Pill Navigation Styles */
+        #nav-pill {
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        /* Ensure text is readable on the pill */
+        .nav-item {
+            transition: color 0.3s ease;
+        }
+        .nav-item.active-pill {
+            color: white;
+        }
+        .dark .nav-item.active-pill {
+            color: black;
+        }
+
+        /* Hover Effects */
+        .hover-blue {
+            transition: color 0.3s ease;
+        }
+        .hover-blue:hover {
+            color: #4fa1fb;
+        }
+
+        .hover-gradient {
+            transition: all 0.3s ease;
+        }
+        .hover-gradient:hover {
+            background-image: linear-gradient(90deg, #ff4500, #ffcc00, #ff4500);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shift-bg 2.5s linear infinite;
+        }
+        @keyframes shift-bg {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        /* Modal Styles */
+        #case-study-modal {
+            transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+            opacity: 0;
+            visibility: hidden;
+        }
+        #case-study-modal.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .cs-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Interactive Card Styles */
+        .exp-card, .project-card {
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, background-color 0.5s ease;
+        }
+        .exp-card:hover, .project-card:hover {
+            transform: scale(1.015) translateY(-5px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+            z-index: 40;
+        }
+    </style>
+</head>
+<body class="selection:bg-gray-500/30 relative">
+
+    <canvas id="mouse-canvas"></canvas>
+
+    <!-- Case Study Modal -->
+    <div id="case-study-modal" class="fixed inset-0 z-[200] bg-white dark:bg-[#111111] overflow-y-auto">
+        <!-- Close Button (Sticky) -->
+        <div class="sticky top-0 left-0 w-full z-[210] p-6 flex justify-end pointer-events-none">
+            <button onclick="closeCaseStudy()" class="pointer-events-auto bg-black text-white dark:bg-white dark:text-black rounded-full px-6 py-3 text-xs font-bold tracking-widest uppercase hover:scale-105 transition-transform shadow-xl flex items-center space-x-2">
+                <span>Close</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+
+        <!-- Dynamic Content Container -->
+        <div class="max-w-[1400px] mx-auto pb-32 -mt-20">
+            <div id="cs-images" class="w-full flex flex-col items-center">
+                <!-- Images injected via JS -->
+            </div>
+            
+            <div id="cs-actions" class="mt-20 flex flex-col items-center space-y-6 px-6">
+                <!-- Buttons injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 w-full z-[100] px-6 py-8">
+        <div class="max-w-[1800px] mx-auto flex items-center justify-between">
+            
+            <!-- Sliding Pill Navigation container -->
+            <div id="nav-wrapper" class="relative flex items-center hidden md:flex">
+                <!-- The actual pill background -->
+                <div id="nav-pill" class="absolute h-[38px] bg-black dark:bg-white rounded-lg opacity-0 pointer-events-none z-0"></div>
+                
+                <div class="flex space-x-1 lg:space-x-2 relative z-10">
+                    <a href="#home" class="nav-item px-3 py-2 text-[9px] lg:text-[10px] tracking-[0.2em] uppercase font-bold">HOME</a>
+                    <a href="#works" class="nav-item px-3 py-2 text-[9px] lg:text-[10px] tracking-[0.2em] uppercase font-bold">WORKS</a>
+                    <a href="#approach" class="nav-item px-3 py-2 text-[9px] lg:text-[10px] tracking-[0.2em] uppercase font-bold">APPROACH</a>
+                    <a href="#experience" class="nav-item px-3 py-2 text-[9px] lg:text-[10px] tracking-[0.2em] uppercase font-bold">EXPERIENCE</a>
+                    <a href="#about" class="nav-item px-3 py-2 text-[9px] lg:text-[10px] tracking-[0.2em] uppercase font-bold">ABOUT</a>
+                    <a href="#skills" class="nav-item px-3 py-2 text-[9px] lg:text-[10px] tracking-[0.2em] uppercase font-bold">SKILLS</a>
+                    <a href="#resume" class="nav-item px-3 py-2 text-[9px] lg:text-[10px] tracking-[0.2em] uppercase font-bold">RESUME</a>
+                    <a href="#blog" class="nav-item px-3 py-2 text-[9px] lg:text-[10px] tracking-[0.2em] uppercase font-bold">BLOG</a>
+                </div>
+            </div>
+
+            <button onclick="toggleTheme()" class="theme-toggle-btn hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors ml-auto">
+                <svg id="sun-icon" class="hidden dark:block w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" /></svg>
+                <svg id="moon-icon" class="block dark:hidden w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="relative z-20">
+        
+        <!-- Hero Section -->
+        <section id="home" class="relative min-h-screen flex items-center px-6 pt-20">
+            <!-- Background Image Overlay -->
+            <div class="absolute inset-0 z-0 opacity-20 pointer-events-none select-none">
+                <img src="Assets/Background.png" onerror="this.onerror=null; this.src='Assets/Background.jpg';" alt="Background" class="w-full h-full object-cover object-center">
+            </div>
+
+            <div class="max-w-[1800px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-end relative z-10">
+                
+                <!-- Left: Name -->
+                <div class="lg:col-span-7 reveal">
+                    <h1 class="name-title text-[clamp(4rem,15vw,12rem)] font-bold uppercase tracking-tighter">
+                        JAIKAR<br><span class="font-serif italic lowercase font-normal tracking-normal text-[clamp(4.5rem,16vw,13rem)]">Pothula</span> <span class="text-4xl md:text-6xl align-top inline-block animate-[spin_10s_linear_infinite]">✹</span>
+                    </h1>
+                    <p class="mt-8 text-sm tracking-[0.4em] uppercase opacity-60 font-medium">Technical UI Designer ✐ / Game UI</p>
+                </div>
+
+                <!-- Right: About Snippet -->
+                <div class="lg:col-span-5 reveal" style="transition-delay: 0.2s;">
+                    <div class="max-w-md ml-auto">
+                        <h2 class="text-xs tracking-[0.5em] uppercase opacity-40 mb-12 font-bold">ABOUT ME</h2>
+                        <p class="text-lg md:text-xl leading-relaxed opacity-80 mb-12">
+                            I am a <span class="font-bold text-black dark:text-white">Technical UI Designer</span> ✦ focused on building real, in-engine UI systems ⚙ for games using <span class="font-bold text-black dark:text-white">Unreal Engine 5</span> and <span class="font-bold text-black dark:text-white">Unity</span> ✜. Basically, I make systems work beautifully ☜.
+                        </p>
+                        <div class="space-y-2">
+                            <p class="text-xs tracking-widest opacity-40 uppercase">SAY HELLO! SAY こんにちは! SAY HOLA! SAY నమస్కారం!</p>
+                            <a href="mailto:Jaikardevgame@gmail.com" class="text-lg font-medium hover:opacity-50 transition-opacity underline decoration-2 underline-offset-4">Jaikardevgame@gmail.com</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Detailed Bio Section -->
+        <section id="about" class="py-32 px-6">
+            <div class="max-w-[1800px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16">
+                <div class="lg:col-span-4 reveal">
+                    <h2 class="text-xs tracking-[0.5em] uppercase opacity-40 font-bold">Philosophy</h2>
+                </div>
+                <div class="lg:col-span-8 reveal">
+                    <p class="text-3xl md:text-5xl font-serif italic leading-tight mb-12">
+                        I don’t just design screens ✺ — I design and implement complete UI systems that connect gameplay ♜, narrative ✎, and player interaction.
+                    </p>
+                    <div class="grid md:grid-cols-2 gap-12 text-zinc-600 dark:text-zinc-400 leading-loose">
+                        <p>
+                            My work focuses on building modular, scalable UI frameworks inside Unreal Engine 5 and Unity that are production-ready and easy for teams to iterate on. I prioritize clarity, readability, and performance, ensuring UI supports gameplay without breaking immersion. I enjoy working on system-driven experiences where UI plays a critical role in guiding the player especially in horror and narrative-heavy games.
+                        </p>
+                        <p>
+                            Recently, I worked on <span class="text-black dark:text-white font-medium">The Dark Arrival: Shadows of the Past</span> and <span class="text-black dark:text-white font-medium">Suite 13</span> as a Technical UI Designer. On <span class="italic">The Dark Arrival</span>, I developed a 3D Investigator’s Journal system and implemented core gameplay UI directly inside Unreal Engine using UMG and Blueprint. Across both projects, I focused on structuring UI systems, building reusable frameworks, and aligning interface design with gameplay logic and player experience.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Works Section -->
+        <section id="works" class="py-32 px-6">
+            <div class="max-w-[1800px] mx-auto">
+                <div class="reveal mb-24">
+                    <h2 class="text-xs tracking-[0.5em] uppercase opacity-40 mb-4 font-bold">LATEST PROJECTS</h2>
+                    <h3 class="text-4xl md:text-6xl font-bold tracking-tight">Design That Speaks <span class="font-serif italic font-normal">✹</span></h3>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-x-12 gap-y-20">
+                    <!-- Project 1 - Yellow Hover -->
+                    <div class="reveal project-card group cursor-pointer p-6 rounded-[2.5rem] hover:bg-[#FEF9C3] dark:hover:bg-amber-950/40" onclick="openCaseStudy('dark-arrival')">
+                        <div class="relative aspect-[4/3] overflow-hidden bg-zinc-100 dark:bg-zinc-900 mb-8 rounded-2xl group-hover:rounded-[2rem] transition-all duration-700 ease-in-out">
+                            <div class="absolute inset-0 flex items-center justify-center opacity-20 text-4xl font-bold uppercase tracking-tighter z-0">The Dark Arrival</div>
+                            <img src="Assets/dark arrival steam image  EPIC 24.png" onerror="this.onerror=null; this.src='Assets/dark arrival steam image  EPIC 24.jpg';" alt="The Dark Arrival" class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100 relative z-10">
+                            <!-- Hover Pill -->
+                            <div class="absolute inset-0 bg-black/20 dark:bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 flex items-center justify-center backdrop-blur-[2px]">
+                                <span class="bg-white text-black px-6 py-3 rounded-full text-xs font-bold tracking-widest uppercase transform translate-y-8 group-hover:translate-y-0 transition-all duration-500 shadow-xl">View Case Study ↗</span>
+                            </div>
+                        </div>
+                        <h4 class="text-2xl font-bold mb-2">The Dark Arrival: Shadows of the Past</h4>
+                        <p class="text-xs tracking-[0.2em] uppercase opacity-50">3D Investigator's Journal / Core UI / UE5</p>
+                    </div>
+
+                    <!-- Project 2 - Blue Hover -->
+                    <div class="reveal project-card group cursor-pointer p-6 rounded-[2.5rem] hover:bg-[#E0F2FE] dark:hover:bg-sky-950/40" style="transition-delay: 0.2s;" onclick="openCaseStudy('suite-13')">
+                        <div class="relative aspect-[4/3] overflow-hidden bg-zinc-100 dark:bg-zinc-900 mb-8 rounded-2xl group-hover:rounded-[2rem] transition-all duration-700 ease-in-out">
+                            <div class="absolute inset-0 flex items-center justify-center opacity-20 text-4xl font-bold uppercase tracking-tighter z-0">Suite 13</div>
+                            <!-- Image updated for Suite 13 -->
+                            <img src="Assets/Main Menu Reference 2.png" onerror="this.onerror=null; this.src='Assets/Main Menu Reference 2.jpg';" alt="Suite 13" class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100 relative z-10">
+                            <!-- Hover Pill -->
+                            <div class="absolute inset-0 bg-black/20 dark:bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 flex items-center justify-center backdrop-blur-[2px]">
+                                <span class="bg-white text-black px-6 py-3 rounded-full text-xs font-bold tracking-widest uppercase transform translate-y-8 group-hover:translate-y-0 transition-all duration-500 shadow-xl">View Case Study ↗</span>
+                            </div>
+                        </div>
+                        <h4 class="text-2xl font-bold mb-2">Suite 13</h4>
+                        <p class="text-xs tracking-[0.2em] uppercase opacity-50">System-driven UI / Gameplay HUD</p>
+                    </div>
+
+                    <!-- Project 3 - Orange Hover -->
+                    <div class="reveal project-card group cursor-pointer p-6 rounded-[2.5rem] hover:bg-[#FFEDD5] dark:hover:bg-orange-950/40" onclick="openCaseStudy('customized-angel')">
+                        <div class="relative aspect-[4/3] overflow-hidden bg-zinc-100 dark:bg-zinc-900 mb-8 rounded-2xl group-hover:rounded-[2rem] transition-all duration-700 ease-in-out">
+                            <div class="absolute inset-0 flex items-center justify-center opacity-20 text-4xl font-bold uppercase tracking-tighter z-0">Customized Angel</div>
+                            <img src="Assets/jaikar-pothula-title.png" alt="Customized Angel" class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100 relative z-10">
+                            <!-- Hover Pill -->
+                            <div class="absolute inset-0 bg-black/20 dark:bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 flex items-center justify-center backdrop-blur-[2px]">
+                                <span class="bg-white text-black px-6 py-3 rounded-full text-xs font-bold tracking-widest uppercase transform translate-y-8 group-hover:translate-y-0 transition-all duration-500 shadow-xl">View Case Study ↗</span>
+                            </div>
+                        </div>
+                        <h4 class="text-2xl font-bold mb-2">Customized Angel</h4>
+                        <p class="text-xs tracking-[0.2em] uppercase opacity-50">Timeline UI / Interaction Systems / Unity</p>
+                    </div>
+
+                    <!-- Project 4 - Green Hover -->
+                    <div class="reveal project-card group cursor-pointer p-6 rounded-[2.5rem] hover:bg-[#DCFCE7] dark:hover:bg-emerald-950/40" style="transition-delay: 0.2s;" onclick="openCaseStudy('nekurati')">
+                        <div class="relative aspect-[4/3] overflow-hidden bg-zinc-100 dark:bg-zinc-900 mb-8 rounded-2xl group-hover:rounded-[2rem] transition-all duration-700 ease-in-out">
+                            <div class="absolute inset-0 flex items-center justify-center opacity-20 text-4xl font-bold uppercase tracking-tighter z-0">Nekurati</div>
+                            <img src="Assets/12.png" alt="Nekurati" class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100 relative z-10">
+                            <!-- Hover Pill -->
+                            <div class="absolute inset-0 bg-black/20 dark:bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 flex items-center justify-center backdrop-blur-[2px]">
+                                <span class="bg-white text-black px-6 py-3 rounded-full text-xs font-bold tracking-widest uppercase transform translate-y-8 group-hover:translate-y-0 transition-all duration-500 shadow-xl">View Case Study ↗</span>
+                            </div>
+                        </div>
+                        <h4 class="text-2xl font-bold mb-2">Nekurati</h4>
+                        <p class="text-xs tracking-[0.2em] uppercase opacity-50">UI/UX Design / Fantasy RPG</p>
+                    </div>
+
+                    <!-- Project 5 - Purple Hover -->
+                    <div class="reveal project-card group cursor-pointer p-6 rounded-[2.5rem] hover:bg-[#F3E8FF] dark:hover:bg-indigo-950/40" onclick="openCaseStudy('tale-of-ronin')">
+                        <div class="relative aspect-[4/3] overflow-hidden bg-zinc-100 dark:bg-zinc-900 mb-8 rounded-2xl group-hover:rounded-[2rem] transition-all duration-700 ease-in-out">
+                            <div class="absolute inset-0 flex items-center justify-center opacity-20 text-4xl font-bold uppercase tracking-tighter z-0">Tale of Ronin</div>
+                            <img src="Assets/HERO.png" alt="Tale of Ronin" class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100 relative z-10">
+                            <!-- Hover Pill -->
+                            <div class="absolute inset-0 bg-black/20 dark:bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 flex items-center justify-center backdrop-blur-[2px]">
+                                <span class="bg-white text-black px-6 py-3 rounded-full text-xs font-bold tracking-widest uppercase transform translate-y-8 group-hover:translate-y-0 transition-all duration-500 shadow-xl">View Case Study ↗</span>
+                            </div>
+                        </div>
+                        <h4 class="text-2xl font-bold mb-2">Tale of Ronin</h4>
+                        <p class="text-xs tracking-[0.2em] uppercase opacity-50">UI/UX Design / Core Systems</p>
+                    </div>
+
+                    <!-- Project 6 - Rose Hover -->
+                    <div class="reveal project-card group cursor-pointer p-6 rounded-[2.5rem] hover:bg-[#FCE7F3] dark:hover:bg-rose-950/40" style="transition-delay: 0.2s;" onclick="openCaseStudy('tollywood-tycoon')">
+                        <div class="relative aspect-[4/3] overflow-hidden bg-zinc-100 dark:bg-zinc-900 mb-8 rounded-2xl group-hover:rounded-[2rem] transition-all duration-700 ease-in-out">
+                            <div class="absolute inset-0 flex items-center justify-center opacity-20 text-4xl font-bold uppercase tracking-tighter z-0">Tollywood Tycoon</div>
+                            <img src="Assets/TITLE.png" alt="Tollywood Tycoon" class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100 relative z-10">
+                            <!-- Hover Pill -->
+                            <div class="absolute inset-0 bg-black/20 dark:bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 flex items-center justify-center backdrop-blur-[2px]">
+                                <span class="bg-white text-black px-6 py-3 rounded-full text-xs font-bold tracking-widest uppercase transform translate-y-8 group-hover:translate-y-0 transition-all duration-500 shadow-xl">View Case Study ↗</span>
+                            </div>
+                        </div>
+                        <h4 class="text-2xl font-bold mb-2">Tollywood Tycoon</h4>
+                        <p class="text-xs tracking-[0.2em] uppercase opacity-50">Data-Driven UI / Complex Systems</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Approach Section -->
+        <section id="approach" class="py-32 px-6">
+            <div class="max-w-[1800px] mx-auto">
+                <div class="reveal mb-24 grid grid-cols-1 lg:grid-cols-12 gap-16">
+                    <div class="lg:col-span-4">
+                        <h2 class="text-xs tracking-[0.5em] uppercase opacity-40 font-bold mb-4">APPROACH</h2>
+                        <h3 class="text-4xl md:text-5xl font-bold tracking-tight">Ideas into <span class="font-serif italic font-normal">Impact</span></h3>
+                    </div>
+                    <div class="lg:col-span-8">
+                        <p class="text-2xl md:text-3xl font-light leading-relaxed mb-6">
+                            It’s not just about making UI functional — it’s about making systems meaningful. I bridge the gap between creative vision and scalable technical execution by designing UI that actively supports gameplay, narrative, and player decision-making. ❀
+                        </p>
+                        <p class="text-xl md:text-2xl font-light leading-relaxed opacity-70">
+                            My approach focuses on building systems that are clear under pressure, immersive within the game world, and efficient for teams to develop and iterate on.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-0 border-t border-l border-zinc-200 dark:border-zinc-800 mt-20">
+                    <div class="reveal p-8 md:p-12 border-b border-r border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors">
+                        <span class="text-4xl font-serif italic opacity-30 block mb-8">— 1 —</span>
+                        <h4 class="text-2xl font-bold mb-2 tracking-wide uppercase">System Design</h4>
+                        <p class="font-serif italic text-xl opacity-70 mb-6">Mapping gameplay systems into structured UI logic that supports player understanding and interaction.</p>
+                        <ul class="opacity-70 leading-relaxed font-light space-y-4 list-none text-sm">
+                            <li class="relative pl-5"><span class="absolute left-0 top-0 text-[10px] mt-1 opacity-50">✦</span> Designed loop-based UI systems for Customized Angel, translating complex mechanics like timelines, NPC behavior tracking, and deduction flows into clear, scannable interfaces</li>
+                            <li class="relative pl-5"><span class="absolute left-0 top-0 text-[10px] mt-1 opacity-50">✦</span> Structured investigation systems using timelines, evidence boards, and diegetic interaction to reduce cognitive load while maintaining immersion</li>
+                            <li class="relative pl-5"><span class="absolute left-0 top-0 text-[10px] mt-1 opacity-50">✦</span> Focus on information hierarchy, player decision clarity, and system readability</li>
+                        </ul>
+                    </div>
+                    <div class="reveal p-8 md:p-12 border-b border-r border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors" style="transition-delay: 0.1s;">
+                        <span class="text-4xl font-serif italic opacity-30 block mb-8">— 2 —</span>
+                        <h4 class="text-2xl font-bold mb-2 tracking-wide uppercase">Architecture</h4>
+                        <p class="font-serif italic text-xl opacity-70 mb-6">Building modular, scalable UI frameworks that are production-ready and adaptable.</p>
+                        <ul class="opacity-70 leading-relaxed font-light space-y-4 list-none text-sm">
+                            <li class="relative pl-5"><span class="absolute left-0 top-0 text-[10px] mt-1 opacity-50">✦</span> Developed modular UI systems in Unreal Engine 5 using UMG and Blueprint for projects like The Dark Arrival and Suite 13</li>
+                            <li class="relative pl-5"><span class="absolute left-0 top-0 text-[10px] mt-1 opacity-50">✦</span> Created reusable UI components, state-driven logic, and scalable menu/HUD systems</li>
+                            <li class="relative pl-5"><span class="absolute left-0 top-0 text-[10px] mt-1 opacity-50">✦</span> Designed structured UI systems in Nekurati with reusable layouts, consistent interaction patterns, and clear navigation flows</li>
+                            <li class="relative pl-5"><span class="absolute left-0 top-0 text-[10px] mt-1 opacity-50">✦</span> Focus on iteration speed, maintainability, and cross-team collaboration</li>
+                        </ul>
+                    </div>
+                    <div class="reveal p-8 md:p-12 border-b border-r border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors" style="transition-delay: 0.2s;">
+                        <span class="text-4xl font-serif italic opacity-30 block mb-8">— 3 —</span>
+                        <h4 class="text-2xl font-bold mb-2 tracking-wide uppercase">Implementation</h4>
+                        <p class="font-serif italic text-xl opacity-70 mb-6">Bringing UI systems to life directly inside the engine with real gameplay integration.</p>
+                        <ul class="opacity-70 leading-relaxed font-light space-y-4 list-none text-sm">
+                            <li class="relative pl-5"><span class="absolute left-0 top-0 text-[10px] mt-1 opacity-50">✦</span> Implemented gameplay UI systems directly in Unreal Engine 5 (UMG/Blueprint) and Unity (C#)</li>
+                            <li class="relative pl-5"><span class="absolute left-0 top-0 text-[10px] mt-1 opacity-50">✦</span> Built a 3D Investigator’s Journal system integrating narrative, objectives, and gameplay state</li>
+                            <li class="relative pl-5"><span class="absolute left-0 top-0 text-[10px] mt-1 opacity-50">✦</span> Designed and implemented data-driven UI for complex systems like Tollywood Tycoon, translating financial and production mechanics into intuitive interfaces</li>
+                            <li class="relative pl-5"><span class="absolute left-0 top-0 text-[10px] mt-1 opacity-50">✦</span> Focus on performance, responsiveness, and seamless gameplay integration</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Tools & Workflow Block -->
+                <div class="reveal mt-16 bg-zinc-50 dark:bg-zinc-900/50 p-8 md:p-12 border border-zinc-200 dark:border-zinc-800 rounded-3xl grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <div class="lg:col-span-4">
+                        <h4 class="text-xl font-bold tracking-wide uppercase">Tools & Workflow</h4>
+                    </div>
+                    <div class="lg:col-span-8">
+                        <div class="flex flex-wrap gap-x-6 gap-y-2 text-lg font-serif italic opacity-80 mb-6">
+                            <span>Figma</span> <span class="opacity-30">·</span> 
+                            <span>Photoshop</span> <span class="opacity-30">·</span> 
+                            <span>Illustrator</span> <span class="opacity-30">·</span> 
+                            <span>Infinity Painter</span> <span class="opacity-30">·</span> 
+                            <span>Unreal Engine 5 (UMG/Blueprint)</span> <span class="opacity-30">·</span> 
+                            <span>Unity (C#)</span> <span class="opacity-30">·</span> 
+                            <span>After Effects</span> <span class="opacity-30">·</span> 
+                            <span>Premiere Pro</span> <span class="opacity-30">·</span> 
+                            <span>Git</span>
+                        </div>
+                        <p class="text-lg font-light leading-relaxed opacity-70">
+                            I adapt to different pipelines and workflows, ensuring UI systems are not only visually strong but technically robust and ready for production.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="py-32 px-6">
+            <div class="max-w-[1800px] mx-auto">
+                
+                <!-- Experience Header & Intro -->
+                <div class="reveal mb-24 grid grid-cols-1 lg:grid-cols-12 gap-16">
+                    <div class="lg:col-span-4">
+                        <h2 class="text-xs tracking-[0.5em] uppercase opacity-40 mb-4 font-bold">CAREER</h2>
+                        <h3 class="text-4xl md:text-5xl font-bold tracking-tight">Experience</h3>
+                    </div>
+                    <div class="lg:col-span-8">
+                        <p class="text-2xl md:text-3xl font-light leading-relaxed">
+                            A detailed timeline of my experience, current focus, and professional growth as a <span class="font-serif italic font-normal">Technical UI Designer</span> focused on system-driven and narrative-integrated game UI.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Current Focus Block -->
+                <div class="reveal mb-20 bg-zinc-50 dark:bg-zinc-900/50 p-8 md:p-12 border border-zinc-200 dark:border-zinc-800 rounded-3xl">
+                    <h4 class="text-xl font-bold mb-8 tracking-wide uppercase">Current Focus <span class="font-serif italic font-normal text-2xl lowercase ml-2 opacity-50">at a glance</span></h4>
+                    <ul class="grid md:grid-cols-2 gap-x-12 gap-y-4 text-lg font-light opacity-80 list-none">
+                        <li class="relative pl-6"><span class="absolute left-0 top-0 text-xs mt-2 opacity-50">✦</span> Building scalable UI systems in Unreal Engine 5 using UMG and Blueprint</li>
+                        <li class="relative pl-6"><span class="absolute left-0 top-0 text-xs mt-2 opacity-50">✦</span> Designing system-driven UI that supports gameplay, narrative, and player decision flows</li>
+                        <li class="relative pl-6"><span class="absolute left-0 top-0 text-xs mt-2 opacity-50">✦</span> Developing modular UI frameworks for faster iteration and production pipelines</li>
+                        <li class="relative pl-6"><span class="absolute left-0 top-0 text-xs mt-2 opacity-50">✦</span> Seeking full-time Technical UI / Game UI roles (F-1 OPT / STEM eligible)</li>
+                    </ul>
+                </div>
+
+                <!-- Career Timeline with Professional Colors from image_545043.png -->
+                <div class="space-y-6">
+                    
+                    <!-- Job 1 - Yellow -->
+                    <div class="reveal exp-card grid grid-cols-1 md:grid-cols-4 gap-8 py-16 px-8 rounded-3xl bg-[#FEF9C3] dark:bg-amber-950/40 text-zinc-900 dark:text-amber-50">
+                        <div>
+                            <div class="text-sm tracking-widest uppercase opacity-60 font-bold mb-2 text-zinc-600 dark:text-amber-200/60">Nov 2025 — Present</div>
+                            <div class="text-xs uppercase tracking-wider opacity-50">Remote</div>
+                        </div>
+                        <div class="md:col-span-3">
+                            <h4 class="text-3xl font-bold mb-2">UI Systems Designer</h4>
+                            <p class="text-lg opacity-90 mb-8 font-serif italic text-2xl">Vault Productions Private Limited · Internship</p>
+                            <ul class="opacity-80 leading-relaxed font-light max-w-4xl space-y-4 list-none">
+                                <li class="relative pl-6"><span class="absolute left-0 top-0 text-xs mt-1.5 opacity-50">✦</span> Led UI system implementation for two game projects: The Dark Arrival: Shadows of the Past and Suite 13</li>
+                                <li class="relative pl-6"><span class="absolute left-0 top-0 text-xs mt-1.5 opacity-50">✦</span> Designed and built a 3D Investigator’s Journal system integrating narrative clues, objectives, and gameplay state</li>
+                                <li class="relative pl-6"><span class="absolute left-0 top-0 text-xs mt-1.5 opacity-50">✦</span> Implemented gameplay UI systems directly in Unreal Engine 5 using UMG and Blueprint</li>
+                                <li class="relative pl-6"><span class="absolute left-0 top-0 text-xs mt-1.5 opacity-50">✦</span> Developed modular Blueprint UI architecture improving iteration speed and team workflow</li>
+                                <li class="relative pl-6"><span class="absolute left-0 top-0 text-xs mt-1.5 opacity-50">✦</span> Balanced performance, readability, and immersion in real-time gameplay UI</li>
+                                <li class="relative pl-6"><span class="absolute left-0 top-0 text-xs mt-1.5 opacity-50">✦</span> Collaborated with designers and engineers to align UI with gameplay systems and narrative pacing</li>
+                                <li class="relative pl-6"><span class="absolute left-0 top-0 text-xs mt-1.5 opacity-50">✦</span> Presented a live playable build at GDC 2026 to an international audience</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Job 2 - Blue -->
+                    <div class="reveal exp-card grid grid-cols-1 md:grid-cols-4 gap-8 py-16 px-8 rounded-3xl bg-[#E0F2FE] dark:bg-sky-950/40 text-zinc-900 dark:text-sky-50" style="transition-delay: 0.1s;">
+                        <div>
+                            <div class="text-sm tracking-widest uppercase opacity-60 font-bold mb-2 text-zinc-600 dark:text-sky-200/60">Sep 2025 — Dec 2025</div>
+                            <div class="text-xs uppercase tracking-wider opacity-50">San Francisco · Hybrid</div>
+                        </div>
+                        <div class="md:col-span-3">
+                            <h4 class="text-3xl font-bold mb-2">Game Development Intern</h4>
+                            <p class="text-lg opacity-90 mb-8 font-serif italic text-2xl">Academy of Art University · Internship</p>
+                            <ul class="opacity-80 leading-relaxed font-light max-w-4xl space-y-4 list-none">
+                                <li class="relative pl-6"><span class="absolute left-0 top-0 text-xs mt-1.5 opacity-50">✦</span> Worked in a cross-functional team to design and implement gameplay systems</li>
+                                <li class="relative pl-6"><span class="absolute left-0 top-0 text-xs mt-1.5 opacity-50">✦</span> Translated design concepts into functional in-engine implementations using Unreal Engine</li>
+                                <li class="relative pl-6"><span class="absolute left-0 top-0 text-xs mt-1.5 opacity-50">✦</span> Contributed to UI systems, gameplay mechanics, and asset integration</li>
+                                <li class="relative pl-6"><span class="absolute left-0 top-0 text-xs mt-1.5 opacity-50">✦</span> Participated in iterative development cycles with structured playtesting and feedback</li>
+                                <li class="relative pl-6"><span class="absolute left-0 top-0 text-xs mt-1.5 opacity-50">✦</span> Documented workflows, system logic, and technical implementation</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Job 3 - Orange -->
+                    <div class="reveal exp-card grid grid-cols-1 md:grid-cols-4 gap-8 py-16 px-8 rounded-3xl bg-[#FFEDD5] dark:bg-orange-950/40 text-zinc-900 dark:text-orange-50">
+                        <div>
+                            <div class="text-sm tracking-widest uppercase opacity-60 font-bold mb-2 text-zinc-600 dark:text-orange-200/60">Mar 2025 — Aug 2025</div>
+                            <div class="text-xs uppercase tracking-wider opacity-50">Remote</div>
+                        </div>
+                        <div class="md:col-span-3">
+                            <h4 class="text-3xl font-bold mb-2">UI Designer</h4>
+                            <p class="text-lg opacity-90 mb-8 font-serif italic text-2xl">Freelance</p>
+                            <ul class="opacity-80 leading-relaxed font-light max-w-4xl space-y-4 list-none">
+                                <li class="relative pl-6"><span class="absolute left-0 top-0 text-xs mt-1.5 opacity-50">✦</span> Led end-to-end UI/UX design for a fantasy RPG (Nekurati)</li>
+                                <li class="relative pl-6"><span class="absolute left-0 top-0 text-xs mt-1.5 opacity-50">✦</span> Designed menu systems, navigation flows, and interaction patterns for gameplay clarity</li>
+                                <li class="relative pl-6"><span class="absolute left-0 top-0 text-xs mt-1.5 opacity-50">✦</span> Created custom UI assets aligned with narrative and visual identity</li>
+                                <li class="relative pl-6"><span class="absolute left-0 top-0 text-xs mt-1.5 opacity-50">✦</span> Delivered high-fidelity prototypes and production-ready UI for engine implementation</li>
+                                <li class="relative pl-6"><span class="absolute left-0 top-0 text-xs mt-1.5 opacity-50">✦</span> Established UI consistency, typography, and interaction standards</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Job 4 - Green -->
+                    <div class="reveal exp-card grid grid-cols-1 md:grid-cols-4 gap-8 py-16 px-8 rounded-3xl bg-[#DCFCE7] dark:bg-emerald-950/40 text-zinc-900 dark:text-emerald-50" style="transition-delay: 0.1s;">
+                        <div>
+                            <div class="text-sm tracking-widest uppercase opacity-60 font-bold mb-2 text-zinc-600 dark:text-emerald-200/60">Feb 2025 — May 2025</div>
+                            <div class="text-xs uppercase tracking-wider opacity-50">Academic Project</div>
+                        </div>
+                        <div class="md:col-span-3">
+                            <h4 class="text-3xl font-bold mb-2">Designer & Programmer</h4>
+                            <p class="text-lg opacity-90 mb-8 font-serif italic text-2xl">Customized Angel</p>
+                            <ul class="opacity-80 leading-relaxed font-light max-w-4xl space-y-4 list-none">
+                                <li class="relative pl-6"><span class="absolute left-0 top-0 text-xs mt-1.5 opacity-50">✦</span> Designed timeline-based UI system for tracking clues and gameplay events</li>
+                                <li class="relative pl-6"><span class="absolute left-0 top-0 text-xs mt-1.5 opacity-50">✦</span> Built interaction systems for NPC behavior observation and loop-based gameplay</li>
+                                <li class="relative pl-6"><span class="absolute left-0 top-0 text-xs mt-1.5 opacity-50">✦</span> Implemented UI systems in Unity using C# and prefabs</li>
+                                <li class="relative pl-6"><span class="absolute left-0 top-0 text-xs mt-1.5 opacity-50">✦</span> Focused on UX clarity, cognitive load, and system-driven interaction design</li>
+                                <li class="relative pl-6"><span class="absolute left-0 top-0 text-xs mt-1.5 opacity-50">✦</span> Collaborated in a team environment with iterative feedback cycles</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Job 5 - Purple -->
+                    <div class="reveal exp-card grid grid-cols-1 md:grid-cols-4 gap-8 py-16 px-8 rounded-3xl bg-[#F3E8FF] dark:bg-indigo-950/40 text-zinc-900 dark:text-indigo-50">
+                        <div>
+                            <div class="text-sm tracking-widest uppercase opacity-60 font-bold mb-2 text-zinc-600 dark:text-indigo-200/60">Jan 2022 — Mar 2022</div>
+                            <div class="text-xs uppercase tracking-wider opacity-50">India</div>
+                        </div>
+                        <div class="md:col-span-3">
+                            <h4 class="text-3xl font-bold mb-2">3D Animator</h4>
+                            <p class="text-lg opacity-90 mb-8 font-serif italic text-2xl">Symbiosys Technologies · Internship</p>
+                            <ul class="opacity-80 leading-relaxed font-light max-w-4xl space-y-4 list-none">
+                                <li class="relative pl-6"><span class="absolute left-0 top-0 text-xs mt-1.5 opacity-50">✦</span> Created character animations and facial expressions for production content</li>
+                                <li class="relative pl-6"><span class="absolute left-0 top-0 text-xs mt-1.5 opacity-50">✦</span> Worked with Maya and Adobe tools for animation and lighting</li>
+                                <li class="relative pl-6"><span class="absolute left-0 top-0 text-xs mt-1.5 opacity-50">✦</span> Delivered assets under tight deadlines in a studio pipeline</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-32 px-6 bg-zinc-50 dark:bg-zinc-900/30 transition-colors">
+            <div class="max-w-[1800px] mx-auto">
+                <div class="reveal mb-20 text-center">
+                    <h2 class="text-xs tracking-[0.5em] uppercase opacity-40 mb-4 font-bold">CORE STRENGTHS</h2>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-16">
+                    <div class="reveal">
+                        <h4 class="text-sm tracking-widest uppercase mb-8 font-bold opacity-60">Engine & Code</h4>
+                        <ul class="space-y-4 text-xl md:text-2xl font-light">
+                            <li>Unreal Engine 5 (UMG)</li>
+                            <li>Blueprint Logic</li>
+                            <li>Unity (C#)</li>
+                            <li>Modular UI Architecture</li>
+                        </ul>
+                    </div>
+                    <div class="reveal" style="transition-delay: 0.1s;">
+                        <h4 class="text-sm tracking-widest uppercase mb-8 font-bold opacity-60">Implementation</h4>
+                        <ul class="space-y-4 text-xl md:text-2xl font-light">
+                            <li>HUDs & Menus</li>
+                            <li>UI State Logic</li>
+                            <li>3D / Diegetic UI</li>
+                            <li>Narrative-driven Interaction</li>
+                        </ul>
+                    </div>
+                    <div class="reveal" style="transition-delay: 0.2s;">
+                        <h4 class="text-sm tracking-widest uppercase mb-8 font-bold opacity-60">Design Workflow</h4>
+                        <ul class="space-y-4 text-xl md:text-2xl font-light">
+                            <li>Figma to Engine</li>
+                            <li>Bridging Design & Engineering</li>
+                            <li>Technical Documentation</li>
+                            <li>Rapid Prototyping</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resume Section -->
+        <section id="resume" class="py-32 px-6">
+            <div class="max-w-[1800px] mx-auto text-center border-t border-zinc-200 dark:border-zinc-800 pt-32">
+                <div class="reveal">
+                    <h2 class="text-xs tracking-[0.5em] uppercase opacity-40 mb-4 font-bold">DOCUMENTATION</h2>
+                    <h3 class="text-5xl md:text-7xl font-bold tracking-tight mb-8">Beyond <span class="font-serif italic font-normal">Design</span> ☟</h3>
+                    <p class="text-lg md:text-xl font-light opacity-80 mb-6 max-w-3xl mx-auto">
+                        Download my resume to explore my experience as a Technical UI Designer, including in-engine UI implementation, system architecture, and shipped gameplay UI systems.
+                    </p>
+                    <p class="text-lg md:text-xl font-light opacity-80 mb-12 max-w-3xl mx-auto">
+                        Featuring work on <span class="italic font-serif">The Dark Arrival: Shadows of the Past</span> and <span class="italic font-serif">Suite 13</span>, along with Unreal Engine 5 and Unity expertise.
+                    </p>
+                    <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+                        <!-- Updated to Open CV Viewer -->
+                        <button onclick="openCaseStudy('resume')" class="group inline-flex items-center justify-center space-x-2 border border-black dark:border-white rounded-full px-8 py-4 text-sm tracking-[0.2em] uppercase font-bold hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300 overflow-hidden relative">
+                            <span class="relative z-10">Download CV</span>
+                            <span class="relative z-10 group-hover:translate-x-1 transition-transform">→</span>
+                        </button>
+                        <!-- Steam Button Updated to Direct Game Link -->
+                        <a href="https://store.steampowered.com/app/3295930/THE_DARK_ARRIVAL__SHADOW_OF_THE_PAST/" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center justify-center space-x-2 bg-black text-white dark:bg-white dark:text-black rounded-full px-8 py-4 text-sm tracking-[0.2em] uppercase font-bold hover:scale-105 transition-all duration-300 shadow-lg">
+                            <span class="relative z-10">Steam</span>
+                            <span class="relative z-10 group-hover:translate-x-1 transition-transform">↗</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog Section -->
+        <section id="blog" class="py-32 px-6">
+            <div class="max-w-[1800px] mx-auto">
+                <div class="reveal mb-24 grid grid-cols-1 lg:grid-cols-12 gap-16">
+                    <div class="lg:col-span-4">
+                        <h2 class="text-xs tracking-[0.5em] uppercase opacity-40 mb-4 font-bold">THOUGHTS</h2>
+                        <h3 class="text-4xl md:text-5xl font-bold tracking-tight">Writing & <span class="font-serif italic font-normal">Insights</span></h3>
+                    </div>
+                    <div class="lg:col-span-8">
+                        <p class="text-2xl md:text-3xl font-light leading-relaxed">
+                            Exploring the intersection of psychology, art, and game interfaces. I write about the <span class="font-serif italic font-normal">technical nuances</span> and creative philosophies that define modern UI design.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-0 border-t border-l border-zinc-200 dark:border-zinc-800 mt-20">
+                    <!-- Blog 1 -->
+                    <a href="https://medium.com/@jaikardevgame/mind-art-why-the-human-touch-drives-game-ui-1401c728775d" target="_blank" class="reveal group p-8 md:p-12 border-b border-r border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-all duration-500">
+                        <div class="flex justify-between items-start mb-12">
+                            <span class="text-sm font-bold tracking-widest opacity-30 uppercase">Medium Article</span>
+                            <span class="text-2xl group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform duration-300">↗</span>
+                        </div>
+                        <h4 class="text-3xl md:text-4xl font-serif italic mb-6 leading-tight group-hover:opacity-60 transition-opacity">Mind & Art: Why the human touch drives game UI</h4>
+                        <p class="text-lg font-light opacity-70 leading-relaxed max-w-xl">
+                            A deep dive into why human intuition and artistic intent remain the most powerful tools in designing immersive player experiences.
+                        </p>
+                    </a>
+                    
+                    <!-- Blog 2 -->
+                    <a href="https://medium.com/@jaikardevgame/designing-the-lens-my-journey-as-a-ui-artist-c98276a52c1d" target="_blank" class="reveal group p-8 md:p-12 border-b border-r border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-all duration-500" style="transition-delay: 0.1s;">
+                        <div class="flex justify-between items-start mb-12">
+                            <span class="text-sm font-bold tracking-widest opacity-30 uppercase">Medium Article</span>
+                            <span class="text-2xl group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform duration-300">↗</span>
+                        </div>
+                        <h4 class="text-3xl md:text-4xl font-serif italic mb-6 leading-tight group-hover:opacity-60 transition-opacity">Designing the Lens: My journey as a UI Artist</h4>
+                        <p class="text-lg font-light opacity-70 leading-relaxed max-w-xl">
+                            Reflecting on my professional evolution and the technical challenges that shaped my approach to technical UI implementation.
+                        </p>
+                    </a>
+
+                    <!-- Blog 3 -->
+                    <a href="https://www.linkedin.com/pulse/shift-last-fare-jaikar-pothula-r1y4c" target="_blank" class="reveal group p-8 md:p-12 border-b border-r border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-all duration-500" style="transition-delay: 0.2s;">
+                        <div class="flex justify-between items-start mb-12">
+                            <span class="text-sm font-bold tracking-widest opacity-30 uppercase">LinkedIn Article</span>
+                            <span class="text-2xl group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform duration-300">↗</span>
+                        </div>
+                        <h4 class="text-3xl md:text-4xl font-serif italic mb-6 leading-tight group-hover:opacity-60 transition-opacity">Shift: Last Fare — UI Narrative</h4>
+                        <p class="text-lg font-light opacity-70 leading-relaxed max-w-xl">
+                            Exploring how UI supports the narrative arc in Shift: Last Fare, focusing on diegetic elements and emotional resonance.
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Marquee Section -->
+        <section class="py-12 border-t border-zinc-200 dark:border-zinc-800 overflow-hidden bg-white dark:bg-[#111111] transition-colors cursor-default">
+            <a href="mailto:Jaikardevgame@gmail.com" class="block marquee-container flex w-[200%] transition-colors">
+                <div class="animate-marquee flex whitespace-nowrap items-center text-4xl md:text-7xl font-heading font-bold uppercase tracking-tighter">
+                    <span class="mx-8 opacity-40 hover:opacity-100 hover-blue transition-all">SAY HELLO!</span> <span class="text-xl opacity-20">★</span>
+                    <span class="mx-8 opacity-40 hover:opacity-100 hover-gradient transition-all">LET'S COLLABORATE</span> <span class="text-xl opacity-20">★</span>
+                    <span class="mx-8 opacity-40 hover:opacity-100 hover-blue transition-all">SAY HOLA!</span> <span class="text-xl opacity-20">★</span>
+                    <span class="mx-8 opacity-40 hover:opacity-100 hover-gradient transition-all">OPEN FOR WORK</span> <span class="text-xl opacity-20">★</span>
+                    <span class="mx-8 opacity-40 hover:opacity-100 hover-blue transition-all">SAY HALLO!</span> <span class="text-xl opacity-20">★</span>
+                    <span class="mx-8 opacity-40 hover:opacity-100 hover-gradient transition-all">GET IN TOUCH</span> <span class="text-xl opacity-20">★</span>
+                    <span class="mx-8 opacity-40 hover:opacity-100 hover-blue transition-all">SAY నమస్కారం!</span> <span class="text-xl opacity-20">★</span>
+                    
+                    <!-- Repeat for seamless loop -->
+                    <span class="mx-8 opacity-40 hover:opacity-100 hover-blue transition-all">SAY HELLO!</span> <span class="text-xl opacity-20">★</span>
+                    <span class="mx-8 opacity-40 hover:opacity-100 hover-gradient transition-all">LET'S COLLABORATE</span> <span class="text-xl opacity-20">★</span>
+                    <span class="mx-8 opacity-40 hover:opacity-100 hover-blue transition-all">SAY HOLA!</span> <span class="text-xl opacity-20">★</span>
+                    <span class="mx-8 opacity-40 hover:opacity-100 hover-gradient transition-all">OPEN FOR WORK</span> <span class="text-xl opacity-20">★</span>
+                    <span class="mx-8 opacity-40 hover:opacity-100 hover-blue transition-all">SAY HALLO!</span> <span class="text-xl opacity-20">★</span>
+                    <span class="mx-8 opacity-40 hover:opacity-100 hover-gradient transition-all">GET IN TOUCH</span> <span class="text-xl opacity-20">★</span>
+                    <span class="mx-8 opacity-40 hover:opacity-100 hover-blue transition-all">SAY నమస్కారం!</span> <span class="text-xl opacity-20">★</span>
+                </div>
+            </a>
+        </section>
+
+        <!-- Footer -->
+        <footer class="py-20 px-6 max-w-[1800px] mx-auto border-t border-zinc-200 dark:border-zinc-800 flex flex-col md:flex-row justify-between items-center text-[10px] tracking-[0.3em] uppercase opacity-50">
+            <p>copyright 2026 @ JAIKAR POTHULA</p>
+            <div class="flex flex-wrap justify-center gap-x-8 gap-y-4 mt-6 md:mt-0">
+                <a href="https://www.linkedin.com/in/jaikar-pothula-489b681a5/" target="_blank" rel="noopener noreferrer" class="hover:opacity-50 transition-opacity">LINKEDIN</a>
+                <a href="https://jim-jam-play.itch.io/" target="_blank" rel="noopener noreferrer" class="hover:opacity-50 transition-opacity">ITCH.IO</a>
+                <!-- Steam Footer Link Updated -->
+                <a href="https://store.steampowered.com/app/3295930/THE_DARK_ARRIVAL__SHADOW_OF_THE_PAST/" target="_blank" rel="noopener noreferrer" class="hover:opacity-50 transition-opacity">STEAM</a>
+                <a href="https://www.behance.net/jaikarpothula" target="_blank" rel="noopener noreferrer" class="hover:opacity-50 transition-opacity">BEHANCE</a>
+                <a href="https://www.artstation.com/jaikarpothula007" target="_blank" rel="noopener noreferrer" class="hover:opacity-50 transition-opacity">ARTSTATION</a>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+        }
+
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+
+        // --- Data Structure for Case Studies ---
+        const caseStudyData = {
+            'customized-angel': {
+                title: 'Customized Angel',
+                imageCount: 12,
+                prefix: 'Assets/Customized_Angel_Case_Study/Customized_Angel_Case_Study-',
+                padZero: true,
+                pdf: 'Assets/Customized_Angel_Case_Study.pdf',
+                playLink: 'https://jim-jam-play.itch.io/customizedangel'
+            },
+            'nekurati': {
+                title: 'Nekurati',
+                imageCount: 10,
+                prefix: 'Assets/Nekurati_CaseStudy_Jaikar/Nekurati_CaseStudy_Jaikar-',
+                padZero: true,
+                pdf: 'Assets/Nekurati_CaseStudy_Jaikar.pdf'
+            },
+            'tale-of-ronin': {
+                title: 'Tale of Ronin',
+                imageCount: 12,
+                prefix: 'Assets/Tale_of_Ronin_UI_UX_Case_Study/Tale_of_Ronin_UI_UX_Case_Study-',
+                padZero: true,
+                pdf: 'Assets/Tale_of_Ronin_UI_UX_Case_Study.pdf'
+            },
+            'tollywood-tycoon': {
+                title: 'Tollywood Tycoon',
+                imageCount: 8,
+                prefix: 'Assets/Tollywood_Tycoon_Design_Case_Study/Tollywood_Tycoon_Design_Case_Study-',
+                padZero: false,
+                pdf: 'Assets/Tollywood_Tycoon_Design_Case_Study.pdf',
+                playLink: 'https://jim-jam-play.itch.io/tollywood-tycoon-by-jaikar'
+            },
+            'dark-arrival': {
+                title: 'The Dark Arrival',
+                imageCount: 0,
+                prefix: '',
+                padZero: false,
+                pdf: 'Assets/The_Dark_Arrival_Case_Study.pdf',
+                playLink: 'https://store.steampowered.com/app/3295930/THE_DARK_ARRIVAL__SHADOW_OF_THE_PAST/'
+            },
+            'suite-13': {
+                title: 'Suite 13',
+                imageCount: 0,
+                prefix: '',
+                padZero: false,
+                pdf: 'Assets/Suite_13_Case_Study.pdf'
+            },
+            // Updated Resume Data for Viewer with fix for -1, -2 filenames
+            'resume': {
+                title: 'Curriculum Vitae',
+                imageCount: 2, 
+                prefix: 'Assets/Jaikar_Pothula_UI_Systems_Designer_Resume/Jaikar_Pothula_UI_Systems_Designer_Resume-',
+                padZero: false, 
+                pdf: 'Assets/Jaikar_Pothula_UI_Systems_Designer_Resume.pdf'
+            }
+        };
+
+        // --- Case Study Modal Logic ---
+        const csModal = document.getElementById('case-study-modal');
+        const csImagesContainer = document.getElementById('cs-images');
+        const csActionsContainer = document.getElementById('cs-actions');
+
+        function openCaseStudy(id) {
+            const data = caseStudyData[id];
+            if (!data) return;
+
+            // 1. Generate Images HTML
+            let imagesHTML = '';
+            if (data.imageCount > 0 || data.prefix !== '') {
+                // Handle cases where imageCount might be 0 but prefix exists (manual check)
+                const count = data.imageCount || 1; 
+                for (let i = 1; i <= count; i++) {
+                    const numStr = (data.padZero && i < 10) ? '0' + i : i.toString();
+                    const src = `${data.prefix}${numStr}.png`;
+                    imagesHTML += `<img src="${src}" alt="${data.title} Page ${i}" class="cs-image shadow-sm" loading="lazy" onerror="this.style.display='none'">`;
+                }
+            } else {
+                imagesHTML = `<div class="py-40 text-center opacity-50 font-serif italic text-2xl">Case study images for ${data.title} are being prepared.</div>`;
+            }
+            csImagesContainer.innerHTML = imagesHTML;
+
+            // 2. Generate Buttons HTML
+            let buttonsHTML = '';
+            if (data.playLink) {
+                const label = data.playLink.includes('steam') ? 'Visit on Steam' : 'Play Game';
+                buttonsHTML += `
+                    <a href="${data.playLink}" target="_blank" class="w-full max-w-sm group inline-flex items-center justify-center space-x-2 bg-black text-white dark:bg-white dark:text-black rounded-full px-8 py-5 text-sm tracking-[0.2em] uppercase font-bold hover:scale-105 transition-all duration-300">
+                        <span>${label}</span>
+                        <span class="group-hover:translate-x-1 transition-transform">→</span>
+                    </a>
+                `;
+            }
+            buttonsHTML += `
+                <a href="${data.pdf}" download target="_blank" class="w-full max-w-sm group inline-flex items-center justify-center space-x-2 border border-black dark:border-white rounded-full px-8 py-5 text-sm tracking-[0.2em] uppercase font-bold hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300">
+                    <span>Download PDF</span>
+                    <span class="group-hover:translate-y-1 transition-transform">↓</span>
+                </a>
+            `;
+            
+            csActionsContainer.innerHTML = buttonsHTML;
+            csModal.classList.add('open');
+            document.body.classList.add('modal-open');
+            csModal.scrollTo(0, 0);
+        }
+
+        function closeCaseStudy() {
+            csModal.classList.remove('open');
+            document.body.classList.remove('modal-open');
+            setTimeout(() => {
+                csImagesContainer.innerHTML = '';
+                csActionsContainer.innerHTML = '';
+            }, 400);
+        }
+
+        // --- Canvas Mouse Logic ---
+        const canvas = document.getElementById('mouse-canvas');
+        const ctx = canvas.getContext('2d');
+        let points = [];
+        const maxPoints = 25;
+
+        function resizeCanvas() {
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = window.innerWidth * dpr;
+            canvas.height = window.innerHeight * dpr;
+            canvas.style.width = window.innerWidth + 'px';
+            canvas.style.height = window.innerHeight + 'px';
+            ctx.scale(dpr, dpr);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        let lastMouse = { x: -100, y: -100 };
+        window.addEventListener('mousemove', (e) => {
+            const currentMouse = { x: e.clientX, y: e.clientY };
+            
+            const dist = Math.hypot(currentMouse.x - lastMouse.x, currentMouse.y - lastMouse.y);
+            const steps = Math.ceil(dist / 4); 
+            
+            if (steps > 0 && lastMouse.x !== -100) {
+                for (let i = 1; i <= steps; i++) {
+                    points.push({
+                        x: lastMouse.x + (currentMouse.x - lastMouse.x) * (i / steps),
+                        y: lastMouse.y + (currentMouse.y - lastMouse.y) * (i / steps),
+                        age: 0
+                    });
+                }
+            } else {
+                points.push({ x: currentMouse.x, y: currentMouse.y, age: 0 });
+            }
+            
+            lastMouse = currentMouse;
+        });
+
+        function animate() {
+            ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+            const isDark = document.documentElement.classList.contains('dark');
+            const color = isDark ? '255, 255, 255' : '0, 0, 0';
+            
+            points = points.filter(p => p.age < maxPoints);
+
+            if (points.length > 1) {
+                for (let i = 1; i < points.length; i++) {
+                    const p1 = points[i - 1];
+                    const p2 = points[i];
+                    
+                    const opacity = Math.max(0, 1 - (p2.age / maxPoints));
+                    const size = Math.max(0.1, (1 - (p2.age / maxPoints)) * 45);
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(p1.x, p1.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    ctx.strokeStyle = `rgba(${color}, ${opacity * 0.2})`;
+                    ctx.lineWidth = size;
+                    ctx.lineCap = 'round';
+                    ctx.lineJoin = 'round';
+                    ctx.stroke();
+                }
+            }
+            
+            points.forEach(p => p.age += 1);
+            
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // --- Smooth Reveal ---
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                if (elementTop < windowHeight - 50) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        window.addEventListener("load", reveal);
+
+        // --- Pill Navigation Logic ---
+        const navPill = document.getElementById('nav-pill');
+        const navItems = document.querySelectorAll('.nav-item');
+        const navWrapper = document.getElementById('nav-wrapper');
+
+        navItems.forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                const rect = item.getBoundingClientRect();
+                const wrapperRect = navWrapper.getBoundingClientRect();
+                
+                navPill.style.width = `${rect.width}px`;
+                navPill.style.left = `${rect.left - wrapperRect.left}px`;
+                navPill.style.opacity = '1';
+                
+                navItems.forEach(ni => ni.classList.remove('active-pill'));
+                this.classList.add('active-pill');
+            });
+        });
+
+        navWrapper.addEventListener('mouseleave', function() {
+            navPill.style.opacity = '0';
+            navItems.forEach(ni => ni.classList.remove('active-pill'));
+        });
+
+        // --- Smooth Scroll Fix ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault(); 
+                const targetId = this.getAttribute('href');
+                if (targetId && targetId.length > 1 && targetId.startsWith('#')) {
+                    try {
+                        const target = document.querySelector(targetId);
+                        if (target) {
+                            window.scrollTo({
+                                top: target.offsetTop,
+                                behavior: 'smooth'
+                            });
+                        }
+                    } catch (err) {
+                        // ignore invalid selectors
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

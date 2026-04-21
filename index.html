@@ -195,12 +195,6 @@
             visibility: visible;
         }
         
-        .cs-image {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
         /* Interactive Card Styles */
         .exp-card, .project-card {
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, background-color 0.5s ease;
@@ -228,6 +222,15 @@
             border-bottom: 1px solid rgba(255,255,255,0.05);
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
         }
+
+        /* Utility for Interactive Tabs */
+        .animate-fade-in {
+            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body class="selection:bg-gray-500/30 relative">
@@ -248,12 +251,21 @@
         </div>
 
         <!-- Dynamic Content Container -->
-        <div class="max-w-[1400px] mx-auto pb-32 -mt-16 md:-mt-20">
+        <div class="max-w-[1400px] mx-auto pb-32">
+            <div id="cs-header" class="w-full flex flex-col items-center px-4">
+                <!-- Title injected via JS -->
+            </div>
+
+            <!-- New UX Sections Container -->
+            <div id="cs-sections" class="w-full px-6 max-w-5xl mx-auto mb-12 lg:mb-16">
+                <!-- UX Tabs and Content injected via JS -->
+            </div>
+
             <div id="cs-images" class="w-full flex flex-col items-center">
-                <!-- Images injected via JS -->
+                <!-- Images container (kept for structure, but intentionally left empty) -->
             </div>
             
-            <div id="cs-actions" class="mt-12 md:mt-20 flex flex-col items-center space-y-6 px-6">
+            <div id="cs-actions" class="mt-6 flex flex-col items-center space-y-6 px-6">
                 <!-- Buttons injected via JS -->
             </div>
         </div>
@@ -704,7 +716,7 @@
                 <div class="reveal mb-16 md:mb-24 grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-16">
                     <div class="lg:col-span-4">
                         <h2 class="text-xs tracking-[0.5em] uppercase opacity-40 mb-4 font-bold">THOUGHTS</h2>
-                        <h3 class="text-4xl md:text-5xl font-bold tracking-tight">Writing & <span class="font-serif italic font-normal">Insights</span></h3>
+                        <h3 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">Writing & <span class="font-serif italic font-normal">Insights</span></h3>
                     </div>
                     <div class="lg:col-span-8">
                         <p class="text-xl md:text-2xl lg:text-3xl font-light leading-relaxed">
@@ -832,42 +844,382 @@
         const caseStudyData = {
             'customized-angel': {
                 title: 'Customized Angel',
-                imageCount: 12,
-                prefix: 'Assets/Customized_Angel_Case_Study/Customized_Angel_Case_Study-',
-                padZero: true,
                 pdf: 'Assets/Customized_Angel_Case_Study.pdf',
                 playLink: 'https://jim-jam-play.itch.io/customizedangel'
             },
             'tale-of-ronin': {
                 title: 'Tale of Ronin',
-                imageCount: 12,
-                prefix: 'Assets/Tale_of_Ronin_UI_UX_Case_Study/Tale_of_Ronin_UI_UX_Case_Study-',
-                padZero: true,
                 pdf: 'Assets/Tale_of_Ronin_UI_UX_Case_Study.pdf'
             },
             'dark-arrival': {
                 title: 'The Dark Arrival',
-                imageCount: 0,
-                prefix: '',
-                padZero: false,
                 pdf: 'Assets/The_Dark_Arrival_Case_Study.pdf',
                 playLink: 'https://store.steampowered.com/app/3295930/THE_DARK_ARRIVAL__SHADOW_OF_THE_PAST/'
             },
             'suite-13': {
                 title: 'Suite 13',
-                imageCount: 0,
-                prefix: '',
-                padZero: false,
                 pdf: 'Assets/Suite_13_Case_Study.pdf'
             },
             'resume': {
                 title: 'Curriculum Vitae',
-                imageCount: 2, 
-                prefix: 'Assets/Jaikar_Pothula_UI_Systems_Designer_Resume/Jaikar_Pothula_UI_Systems_Designer_Resume-',
-                padZero: false, 
                 pdf: 'Assets/Jaikar_Pothula_UI_Systems_Designer_Resume.pdf'
             }
         };
+
+        // UX Sections Data (For non-Ronin projects)
+        const caseStudyUX = {
+            "dark-arrival": {
+                flow: ["Exploration", "Clue Discovery", "Open Journal", "Analyze Data", "Deduction", "Outcome"],
+                journey: ["Enter haunted area", "Find environmental clue", "UI prompts interaction", "Open 3D journal", "Piece together evidence"],
+                architecture: ["Game State", "UI Manager", "Journal System", "Clue Components", "Player Input", "Haptic Feedback"],
+                interaction: ["Player presses interact key", "Diegetic journal animates open", "Category tabs update", "New data highlighted"],
+                decisions: ["Diegetic 3D UI", "Reduced screen clutter", "Modular clue system"],
+                impact: ["Improved immersion", "Reduced cognitive load", "Faster player onboarding"]
+            },
+            "suite-13": {
+                flow: ["Observation", "Threat Detection", "HUD Alert", "Evasion", "Safe State", "Resume"],
+                journey: ["Navigate corridors", "System detects anomaly", "Minimal HUD warns player", "Player hides", "HUD clears"],
+                architecture: ["Event Dispatcher", "HUD Controller", "Threat Sensor", "VFX Overlay", "Audio Cues", "State Machine"],
+                interaction: ["Threat level rises", "VFX intensity scales", "Heartbeat audio syncs", "Screen edge vignette"],
+                decisions: ["Minimalist HUD", "Audio-visual reliance", "System-driven alerts"],
+                impact: ["Heightened tension", "Unobstructed view", "Clearer threat communication"]
+            },
+            "customized-angel": {
+                flow: ["Start Loop", "Observe NPC", "Log Behavior", "Timeline Update", "Deduction", "Next Loop"],
+                journey: ["Player enters loop", "Tracks target movements", "Logs anomalies in UI", "Reviews timeline", "Plans next action"],
+                architecture: ["Loop Manager", "Timeline System", "NPC Tracker", "UI Controller", "Data Model", "Save State"],
+                interaction: ["Select NPC", "Choose observation type", "Timeline populates", "Time advances"],
+                decisions: ["Visual timeline", "Icon-based logging", "Clear temporal feedback"],
+                impact: ["Easier tracking of complex loops", "Better deduction process", "Reduced frustration"]
+            }
+        };
+
+        // TALE OF RONIN SPECIFIC UX DATA
+        const roninUX = {
+            flow: ["Main Menu", "Player Selection", "Exploration", "Combat", "Feedback", "Progression"],
+            journey: [
+                { step: "Enter Game", img: "11.png" },
+                { step: "Choose Path", img: "8.png" },
+                { step: "Explore", img: "13.png" },
+                { step: "Interact", img: "4.png" },
+                { step: "Understand System", img: "12.png" },
+                { step: "Progress", img: "10.png" }
+            ],
+            visualImages: [
+                "4bgSc8TcazabxDrdV1zGdA7L.png",
+                "DESIGN STYLE.png",
+                "FONT STYLE.png",
+                "STYLES.png",
+                "Two-Pines-Sumie-Painting.png"
+            ],
+            interactionImages: [
+                { file: "HOVER.png", label: "Hover State" },
+                { file: "CLICKED.png", label: "Click Feedback" },
+                { file: "CURSOR.png", label: "Cursor System" },
+                { file: "PLAY.png", label: "Action Trigger" }
+            ]
+        };
+
+        function renderAngelContent(tab) {
+            const base = "Assets/Customized_Angel_Case_Study/CUSTOMIZED ANGEL/";
+            const fallbackObj = "onerror=\"this.onerror=null; this.src='https://images.unsplash.com/photo-1618331835717-801e976710b2?q=80&w=1000&auto=format&fit=crop';\"";
+            const contentContainer = document.getElementById("cs-content");
+            if (!contentContainer) return;
+            
+            let html = "";
+            
+            if(tab === "Overview") {
+                html = `
+                <div class="space-y-8 animate-fade-in w-full">
+                    <div class="relative w-full aspect-[21/9] rounded-3xl overflow-hidden group shadow-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-900 flex items-center justify-center">
+                        <div class="absolute inset-0 bg-[url('${base}2.png')] bg-cover bg-center opacity-40 blur-md transition-all duration-700 group-hover:opacity-30 group-hover:blur-xl"></div>
+                        <div class="absolute inset-0 bg-black/40"></div>
+                        <img src="${base}TITLE.png" ${fallbackObj} class="w-3/4 max-w-lg h-auto object-contain relative z-10 drop-shadow-[0_0_30px_rgba(255,255,255,0.2)] group-hover:scale-105 transition-transform duration-700 ease-out" alt="Title">
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+                        <div class="rounded-3xl overflow-hidden shadow-sm border border-zinc-200 dark:border-zinc-800 group relative bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center p-6">
+                            <img src="${base}2.png" ${fallbackObj} class="w-full h-auto max-h-[500px] object-contain group-hover:scale-105 transition-transform duration-700 ease-out" alt="Overview Image 1">
+                        </div>
+                        <div class="flex flex-col gap-8">
+                            <div class="bg-zinc-50 dark:bg-zinc-900/50 p-8 md:p-10 rounded-3xl border border-zinc-200 dark:border-zinc-800 shadow-sm flex flex-col justify-center flex-grow">
+                                <h5 class="text-2xl font-bold tracking-tight mb-4">Establishing the Loop</h5>
+                                <p class="opacity-70 leading-relaxed font-light text-base">
+                                    Customized Angel is built around observation and deduction. The UI clearly communicates temporal mechanics, allowing players to track anomalies effortlessly over a loop-based timeline without breaking narrative immersion.
+                                </p>
+                            </div>
+                            <div class="rounded-3xl overflow-hidden shadow-sm border border-zinc-200 dark:border-zinc-800 group relative bg-zinc-100 dark:bg-zinc-900 h-64 flex items-center justify-center p-6">
+                                <img src="${base}3.png" ${fallbackObj} class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 ease-out" alt="Overview Image 2">
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+            } 
+            else if(tab === "System Design") {
+                html = `
+                <div class="space-y-10 animate-fade-in w-full">
+                    <div class="flex flex-wrap justify-center items-center gap-3 md:gap-4 mb-4">
+                        ${["Input", "Timeline", "Event", "Output"].map((step, i) => `
+                            <div class="px-6 py-3 bg-white dark:bg-[#111111] border border-zinc-200 dark:border-zinc-800 rounded-full text-xs md:text-sm font-bold tracking-widest uppercase shadow-sm">${step}</div>
+                            ${i < 3 ? '<div class="text-zinc-400 dark:text-zinc-600 font-bold">→</div>' : ''}
+                        `).join("")}
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="group rounded-3xl overflow-hidden shadow-sm border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center p-6 min-h-[300px]">
+                            <img src="${base}4.png" ${fallbackObj} class="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-700 ease-out" alt="System Flow 1">
+                        </div>
+                        <div class="group rounded-3xl overflow-hidden shadow-sm border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center p-6 min-h-[300px]">
+                            <img src="${base}5.png" ${fallbackObj} class="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-700 ease-out" alt="System Flow 2">
+                        </div>
+                    </div>
+                </div>`;
+            } 
+            else if(tab === "UI Structure") {
+                html = `
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 animate-fade-in w-full">
+                    ${["6.png", "10.png", "11.png"].map(img => `
+                    <div class="group relative rounded-3xl overflow-hidden border border-zinc-200 dark:border-zinc-800 shadow-sm hover:shadow-xl transition-all duration-500 bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center aspect-[4/5] p-6 cursor-none">
+                        <img src="${base}${img}" ${fallbackObj} class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-700 ease-out" alt="UI Structure">
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500 pointer-events-none"></div>
+                    </div>
+                    `).join("")}
+                </div>`;
+            } 
+            else if(tab === "Interaction") {
+                html = `
+                <div class="space-y-8 animate-fade-in w-full">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        ${[{l:"Player Input", c:"bg-zinc-100 dark:bg-zinc-800"}, {l:"UI Responds", c:"bg-zinc-200 dark:bg-zinc-700"}, {l:"System Updates", c:"bg-zinc-300 dark:bg-zinc-600"}, {l:"Feedback Shown", c:"bg-zinc-400 dark:bg-zinc-500"}].map((step, i) => `
+                            <div class="p-5 rounded-2xl ${step.c} flex flex-col items-center justify-center text-center shadow-sm relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
+                                <span class="text-[10px] md:text-xs font-bold tracking-widest uppercase opacity-70 z-10 text-black dark:text-white">${i+1}. ${step.l}</span>
+                            </div>
+                        `).join("")}
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="group rounded-3xl overflow-hidden shadow-sm border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 aspect-video flex items-center justify-center p-6">
+                            <img src="${base}7.png" ${fallbackObj} class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 ease-out" alt="Interaction Step 1">
+                        </div>
+                        <div class="group rounded-3xl overflow-hidden shadow-sm border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 aspect-video flex items-center justify-center p-6">
+                            <img src="${base}8.png" ${fallbackObj} class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 ease-out" alt="Interaction Step 2">
+                        </div>
+                    </div>
+                </div>`;
+            } 
+            else if(tab === "Gameplay Integration") {
+                html = `
+                <div class="space-y-8 animate-fade-in w-full flex flex-col items-center">
+                    <div class="w-full max-w-4xl relative rounded-3xl overflow-hidden shadow-2xl border border-zinc-200 dark:border-zinc-800 bg-[#0a0a0a] group aspect-video flex items-center justify-center">
+                        <img src="${base}PsI78P.gif" ${fallbackObj} class="w-full h-full object-cover pointer-events-none group-hover:scale-[1.02] transition-transform duration-700" alt="Gameplay Integration GIF">
+                        <div class="absolute inset-0 shadow-[inset_0_0_50px_rgba(0,0,0,0.5)] pointer-events-none"></div>
+                    </div>
+                    <div class="w-full max-w-4xl">
+                        <div class="group relative rounded-3xl overflow-hidden border border-zinc-200 dark:border-zinc-800 shadow-sm bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center p-6 aspect-[21/9]">
+                            <img src="${base}9.png" ${fallbackObj} class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 ease-out" alt="Gameplay Integration Details">
+                        </div>
+                    </div>
+                </div>`;
+            }
+            else if(tab === "Final Output") {
+                html = `
+                <div class="space-y-8 animate-fade-in w-full flex flex-col items-center">
+                    <div class="w-full rounded-3xl overflow-hidden shadow-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 group relative flex items-center justify-center p-8 lg:p-12 min-h-[50vh]">
+                        <img src="${base}13.png" ${fallbackObj} class="w-full h-auto max-h-[600px] object-contain group-hover:scale-[1.02] transition-transform duration-700 ease-out" alt="Final Output">
+                    </div>
+                    <div class="w-full max-w-2xl rounded-3xl overflow-hidden shadow-sm border border-zinc-200 dark:border-zinc-800 bg-zinc-900 group relative p-12 flex items-center justify-center aspect-[21/9]">
+                        <img src="${base}TITLE.png" ${fallbackObj} class="w-3/4 h-auto object-contain group-hover:scale-110 transition-transform duration-700 ease-out drop-shadow-xl" alt="Title Showcase">
+                    </div>
+                </div>`;
+            }
+            
+            contentContainer.innerHTML = html;
+        }
+
+        function renderRoninContent(tab) {
+            const base = "Assets/Tale_of_Ronin_UI_UX_Case_Study/TALE OF RONIN/";
+            const fallbackObj = "onerror=\"this.onerror=null; this.src='https://images.unsplash.com/photo-1618331835717-801e976710b2?q=80&w=1000&auto=format&fit=crop';\"";
+            const contentContainer = document.getElementById("cs-content");
+            if (!contentContainer) return;
+            
+            let html = "";
+            
+            if(tab === "Overview") {
+                html = `
+                <div class="space-y-8 animate-fade-in w-full">
+                    <div class="relative w-full aspect-[21/9] rounded-3xl overflow-hidden group shadow-lg border border-zinc-200 dark:border-zinc-800">
+                        <img src="Assets/HERO.png" ${fallbackObj} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" alt="Hero">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8 md:p-12">
+                            <span class="text-xs font-bold tracking-[0.3em] uppercase text-white/60 mb-2">Tale of Ronin</span>
+                            <h4 class="text-3xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-none">A Sumi-e <br><span class="font-serif italic font-normal">Journey</span></h4>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="bg-zinc-50 dark:bg-zinc-900/50 p-8 md:p-10 rounded-3xl border border-zinc-200 dark:border-zinc-800 shadow-sm flex flex-col justify-center">
+                            <h5 class="text-2xl font-bold mb-4 tracking-tight">Core Philosophy</h5>
+                            <p class="opacity-70 leading-relaxed font-light text-base md:text-lg">
+                                Minimal UI for maximum immersion. The interface blends seamlessly into the ink-washed world, utilizing strong hierarchy and theme-driven interactions to guide the player without breaking the fourth wall. Every interaction was designed to mirror the deliberate, precise strokes of a brush.
+                            </p>
+                        </div>
+                        <div class="rounded-3xl overflow-hidden shadow-sm border border-zinc-200 dark:border-zinc-800 group relative">
+                            <img src="${base}TALE OF RONIN VISUAL MOOD BOARD.png" ${fallbackObj} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" alt="Mood Board">
+                            <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        </div>
+                    </div>
+                </div>`;
+            } 
+            else if(tab === "System Flow") {
+                html = `
+                <div class="flex flex-col items-center animate-fade-in w-full">
+                    <div class="w-full relative aspect-video md:aspect-[21/9] mb-10 rounded-3xl overflow-hidden bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm group">
+                        <img id="flow-preview" src="${base}TALE OF RONIN VISUAL MOOD BOARD.png" ${fallbackObj} class="w-full h-full object-cover transition-all duration-500" alt="Preview">
+                        <div class="absolute bottom-6 left-6 bg-black/70 backdrop-blur-md text-white px-5 py-2.5 rounded-full text-xs tracking-widest font-bold uppercase transition-all duration-300" id="flow-label">Hover a step below</div>
+                    </div>
+                    <div class="flex flex-wrap justify-center gap-3 md:gap-5 w-full max-w-4xl">
+                        ${roninUX.flow.map(step => `
+                        <button onmouseenter="document.getElementById('flow-preview').src='${base}TALE OF RONIN VISUAL MOOD BOARD.png'; document.getElementById('flow-label').innerText='${step}'" class="px-6 md:px-8 py-3 md:py-4 rounded-full bg-white dark:bg-[#111111] border border-zinc-200 dark:border-zinc-800 shadow-sm hover:shadow-xl hover:border-black dark:hover:border-white hover:-translate-y-1 transition-all duration-300 font-bold text-xs md:text-sm tracking-wide uppercase group relative overflow-hidden overflow-visible">
+                            <span class="relative z-10">${step}</span>
+                        </button>
+                        `).join("")}
+                    </div>
+                </div>`;
+            } 
+            else if(tab === "Visual Language") {
+                html = `
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in w-full items-start">
+                    ${roninUX.visualImages.map(img => `
+                    <div class="group relative rounded-3xl overflow-hidden border border-zinc-200 dark:border-zinc-800 shadow-sm hover:shadow-2xl transition-all duration-500 bg-white dark:bg-zinc-900 cursor-none p-6 flex items-center justify-center">
+                        <img src="${base}${img}" ${fallbackObj} class="w-full h-auto object-contain max-h-[300px] group-hover:scale-105 transition-transform duration-700 ease-out" alt="${img}">
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors duration-500 flex items-center justify-center backdrop-blur-[1px]">
+                            <span class="text-white opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 font-bold tracking-[0.2em] text-xs uppercase px-4 text-center">${img.replace('.png','').replace(/-/g, ' ')}</span>
+                        </div>
+                    </div>
+                    `).join("")}
+                </div>`;
+            } 
+            else if(tab === "Interaction Design") {
+                html = `
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 animate-fade-in w-full">
+                    ${roninUX.interactionImages.map(item => `
+                    <div class="group relative rounded-[2rem] overflow-hidden aspect-square border border-zinc-200 dark:border-zinc-800 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 bg-zinc-100 dark:bg-zinc-900 cursor-none">
+                        <img src="${base}${item.file}" ${fallbackObj} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out" alt="${item.label}">
+                        <div class="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/90 via-black/40 to-transparent translate-y-4 group-hover:translate-y-0 transition-transform duration-500 flex flex-col justify-end h-1/2">
+                            <div class="text-white font-bold text-sm md:text-lg tracking-wide opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-75 uppercase">${item.label}</div>
+                        </div>
+                        <div class="absolute inset-0 border-[3px] border-white/0 group-hover:border-white/30 rounded-[2rem] scale-95 group-hover:scale-100 transition-all duration-500 pointer-events-none"></div>
+                    </div>
+                    `).join("")}
+                </div>`;
+            } 
+            else if(tab === "Experience") {
+                html = `
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-16 animate-fade-in w-full items-start">
+                    <div class="lg:col-span-5 flex flex-col gap-3 md:gap-4 w-full">
+                        ${roninUX.journey.map((item, index) => `
+                        <div onmouseenter="document.getElementById('exp-preview').src='${base}${item.img}'" class="group flex items-center gap-4 md:gap-6 p-4 md:p-6 rounded-2xl bg-zinc-50 dark:bg-zinc-900/40 hover:bg-white dark:hover:bg-[#111111] border border-transparent hover:border-black/10 dark:hover:border-white/10 transition-all duration-300 cursor-none shadow-sm hover:shadow-lg hover:scale-[1.02]">
+                            <div class="w-10 h-10 md:w-12 md:h-12 flex-shrink-0 rounded-full bg-zinc-200 dark:bg-zinc-800 flex items-center justify-center font-serif italic text-lg md:text-xl font-bold text-zinc-500 dark:text-zinc-400 group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition-colors duration-300">${index + 1}</div>
+                            <div class="text-lg md:text-xl font-bold tracking-tight opacity-50 group-hover:opacity-100 transition-opacity duration-300">${item.step}</div>
+                            <div class="ml-auto opacity-0 group-hover:opacity-100 transform -translate-x-4 group-hover:translate-x-0 transition-all duration-300 text-black dark:text-white">→</div>
+                        </div>
+                        `).join("")}
+                    </div>
+                    <div class="lg:col-span-7 sticky top-6 md:top-12">
+                        <div class="w-full aspect-[4/3] rounded-3xl overflow-hidden border border-zinc-200 dark:border-zinc-800 shadow-2xl bg-zinc-100 dark:bg-zinc-900 relative">
+                            <img id="exp-preview" src="${base}11.png" ${fallbackObj} class="w-full h-full object-cover transition-all duration-500" alt="Experience Preview">
+                            <div class="absolute inset-0 shadow-[inset_0_0_50px_rgba(0,0,0,0.1)] pointer-events-none"></div>
+                        </div>
+                    </div>
+                </div>`;
+            }
+            
+            contentContainer.innerHTML = html;
+        }
+
+        // UX Sections Variables
+        let activeUxTab = 'flow';
+        let currentCaseStudyId = null;
+
+        function renderUXSections(projectId) {
+            const container = document.getElementById('cs-sections');
+            const data = caseStudyUX[projectId];
+            
+            if (!data) {
+                container.innerHTML = '';
+                return;
+            }
+
+            const tabsConfig = [
+                { id: 'flow', label: 'System Flow' },
+                { id: 'journey', label: 'Player Journey' },
+                { id: 'architecture', label: 'Architecture' },
+                { id: 'interaction', label: 'Interaction' },
+                { id: 'decisions', label: 'Decisions' },
+                { id: 'impact', label: 'Impact' }
+            ];
+
+            let tabsHTML = `<div class="flex flex-wrap gap-2 mb-8 justify-center">`;
+            tabsConfig.forEach(tab => {
+                const isActive = activeUxTab === tab.id;
+                const activeClasses = isActive 
+                    ? 'bg-black text-white dark:bg-white dark:text-black' 
+                    : 'border border-black/20 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 text-black dark:text-white';
+                
+                tabsHTML += `
+                    <button onclick="switchTab('${tab.id}')" class="px-4 py-2 text-[10px] md:text-xs font-bold tracking-widest uppercase rounded-full transition-colors ${activeClasses}">
+                        ${tab.label}
+                    </button>
+                `;
+            });
+            tabsHTML += `</div>`;
+
+            let contentHTML = `<div class="p-6 md:p-8 rounded-2xl md:rounded-3xl bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 transition-all duration-300">`;
+            
+            const listData = data[activeUxTab] || [];
+            
+            if (activeUxTab === 'flow') {
+                contentHTML += `<div class="flex flex-wrap gap-2 md:gap-4 items-center justify-center">`;
+                listData.forEach((item, index) => {
+                    contentHTML += `<div class="px-4 py-3 bg-white dark:bg-[#111111] border border-zinc-200 dark:border-zinc-800 rounded-xl text-sm md:text-base font-medium shadow-sm">${item}</div>`;
+                    if (index < listData.length - 1) {
+                        contentHTML += `<div class="text-zinc-400 dark:text-zinc-600 font-bold">→</div>`;
+                    }
+                });
+                contentHTML += `</div>`;
+            } else if (activeUxTab === 'journey') {
+                contentHTML += `<div class="space-y-4 max-w-2xl mx-auto">`;
+                listData.forEach((item, index) => {
+                    contentHTML += `
+                        <div class="flex gap-4 p-4 bg-white dark:bg-[#111111] border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-sm">
+                            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-black text-white dark:bg-white dark:text-black flex items-center justify-center font-bold text-sm">${index + 1}</div>
+                            <div class="flex items-center text-sm md:text-base">${item}</div>
+                        </div>`;
+                });
+                contentHTML += `</div>`;
+            } else if (activeUxTab === 'architecture') {
+                contentHTML += `<div class="grid grid-cols-2 md:grid-cols-3 gap-4">`;
+                listData.forEach(item => {
+                    contentHTML += `<div class="p-4 bg-white dark:bg-[#111111] border border-zinc-200 dark:border-zinc-800 rounded-xl text-center shadow-sm text-sm md:text-base font-medium">${item}</div>`;
+                });
+                contentHTML += `</div>`;
+            } else if (activeUxTab === 'interaction') {
+                contentHTML += `<ol class="list-decimal list-inside space-y-3 max-w-2xl mx-auto text-sm md:text-base leading-relaxed opacity-80">`;
+                listData.forEach(item => {
+                    contentHTML += `<li class="pl-2">${item}</li>`;
+                });
+                contentHTML += `</ol>`;
+            } else { // decisions and impact
+                contentHTML += `<ul class="space-y-3 max-w-2xl mx-auto text-sm md:text-base leading-relaxed opacity-80 list-none">`;
+                listData.forEach(item => {
+                    contentHTML += `<li class="relative pl-5"><span class="absolute left-0 top-0 text-[10px] mt-1.5 opacity-50">✦</span> ${item}</li>`;
+                });
+                contentHTML += `</ul>`;
+            }
+
+            contentHTML += `</div>`;
+            container.innerHTML = tabsHTML + contentHTML;
+        }
+
+        window.switchTab = function(tabId) {
+            activeUxTab = tabId;
+            renderUXSections(currentCaseStudyId);
+        }
 
         // --- Case Study Modal Logic ---
         const csModal = document.getElementById('case-study-modal');
@@ -878,18 +1230,84 @@
             const data = caseStudyData[id];
             if (!data) return;
 
-            let imagesHTML = '';
-            if (data.imageCount > 0 || data.prefix !== '') {
-                const count = data.imageCount || 1; 
-                for (let i = 1; i <= count; i++) {
-                    const numStr = (data.padZero && i < 10) ? '0' + i : i.toString();
-                    const src = `${data.prefix}${numStr}.png`;
-                    imagesHTML += `<img src="${src}" alt="${data.title} Page ${i}" class="cs-image shadow-sm" loading="lazy" onerror="this.style.display='none'">`;
-                }
+            currentCaseStudyId = id;
+            activeUxTab = 'flow';
+
+            const csHeaderContainer = document.getElementById('cs-header');
+            csHeaderContainer.innerHTML = `
+                <div class="pt-[20vh] pb-8 md:pb-12 text-center flex flex-col items-center">
+                    <h2 class="text-[10px] md:text-xs tracking-[0.5em] uppercase opacity-40 mb-4 font-bold">CASE STUDY</h2>
+                    <h3 class="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight max-w-4xl">${data.title}</h3>
+                </div>
+            `;
+
+            if (id === 'tale-of-ronin') {
+                const sectionsContainer = document.getElementById('cs-sections');
+                sectionsContainer.className = "w-full px-6 max-w-6xl mx-auto mb-12 lg:mb-20"; // Make the container a bit wider for Ronin
+                sectionsContainer.innerHTML = `
+                    <div id="cs-tabs" class="flex flex-wrap gap-3 md:gap-4 mb-10 md:mb-16 justify-center"></div>
+                    <div id="cs-content" class="w-full flex justify-center"></div>
+                `;
+                
+                const tabs = ["Overview", "System Flow", "Visual Language", "Interaction Design", "Experience"];
+                const tabsContainer = document.getElementById("cs-tabs");
+                
+                tabs.forEach((tab, index) => {
+                    const btn = document.createElement("button");
+                    btn.textContent = tab;
+                    // Base inactive classes
+                    const inactiveClasses = "px-5 md:px-8 py-2.5 md:py-3.5 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase rounded-full border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-600 dark:text-zinc-400 transition-all duration-300";
+                    // Active classes
+                    const activeClasses = "px-5 md:px-8 py-2.5 md:py-3.5 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase rounded-full border border-transparent bg-black text-white dark:bg-white dark:text-black shadow-lg scale-105 transition-all duration-300";
+                    
+                    btn.className = index === 0 ? activeClasses : inactiveClasses;
+                    
+                    btn.onclick = () => {
+                        document.querySelectorAll("#cs-tabs button").forEach(b => b.className = inactiveClasses);
+                        btn.className = activeClasses;
+                        renderRoninContent(tab);
+                    };
+                    tabsContainer.appendChild(btn);
+                });
+                
+                renderRoninContent("Overview");
+            } else if (id === 'customized-angel') {
+                const sectionsContainer = document.getElementById('cs-sections');
+                sectionsContainer.className = "w-full px-6 max-w-6xl mx-auto mb-12 lg:mb-20";
+                sectionsContainer.innerHTML = `
+                    <div id="cs-tabs" class="flex flex-wrap gap-3 md:gap-4 mb-10 md:mb-16 justify-center"></div>
+                    <div id="cs-content" class="w-full flex justify-center"></div>
+                `;
+                
+                const tabs = ["Overview", "System Design", "UI Structure", "Interaction", "Gameplay Integration", "Final Output"];
+                const tabsContainer = document.getElementById("cs-tabs");
+                
+                tabs.forEach((tab, index) => {
+                    const btn = document.createElement("button");
+                    btn.textContent = tab;
+                    const inactiveClasses = "px-5 md:px-8 py-2.5 md:py-3.5 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase rounded-full border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-600 dark:text-zinc-400 transition-all duration-300";
+                    const activeClasses = "px-5 md:px-8 py-2.5 md:py-3.5 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase rounded-full border border-transparent bg-black text-white dark:bg-white dark:text-black shadow-lg scale-105 transition-all duration-300";
+                    
+                    btn.className = index === 0 ? activeClasses : inactiveClasses;
+                    
+                    btn.onclick = () => {
+                        document.querySelectorAll("#cs-tabs button").forEach(b => b.className = inactiveClasses);
+                        btn.className = activeClasses;
+                        renderAngelContent(tab);
+                    };
+                    tabsContainer.appendChild(btn);
+                });
+                
+                renderAngelContent("Overview");
             } else {
-                imagesHTML = `<div class="py-20 md:py-40 text-center opacity-50 font-serif italic text-lg md:text-2xl px-6">Case study images for ${data.title} are being prepared.</div>`;
+                // Restore standard width for other case studies
+                const sectionsContainer = document.getElementById('cs-sections');
+                sectionsContainer.className = "w-full px-6 max-w-5xl mx-auto mb-12 lg:mb-16";
+                renderUXSections(id);
             }
-            csImagesContainer.innerHTML = imagesHTML;
+
+            // Removing image generation as requested
+            csImagesContainer.innerHTML = '';
 
             let buttonsHTML = '';
             if (data.playLink) {
@@ -922,6 +1340,7 @@
             setTimeout(() => {
                 csImagesContainer.innerHTML = '';
                 csActionsContainer.innerHTML = '';
+                document.getElementById('cs-sections').innerHTML = '';
             }, 400);
         }
 

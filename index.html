@@ -37,10 +37,55 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             transition: background-color 0.5s ease, color 0.5s ease;
+            cursor: none; /* Hide default cursor on body */
         }
         
+        * {
+            cursor: none !important; /* Force hide default cursor everywhere */
+        }
+
         body.modal-open {
             overflow: hidden;
+        }
+
+        /* Custom Creative Cursor */
+        #custom-cursor-dot {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 8px;
+            background-color: var(--text-color);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease, background-color 0.5s ease;
+        }
+
+        #custom-cursor-ring {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 32px;
+            height: 32px;
+            border: 1px solid var(--text-color);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9998;
+            transition: width 0.2s ease, height 0.2s ease, background-color 0.2s ease, border-color 0.5s ease;
+        }
+
+        /* Hover state for links and buttons */
+        body.cursor-hover #custom-cursor-ring {
+            width: 48px;
+            height: 48px;
+            background-color: rgba(128, 128, 128, 0.2);
+            border-color: transparent;
+        }
+        body.cursor-hover #custom-cursor-dot {
+            transform: translate(-50%, -50%) scale(0.5);
         }
 
         canvas#mouse-canvas {
@@ -98,13 +143,10 @@
         
         /* Ensure text is readable on the pill */
         .nav-item {
-            transition: color 0.3s ease;
+            transition: color 0.3s ease, opacity 0.3s ease;
         }
         .nav-item.active-pill {
-            color: white;
-        }
-        .dark .nav-item.active-pill {
-            color: black;
+            opacity: 1;
         }
 
         /* Hover Effects */
@@ -158,9 +200,28 @@
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
             z-index: 40;
         }
+
+        /* Nav Scrolling Effect */
+        nav.scrolled {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding-top: 1rem !important;
+            padding-bottom: 1rem !important;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        .dark nav.scrolled {
+            background-color: rgba(17, 17, 17, 0.85);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+        }
     </style>
 </head>
 <body class="selection:bg-gray-500/30 relative">
+
+    <div id="custom-cursor-dot"></div>
+    <div id="custom-cursor-ring"></div>
 
     <canvas id="mouse-canvas"></canvas>
 
@@ -187,13 +248,13 @@
     </div>
 
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 w-full z-[100] px-6 py-8">
+    <nav id="main-nav" class="fixed top-0 left-0 w-full z-[100] px-6 py-8 transition-all duration-300">
         <div class="max-w-[1800px] mx-auto flex items-center justify-between">
             
             <!-- Sliding Pill Navigation container -->
             <div id="nav-wrapper" class="relative flex items-center hidden md:flex">
-                <!-- The actual pill background -->
-                <div id="nav-pill" class="absolute h-[38px] bg-black dark:bg-white rounded-lg opacity-0 pointer-events-none z-0"></div>
+                <!-- The actual pill background - Updated to Frosted Glass -->
+                <div id="nav-pill" class="absolute h-[38px] backdrop-blur-md bg-black/5 dark:bg-white/10 border border-black/10 dark:border-white/20 shadow-sm rounded-lg opacity-0 pointer-events-none z-0"></div>
                 
                 <div class="flex space-x-1 lg:space-x-2 relative z-10">
                     <a href="#home" class="nav-item px-3 py-2 text-[9px] lg:text-[10px] tracking-[0.2em] uppercase font-bold">HOME</a>
@@ -259,7 +320,7 @@
                 </div>
                 <div class="lg:col-span-8 reveal">
                     <p class="text-3xl md:text-5xl font-serif italic leading-tight mb-12">
-                        I don’t just design screens ✺ — I design and implement complete UI systems that connect gameplay ♜, narrative ✎, and player interaction.
+                        I don’t just design screens ✺ I design and implement complete UI systems that connect gameplay ♜, narrative ✎, and player interaction.
                     </p>
                     <div class="grid md:grid-cols-2 gap-12 text-zinc-600 dark:text-zinc-400 leading-loose">
                         <p>
@@ -325,22 +386,8 @@
                         <p class="text-xs tracking-[0.2em] uppercase opacity-50">Timeline UI / Interaction Systems / Unity</p>
                     </div>
 
-                    <!-- Project 4 - Green Hover -->
-                    <div class="reveal project-card group cursor-pointer p-6 rounded-[2.5rem] hover:bg-[#DCFCE7] dark:hover:bg-emerald-950/40" style="transition-delay: 0.2s;" onclick="openCaseStudy('nekurati')">
-                        <div class="relative aspect-[4/3] overflow-hidden bg-zinc-100 dark:bg-zinc-900 mb-8 rounded-2xl group-hover:rounded-[2rem] transition-all duration-700 ease-in-out">
-                            <div class="absolute inset-0 flex items-center justify-center opacity-20 text-4xl font-bold uppercase tracking-tighter z-0">Nekurati</div>
-                            <img src="Assets/12.png" alt="Nekurati" class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100 relative z-10">
-                            <!-- Hover Pill -->
-                            <div class="absolute inset-0 bg-black/20 dark:bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 flex items-center justify-center backdrop-blur-[2px]">
-                                <span class="bg-white text-black px-6 py-3 rounded-full text-xs font-bold tracking-widest uppercase transform translate-y-8 group-hover:translate-y-0 transition-all duration-500 shadow-xl">View Case Study ↗</span>
-                            </div>
-                        </div>
-                        <h4 class="text-2xl font-bold mb-2">Nekurati</h4>
-                        <p class="text-xs tracking-[0.2em] uppercase opacity-50">UI/UX Design / Fantasy RPG</p>
-                    </div>
-
-                    <!-- Project 5 - Purple Hover -->
-                    <div class="reveal project-card group cursor-pointer p-6 rounded-[2.5rem] hover:bg-[#F3E8FF] dark:hover:bg-indigo-950/40" onclick="openCaseStudy('tale-of-ronin')">
+                    <!-- Project 4 - Purple Hover (Previously Project 5) -->
+                    <div class="reveal project-card group cursor-pointer p-6 rounded-[2.5rem] hover:bg-[#F3E8FF] dark:hover:bg-indigo-950/40" style="transition-delay: 0.2s;" onclick="openCaseStudy('tale-of-ronin')">
                         <div class="relative aspect-[4/3] overflow-hidden bg-zinc-100 dark:bg-zinc-900 mb-8 rounded-2xl group-hover:rounded-[2rem] transition-all duration-700 ease-in-out">
                             <div class="absolute inset-0 flex items-center justify-center opacity-20 text-4xl font-bold uppercase tracking-tighter z-0">Tale of Ronin</div>
                             <img src="Assets/HERO.png" alt="Tale of Ronin" class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100 relative z-10">
@@ -351,20 +398,6 @@
                         </div>
                         <h4 class="text-2xl font-bold mb-2">Tale of Ronin</h4>
                         <p class="text-xs tracking-[0.2em] uppercase opacity-50">UI/UX Design / Core Systems</p>
-                    </div>
-
-                    <!-- Project 6 - Rose Hover -->
-                    <div class="reveal project-card group cursor-pointer p-6 rounded-[2.5rem] hover:bg-[#FCE7F3] dark:hover:bg-rose-950/40" style="transition-delay: 0.2s;" onclick="openCaseStudy('tollywood-tycoon')">
-                        <div class="relative aspect-[4/3] overflow-hidden bg-zinc-100 dark:bg-zinc-900 mb-8 rounded-2xl group-hover:rounded-[2rem] transition-all duration-700 ease-in-out">
-                            <div class="absolute inset-0 flex items-center justify-center opacity-20 text-4xl font-bold uppercase tracking-tighter z-0">Tollywood Tycoon</div>
-                            <img src="Assets/TITLE.png" alt="Tollywood Tycoon" class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100 relative z-10">
-                            <!-- Hover Pill -->
-                            <div class="absolute inset-0 bg-black/20 dark:bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 flex items-center justify-center backdrop-blur-[2px]">
-                                <span class="bg-white text-black px-6 py-3 rounded-full text-xs font-bold tracking-widest uppercase transform translate-y-8 group-hover:translate-y-0 transition-all duration-500 shadow-xl">View Case Study ↗</span>
-                            </div>
-                        </div>
-                        <h4 class="text-2xl font-bold mb-2">Tollywood Tycoon</h4>
-                        <p class="text-xs tracking-[0.2em] uppercase opacity-50">Data-Driven UI / Complex Systems</p>
                     </div>
                 </div>
             </div>
@@ -380,7 +413,7 @@
                     </div>
                     <div class="lg:col-span-8">
                         <p class="text-2xl md:text-3xl font-light leading-relaxed mb-6">
-                            It’s not just about making UI functional — it’s about making systems meaningful. I bridge the gap between creative vision and scalable technical execution by designing UI that actively supports gameplay, narrative, and player decision-making. ❀
+                            It’s not just about making UI functional it’s about making systems meaningful. I bridge the gap between creative vision and scalable technical execution by designing UI that actively supports gameplay, narrative, and player decision-making. ❀
                         </p>
                         <p class="text-xl md:text-2xl font-light leading-relaxed opacity-70">
                             My approach focuses on building systems that are clear under pressure, immersive within the game world, and efficient for teams to develop and iterate on.
@@ -637,7 +670,7 @@
                             <span class="relative z-10 group-hover:translate-x-1 transition-transform">→</span>
                         </button>
                         <!-- Steam Button Updated to Direct Game Link -->
-                        <a href="https://store.steampowered.com/app/3295930/THE_DARK_ARRIVAL__SHADOW_OF_THE_PAST/" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center justify-center space-x-2 bg-black text-white dark:bg-white dark:text-black rounded-full px-8 py-4 text-sm tracking-[0.2em] uppercase font-bold hover:scale-105 transition-all duration-300 shadow-lg">
+                        <a href="https://store.steampowered.com/app/3295930/THE_DARK_ARRIVAL__SHADOWS_OF_THE_PAST/" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center justify-center space-x-2 bg-black text-white dark:bg-white dark:text-black rounded-full px-8 py-4 text-sm tracking-[0.2em] uppercase font-bold hover:scale-105 transition-all duration-300 shadow-lg">
                             <span class="relative z-10">Steam</span>
                             <span class="relative z-10 group-hover:translate-x-1 transition-transform">↗</span>
                         </a>
@@ -759,27 +792,12 @@
                 pdf: 'Assets/Customized_Angel_Case_Study.pdf',
                 playLink: 'https://jim-jam-play.itch.io/customizedangel'
             },
-            'nekurati': {
-                title: 'Nekurati',
-                imageCount: 10,
-                prefix: 'Assets/Nekurati_CaseStudy_Jaikar/Nekurati_CaseStudy_Jaikar-',
-                padZero: true,
-                pdf: 'Assets/Nekurati_CaseStudy_Jaikar.pdf'
-            },
             'tale-of-ronin': {
                 title: 'Tale of Ronin',
                 imageCount: 12,
                 prefix: 'Assets/Tale_of_Ronin_UI_UX_Case_Study/Tale_of_Ronin_UI_UX_Case_Study-',
                 padZero: true,
                 pdf: 'Assets/Tale_of_Ronin_UI_UX_Case_Study.pdf'
-            },
-            'tollywood-tycoon': {
-                title: 'Tollywood Tycoon',
-                imageCount: 8,
-                prefix: 'Assets/Tollywood_Tycoon_Design_Case_Study/Tollywood_Tycoon_Design_Case_Study-',
-                padZero: false,
-                pdf: 'Assets/Tollywood_Tycoon_Design_Case_Study.pdf',
-                playLink: 'https://jim-jam-play.itch.io/tollywood-tycoon-by-jaikar'
             },
             'dark-arrival': {
                 title: 'The Dark Arrival',
@@ -881,10 +899,22 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
+        const cursorDot = document.getElementById('custom-cursor-dot');
+        const cursorRing = document.getElementById('custom-cursor-ring');
+
         let lastMouse = { x: -100, y: -100 };
         window.addEventListener('mousemove', (e) => {
             const currentMouse = { x: e.clientX, y: e.clientY };
             
+            // Update custom cursor
+            cursorDot.style.left = `${e.clientX}px`;
+            cursorDot.style.top = `${e.clientY}px`;
+            
+            cursorRing.animate({
+                left: `${e.clientX}px`,
+                top: `${e.clientY}px`
+            }, { duration: 150, fill: "forwards" });
+
             const dist = Math.hypot(currentMouse.x - lastMouse.x, currentMouse.y - lastMouse.y);
             const steps = Math.ceil(dist / 4); 
             
@@ -948,6 +978,27 @@
         }
         window.addEventListener("scroll", reveal);
         window.addEventListener("load", reveal);
+
+        // Setup custom cursor hover states
+        const setupCursorHovers = () => {
+            const interactables = document.querySelectorAll('a, button, .cursor-pointer, .nav-item, .project-card, .exp-card');
+            interactables.forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+            });
+        };
+        setupCursorHovers();
+        setTimeout(setupCursorHovers, 1000); // Re-run to catch dynamically loaded elements
+
+        // --- Navbar Scroll Logic ---
+        const mainNav = document.getElementById('main-nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                mainNav.classList.add('scrolled');
+            } else {
+                mainNav.classList.remove('scrolled');
+            }
+        });
 
         // --- Pill Navigation Logic ---
         const navPill = document.getElementById('nav-pill');

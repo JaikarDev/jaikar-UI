@@ -7,8 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -17,7 +17,7 @@
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                         heading: ['Space Grotesk', 'sans-serif'],
-                        serif: ['Instrument Serif', 'serif'],
+                        serif: ['Playfair Display', 'serif'],
                     },
                 }
             }
@@ -327,26 +327,29 @@
         <section id="home" class="relative min-h-screen flex items-center px-5 md:px-6 pt-28 md:pt-20">
             <!-- Background Image Overlay -->
             <div class="absolute inset-0 z-0 opacity-20 pointer-events-none select-none">
-                <img src="Assets/Background.png" onerror="this.onerror=null; this.src='Assets/Background.jpg';" alt="Background" class="w-full h-full object-cover object-center">
+                <img src="Assets/Background.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070&auto=format&fit=crop';" alt="Background" class="w-full h-full object-cover object-center">
             </div>
 
             <div class="max-w-[1800px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 lg:gap-24 items-end relative z-10">
                 
                 <!-- Left: Name -->
                 <div class="lg:col-span-7 reveal">
-                    <h1 class="name-title text-[4rem] leading-[0.85] md:text-[clamp(4rem,15vw,12rem)] font-bold uppercase tracking-tighter break-words">
-                        JAIKAR<br><span class="font-serif italic lowercase font-normal tracking-normal text-[4.5rem] md:text-[clamp(4.5rem,16vw,13rem)]">Pothula</span> <span class="text-4xl md:text-6xl align-top inline-block animate-[spin_10s_linear_infinite]">✹</span>
+                    <h1 class="flex flex-col items-start text-left break-words">
+                        <span class="font-sans font-[700] uppercase text-[#111111] dark:text-[#F2F2F2] tracking-[0.02em] text-[4.5rem] md:text-[clamp(5rem,12vw,10rem)] leading-[0.85]">JAIKAR</span>
+                        <span class="font-serif italic lowercase font-[400] text-[#666666] dark:text-[#B8B8B8] text-[5rem] md:text-[clamp(5.5rem,13vw,11rem)] leading-[0.85] mt-[12px]">pothula</span>
                     </h1>
-                    <p class="mt-6 md:mt-8 text-[10px] md:text-sm tracking-[0.2em] md:tracking-[0.4em] uppercase opacity-60 font-medium">Technical UI Designer ✐ / Game UI</p>
+                    <p class="mt-8 md:mt-10 text-[10px] md:text-sm tracking-[0.2em] md:tracking-[0.4em] uppercase opacity-60 font-medium">Game UI Artist | Systems & Gameplay</p>
                 </div>
 
                 <!-- Right: About Snippet -->
                 <div class="lg:col-span-5 reveal pb-10 lg:pb-0" style="transition-delay: 0.2s;">
                     <div class="max-w-md ml-0 lg:ml-auto">
                         <h2 class="text-xs tracking-[0.5em] uppercase opacity-40 mb-8 md:mb-12 font-bold">ABOUT ME</h2>
-                        <p class="text-base md:text-lg lg:text-xl leading-relaxed opacity-80 mb-8 md:mb-12">
-                            I am a <span class="font-bold text-black dark:text-white">Technical UI Designer</span> ✦ focused on building real, in-engine UI systems ⚙ for games using <span class="font-bold text-black dark:text-white">Unreal Engine 5</span> and <span class="font-bold text-black dark:text-white">Unity</span> ✜. Basically, I make systems work beautifully ☜.
-                        </p>
+                        <div class="text-base md:text-lg leading-relaxed opacity-80 mb-8 md:mb-12 space-y-5">
+                            <p>I am a <span class="font-bold text-black dark:text-white">Game UI Artist</span> focused on crafting clear, responsive, and visually polished interfaces for gameplay-driven experiences.</p>
+                            <p>I design HUDs, menus, and in-game UI systems that support fast decision making and maintain clarity under pressure.</p>
+                            <p>Experienced in <span class="font-bold text-black dark:text-white">Unreal Engine 5</span> and <span class="font-bold text-black dark:text-white">Unity</span>, I build UI directly in engine and collaborate across disciplines to deliver production-ready results.</p>
+                        </div>
                         <div class="space-y-2">
                             <p class="text-[10px] md:text-xs tracking-widest opacity-40 uppercase">SAY HELLO! SAY こんにちは! SAY HOLA! SAY నమస్కారం!</p>
                             <a href="mailto:Jaikardevgame@gmail.com" class="text-base md:text-lg font-medium hover:opacity-50 transition-opacity underline decoration-2 underline-offset-4 break-all">Jaikardevgame@gmail.com</a>
@@ -365,15 +368,25 @@
                 </div>
                 <div class="lg:col-span-8 reveal">
                     <p class="text-2xl md:text-3xl lg:text-5xl font-serif italic leading-tight mb-8 md:mb-12">
-                        I don’t just design screens ✺ I design and implement complete UI systems that connect gameplay ♜, narrative ✎, and player interaction.
+                        I design and implement UI systems that connect gameplay, narrative, and player interaction.
                     </p>
                     <div class="grid md:grid-cols-2 gap-8 md:gap-12 text-zinc-600 dark:text-zinc-400 leading-loose text-sm md:text-base">
-                        <p>
-                            My work focuses on building modular, scalable UI frameworks inside Unreal Engine 5 and Unity that are production-ready and easy for teams to iterate on. I prioritize clarity, readability, and performance, ensuring UI supports gameplay without breaking immersion. I enjoy working on system-driven experiences where UI plays a critical role in guiding the player especially in horror and narrative-heavy games.
-                        </p>
-                        <p>
-                            Recently, I worked on <span class="text-black dark:text-white font-medium">The Dark Arrival: Shadows of the Past</span> and <span class="text-black dark:text-white font-medium">Suite 13</span> as a Technical UI Designer. On <span class="italic">The Dark Arrival</span>, I developed a 3D Investigator’s Journal system and implemented core gameplay UI directly inside Unreal Engine using UMG and Blueprint. Across both projects, I focused on structuring UI systems, building reusable frameworks, and aligning interface design with gameplay logic and player experience.
-                        </p>
+                        <div class="space-y-4">
+                            <p>
+                                My work focuses on building modular, scalable UI frameworks in <span class="font-medium text-black dark:text-white">Unreal Engine 5</span> and <span class="font-medium text-black dark:text-white">Unity</span> that are production-ready and easy to iterate on.
+                            </p>
+                            <p>
+                                I prioritize clarity, readability, and performance—ensuring UI supports gameplay without breaking immersion. I focus on systems where UI plays a critical role in guiding the player experience.
+                            </p>
+                        </div>
+                        <div class="space-y-4">
+                            <p>
+                                Recently, I worked on <span class="font-medium text-black dark:text-white">The Dark Arrival: Shadows of the Past</span> and <span class="font-medium text-black dark:text-white">Suite 13</span>, designing and implementing gameplay-driven UI systems.
+                            </p>
+                            <p>
+                                I developed a 3D Investigator Journal and core interface systems in Unreal Engine using UMG and Blueprint, focusing on structure, reusability, and alignment with gameplay logic and player experience.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -384,7 +397,7 @@
             <div class="max-w-[1800px] mx-auto">
                 <div class="reveal mb-16 md:mb-24">
                     <h2 class="text-xs tracking-[0.5em] uppercase opacity-40 mb-4 font-bold">LATEST PROJECTS</h2>
-                    <h3 class="text-4xl md:text-6xl font-bold tracking-tight">Design That Speaks <span class="font-serif italic font-normal">✹</span></h3>
+                    <h3 class="text-4xl md:text-6xl font-bold tracking-tight">Interfaces That Drive Gameplay</h3>
                 </div>
 
                 <div class="grid md:grid-cols-2 gap-8 md:gap-x-12 md:gap-y-20">
@@ -392,7 +405,7 @@
                     <div class="reveal project-card group cursor-pointer p-5 md:p-6 rounded-3xl md:rounded-[2.5rem] hover:bg-[#FEF9C3] dark:hover:bg-amber-950/40" onclick="openCaseStudy('dark-arrival')">
                         <div class="relative aspect-[4/3] overflow-hidden bg-zinc-100 dark:bg-zinc-900 mb-6 md:mb-8 rounded-xl md:rounded-2xl group-hover:rounded-2xl md:group-hover:rounded-[2rem] transition-all duration-700 ease-in-out">
                             <div class="absolute inset-0 flex items-center justify-center opacity-20 text-2xl md:text-4xl font-bold uppercase tracking-tighter z-0 text-center">The Dark Arrival</div>
-                            <img src="Assets/dark arrival steam image  EPIC 24.png" onerror="this.onerror=null; this.src='Assets/dark arrival steam image  EPIC 24.jpg';" alt="The Dark Arrival" class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100 relative z-10">
+                            <img src="Assets/dark arrival steam image  EPIC 24.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop';" alt="The Dark Arrival" class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100 relative z-10">
                             <!-- Hover Pill -->
                             <div class="absolute inset-0 bg-black/20 dark:bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 flex items-center justify-center backdrop-blur-[2px]">
                                 <span class="bg-white text-black px-4 md:px-6 py-2 md:py-3 rounded-full text-[10px] md:text-xs font-bold tracking-widest uppercase transform translate-y-4 md:translate-y-8 group-hover:translate-y-0 transition-all duration-500 shadow-xl">View Case Study ↗</span>
@@ -406,7 +419,7 @@
                     <div class="reveal project-card group cursor-pointer p-5 md:p-6 rounded-3xl md:rounded-[2.5rem] hover:bg-[#E0F2FE] dark:hover:bg-sky-950/40" style="transition-delay: 0.1s;" onclick="openCaseStudy('suite-13')">
                         <div class="relative aspect-[4/3] overflow-hidden bg-zinc-100 dark:bg-zinc-900 mb-6 md:mb-8 rounded-xl md:rounded-2xl group-hover:rounded-2xl md:group-hover:rounded-[2rem] transition-all duration-700 ease-in-out">
                             <div class="absolute inset-0 flex items-center justify-center opacity-20 text-2xl md:text-4xl font-bold uppercase tracking-tighter z-0 text-center">Suite 13</div>
-                            <img src="Assets/Main Menu Reference 2.png" onerror="this.onerror=null; this.src='Assets/Main Menu Reference 2.jpg';" alt="Suite 13" class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100 relative z-10">
+                            <img src="Assets/Main Menu Reference 2.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=2070&auto=format&fit=crop';" alt="Suite 13" class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100 relative z-10">
                             <!-- Hover Pill -->
                             <div class="absolute inset-0 bg-black/20 dark:bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 flex items-center justify-center backdrop-blur-[2px]">
                                 <span class="bg-white text-black px-4 md:px-6 py-2 md:py-3 rounded-full text-[10px] md:text-xs font-bold tracking-widest uppercase transform translate-y-4 md:translate-y-8 group-hover:translate-y-0 transition-all duration-500 shadow-xl">View Case Study ↗</span>
@@ -420,7 +433,7 @@
                     <div class="reveal project-card group cursor-pointer p-5 md:p-6 rounded-3xl md:rounded-[2.5rem] hover:bg-[#FFEDD5] dark:hover:bg-orange-950/40" onclick="openCaseStudy('customized-angel')">
                         <div class="relative aspect-[4/3] overflow-hidden bg-zinc-100 dark:bg-zinc-900 mb-6 md:mb-8 rounded-xl md:rounded-2xl group-hover:rounded-2xl md:group-hover:rounded-[2rem] transition-all duration-700 ease-in-out">
                             <div class="absolute inset-0 flex items-center justify-center opacity-20 text-2xl md:text-4xl font-bold uppercase tracking-tighter z-0 text-center">Customized Angel</div>
-                            <img src="Assets/jaikar-pothula-title.png" alt="Customized Angel" class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100 relative z-10">
+                            <img src="Assets/jaikar-pothula-title.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=2071&auto=format&fit=crop';" alt="Customized Angel" class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100 relative z-10">
                             <!-- Hover Pill -->
                             <div class="absolute inset-0 bg-black/20 dark:bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 flex items-center justify-center backdrop-blur-[2px]">
                                 <span class="bg-white text-black px-4 md:px-6 py-2 md:py-3 rounded-full text-[10px] md:text-xs font-bold tracking-widest uppercase transform translate-y-4 md:translate-y-8 group-hover:translate-y-0 transition-all duration-500 shadow-xl">View Case Study ↗</span>
@@ -434,7 +447,7 @@
                     <div class="reveal project-card group cursor-pointer p-5 md:p-6 rounded-3xl md:rounded-[2.5rem] hover:bg-[#F3E8FF] dark:hover:bg-indigo-950/40" style="transition-delay: 0.1s;" onclick="openCaseStudy('tale-of-ronin')">
                         <div class="relative aspect-[4/3] overflow-hidden bg-zinc-100 dark:bg-zinc-900 mb-6 md:mb-8 rounded-xl md:rounded-2xl group-hover:rounded-2xl md:group-hover:rounded-[2rem] transition-all duration-700 ease-in-out">
                             <div class="absolute inset-0 flex items-center justify-center opacity-20 text-2xl md:text-4xl font-bold uppercase tracking-tighter z-0 text-center">Tale of Ronin</div>
-                            <img src="Assets/HERO.png" alt="Tale of Ronin" class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100 relative z-10">
+                            <img src="Assets/HERO.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1509114397022-ed747cca3f65?q=80&w=2070&auto=format&fit=crop';" alt="Tale of Ronin" class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100 relative z-10">
                             <!-- Hover Pill -->
                             <div class="absolute inset-0 bg-black/20 dark:bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 flex items-center justify-center backdrop-blur-[2px]">
                                 <span class="bg-white text-black px-4 md:px-6 py-2 md:py-3 rounded-full text-[10px] md:text-xs font-bold tracking-widest uppercase transform translate-y-4 md:translate-y-8 group-hover:translate-y-0 transition-all duration-500 shadow-xl">View Case Study ↗</span>
@@ -457,10 +470,10 @@
                     </div>
                     <div class="lg:col-span-8">
                         <p class="text-xl md:text-2xl lg:text-3xl font-light leading-relaxed mb-6">
-                            It’s not just about making UI functional it’s about making systems meaningful. I bridge the gap between creative vision and scalable technical execution by designing UI that actively supports gameplay, narrative, and player decision-making. ❀
+                            I design UI systems that connect creative vision with scalable technical execution supporting gameplay, narrative, and player decision making.
                         </p>
                         <p class="text-base md:text-xl lg:text-2xl font-light leading-relaxed opacity-70">
-                            My approach focuses on building systems that are clear under pressure, immersive within the game world, and efficient for teams to develop and iterate on.
+                            My approach focuses on clarity under pressure, immersion within the game world, and systems that are efficient to build, iterate, and scale.
                         </p>
                     </div>
                 </div>
@@ -469,11 +482,11 @@
                     <div class="reveal p-6 md:p-8 lg:p-12 border-b border-zinc-200 dark:border-zinc-800 md:border-r hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors">
                         <span class="text-3xl md:text-4xl font-serif italic opacity-30 block mb-6 md:mb-8">— 1 —</span>
                         <h4 class="text-xl md:text-2xl font-bold mb-2 tracking-wide uppercase">System Design</h4>
-                        <p class="font-serif italic text-lg md:text-xl opacity-70 mb-4 md:mb-6">Mapping gameplay systems into structured UI logic that supports player understanding and interaction.</p>
+                        <p class="font-serif italic text-lg md:text-xl opacity-70 mb-4 md:mb-6">Translating gameplay systems into clear, structured UI that supports player understanding and interaction.</p>
                         <ul class="opacity-70 leading-relaxed font-light space-y-3 md:space-y-4 list-none text-[13px] md:text-sm">
-                            <li class="relative pl-4 md:pl-5"><span class="absolute left-0 top-0 text-[8px] md:text-[10px] mt-1 opacity-50">✦</span> Designed loop-based UI systems for Customized Angel, translating complex mechanics</li>
-                            <li class="relative pl-4 md:pl-5"><span class="absolute left-0 top-0 text-[8px] md:text-[10px] mt-1 opacity-50">✦</span> Structured investigation systems using timelines, evidence boards, and diegetic interaction</li>
-                            <li class="relative pl-4 md:pl-5"><span class="absolute left-0 top-0 text-[8px] md:text-[10px] mt-1 opacity-50">✦</span> Focus on information hierarchy and system readability</li>
+                            <li class="relative pl-4 md:pl-5"><span class="absolute left-0 top-0 text-[8px] md:text-[10px] mt-1 opacity-50">✦</span> Designed UI systems that translate complex mechanics into readable player interactions</li>
+                            <li class="relative pl-4 md:pl-5"><span class="absolute left-0 top-0 text-[8px] md:text-[10px] mt-1 opacity-50">✦</span> Structured investigation systems using timelines, evidence boards, and diegetic design</li>
+                            <li class="relative pl-4 md:pl-5"><span class="absolute left-0 top-0 text-[8px] md:text-[10px] mt-1 opacity-50">✦</span> Focused on information hierarchy and clarity in high-pressure gameplay</li>
                         </ul>
                     </div>
                     <div class="reveal p-6 md:p-8 lg:p-12 border-b border-zinc-200 dark:border-zinc-800 md:border-r hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors" style="transition-delay: 0.1s;">
@@ -482,18 +495,18 @@
                         <p class="font-serif italic text-lg md:text-xl opacity-70 mb-4 md:mb-6">Building modular, scalable UI frameworks that are production-ready and adaptable.</p>
                         <ul class="opacity-70 leading-relaxed font-light space-y-3 md:space-y-4 list-none text-[13px] md:text-sm">
                             <li class="relative pl-4 md:pl-5"><span class="absolute left-0 top-0 text-[8px] md:text-[10px] mt-1 opacity-50">✦</span> Developed modular UI systems in Unreal Engine 5 using UMG and Blueprint</li>
-                            <li class="relative pl-4 md:pl-5"><span class="absolute left-0 top-0 text-[8px] md:text-[10px] mt-1 opacity-50">✦</span> Created reusable UI components, state-driven logic, and scalable menus</li>
-                            <li class="relative pl-4 md:pl-5"><span class="absolute left-0 top-0 text-[8px] md:text-[10px] mt-1 opacity-50">✦</span> Focus on iteration speed, maintainability, and cross-team collaboration</li>
+                            <li class="relative pl-4 md:pl-5"><span class="absolute left-0 top-0 text-[8px] md:text-[10px] mt-1 opacity-50">✦</span> Created reusable components, state-driven logic, and scalable menu systems</li>
+                            <li class="relative pl-4 md:pl-5"><span class="absolute left-0 top-0 text-[8px] md:text-[10px] mt-1 opacity-50">✦</span> Focused on iteration speed, maintainability, and cross-team collaboration</li>
                         </ul>
                     </div>
                     <div class="reveal p-6 md:p-8 lg:p-12 border-b md:border-b-0 border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors" style="transition-delay: 0.2s;">
                         <span class="text-3xl md:text-4xl font-serif italic opacity-30 block mb-6 md:mb-8">— 3 —</span>
                         <h4 class="text-xl md:text-2xl font-bold mb-2 tracking-wide uppercase">Implementation</h4>
-                        <p class="font-serif italic text-lg md:text-xl opacity-70 mb-4 md:mb-6">Bringing UI systems to life directly inside the engine with real gameplay integration.</p>
+                        <p class="font-serif italic text-lg md:text-xl opacity-70 mb-4 md:mb-6">Bringing UI systems to life directly in-engine with real gameplay integration.</p>
                         <ul class="opacity-70 leading-relaxed font-light space-y-3 md:space-y-4 list-none text-[13px] md:text-sm">
-                            <li class="relative pl-4 md:pl-5"><span class="absolute left-0 top-0 text-[8px] md:text-[10px] mt-1 opacity-50">✦</span> Implemented gameplay UI systems directly in Unreal Engine 5 and Unity</li>
-                            <li class="relative pl-4 md:pl-5"><span class="absolute left-0 top-0 text-[8px] md:text-[10px] mt-1 opacity-50">✦</span> Built a 3D Investigator’s Journal system integrating narrative and objectives</li>
-                            <li class="relative pl-4 md:pl-5"><span class="absolute left-0 top-0 text-[8px] md:text-[10px] mt-1 opacity-50">✦</span> Focus on performance, responsiveness, and seamless gameplay integration</li>
+                            <li class="relative pl-4 md:pl-5"><span class="absolute left-0 top-0 text-[8px] md:text-[10px] mt-1 opacity-50">✦</span> Implemented gameplay UI systems in Unreal Engine 5 and Unity</li>
+                            <li class="relative pl-4 md:pl-5"><span class="absolute left-0 top-0 text-[8px] md:text-[10px] mt-1 opacity-50">✦</span> Built a 3D Investigator Journal integrating narrative and gameplay objectives</li>
+                            <li class="relative pl-4 md:pl-5"><span class="absolute left-0 top-0 text-[8px] md:text-[10px] mt-1 opacity-50">✦</span> Focused on performance, responsiveness, and seamless gameplay integration</li>
                         </ul>
                     </div>
                 </div>
@@ -502,143 +515,134 @@
                 <div class="reveal mt-12 md:mt-16 bg-zinc-100/50 dark:bg-zinc-900/30 backdrop-blur-xl border border-white/60 dark:border-white/10 shadow-lg p-6 md:p-8 lg:p-12 rounded-2xl md:rounded-3xl flex flex-col">
                     <h4 class="text-lg md:text-xl font-bold tracking-wide uppercase mb-8 md:mb-12">Tools & Workflow</h4>
                     
-                    <div class="flex flex-wrap items-center gap-x-4 md:gap-x-8 gap-y-4 text-lg md:text-2xl lg:text-3xl font-serif italic mb-8 md:mb-10 text-zinc-900 dark:text-zinc-100">
-                        <span>Figma</span> <span class="opacity-30 text-sm">·</span> 
-                        <span>Photoshop</span> <span class="opacity-30 text-sm">·</span> 
-                        <span>Illustrator</span> <span class="opacity-30 text-sm">·</span> 
-                        <span>Infinity Painter</span> <span class="opacity-30 text-sm">·</span> 
-                        <span>Unreal Engine 5 (UMG/Blueprint)</span> <span class="opacity-30 text-sm hidden lg:inline">·</span> 
-                        <span>Unity (C#)</span> <span class="opacity-30 text-sm">·</span> 
-                        <span>After Effects</span> <span class="opacity-30 text-sm">·</span> 
-                        <span>Premiere Pro</span> <span class="opacity-30 text-sm">·</span> 
-                        <span>Git</span>
+                    <div class="space-y-8 mb-8 md:mb-12">
+                        <!-- Design -->
+                        <div>
+                            <h5 class="text-xs tracking-[0.2em] uppercase opacity-50 font-bold mb-3">Design</h5>
+                            <div class="flex flex-wrap items-center gap-x-3 md:gap-x-6 gap-y-2 text-lg md:text-2xl lg:text-3xl font-serif italic text-zinc-900 dark:text-zinc-100">
+                                <span>Figma</span> <span class="opacity-30 text-sm">·</span> 
+                                <span>Photoshop</span> <span class="opacity-30 text-sm">·</span> 
+                                <span>Illustrator</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Engine -->
+                        <div>
+                            <h5 class="text-xs tracking-[0.2em] uppercase opacity-50 font-bold mb-3">Engine</h5>
+                            <div class="flex flex-wrap items-center gap-x-3 md:gap-x-6 gap-y-2 text-lg md:text-2xl lg:text-3xl font-serif italic text-zinc-900 dark:text-zinc-100">
+                                <span>Unreal Engine 5 <span class="text-[0.55em] font-sans not-italic opacity-50 align-middle ml-1">(UMG/Blueprint)</span></span> <span class="opacity-30 text-sm">·</span> 
+                                <span>Unity <span class="text-[0.55em] font-sans not-italic opacity-50 align-middle ml-1">(C#)</span></span>
+                            </div>
+                        </div>
+                        
+                        <!-- Pipeline -->
+                        <div>
+                            <h5 class="text-xs tracking-[0.2em] uppercase opacity-50 font-bold mb-3">Pipeline</h5>
+                            <div class="flex flex-wrap items-center gap-x-3 md:gap-x-6 gap-y-2 text-lg md:text-2xl lg:text-3xl font-serif italic text-zinc-900 dark:text-zinc-100">
+                                <span>Git</span> <span class="opacity-30 text-sm">·</span> 
+                                <span>After Effects</span>
+                            </div>
+                        </div>
                     </div>
                     
-                    <p class="text-base md:text-xl font-light leading-relaxed opacity-80 text-zinc-800 dark:text-zinc-200 max-w-5xl">
-                        I adapt to different pipelines and workflows, ensuring UI systems are not only visually strong but technically robust and ready for production.
-                    </p>
+                    <div class="border-t border-zinc-200 dark:border-zinc-800 pt-8 mt-2">
+                        <p class="text-base md:text-xl font-light leading-relaxed opacity-80 text-zinc-800 dark:text-zinc-200 max-w-4xl">
+                            I work across design and engine pipelines to deliver UI that is visually polished, performant, and ready for production.
+                        </p>
+                    </div>
                 </div>
 
             </div>
         </section>
 
         <!-- Experience Section -->
-        <section id="experience" class="py-20 md:py-32 px-5 md:px-6">
+        <section id="experience" class="py-20 md:py-32 px-5 md:px-6 border-t border-zinc-200 dark:border-white/5 bg-white dark:bg-[#080808] text-black dark:text-white transition-colors duration-500">
             <div class="max-w-[1800px] mx-auto">
-                
-                <!-- Experience Header & Intro -->
-                <div class="reveal mb-16 md:mb-24 grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-16">
-                    <div class="lg:col-span-4">
-                        <h2 class="text-xs tracking-[0.5em] uppercase opacity-40 mb-4 font-bold">CAREER</h2>
-                        <h3 class="text-4xl md:text-5xl font-bold tracking-tight">Experience</h3>
-                    </div>
-                    <div class="lg:col-span-8">
-                        <p class="text-xl md:text-2xl lg:text-3xl font-light leading-relaxed">
-                            A detailed timeline of my experience, current focus, and professional growth as a <span class="font-serif italic font-normal">Technical UI Designer</span> focused on system-driven and narrative-integrated game UI.
-                        </p>
-                    </div>
+                <div class="reveal mb-12 md:mb-16">
+                    <h2 class="text-xs tracking-[0.5em] uppercase opacity-40 mb-4 font-bold text-zinc-500 dark:text-gray-400">CAREER LOG</h2>
+                    <h3 class="text-3xl md:text-5xl font-bold tracking-tight text-black dark:text-white">Experience</h3>
+                    <p class="text-xl md:text-2xl font-light leading-relaxed text-zinc-600 dark:text-gray-400 mt-6 max-w-4xl">
+                        A focused timeline of my work designing and implementing gameplay driven UI systems across Unreal Engine 5 and Unity.
+                    </p>
                 </div>
 
                 <!-- Current Focus Block -->
-                <div class="reveal mb-12 md:mb-20 bg-zinc-50 dark:bg-zinc-900/50 p-6 md:p-8 lg:p-12 border border-zinc-200 dark:border-zinc-800 rounded-2xl md:rounded-3xl">
-                    <h4 class="text-lg md:text-xl font-bold mb-6 md:mb-8 tracking-wide uppercase">Current Focus <span class="font-serif italic font-normal text-lg md:text-2xl lowercase ml-2 opacity-50 block md:inline">at a glance</span></h4>
-                    <ul class="grid md:grid-cols-2 gap-x-12 gap-y-4 text-sm md:text-lg font-light opacity-80 list-none">
-                        <li class="relative pl-5 md:pl-6"><span class="absolute left-0 top-0 text-[10px] md:text-xs mt-1 md:mt-2 opacity-50">✦</span> Building scalable UI systems in Unreal Engine 5 using UMG and Blueprint</li>
-                        <li class="relative pl-5 md:pl-6"><span class="absolute left-0 top-0 text-[10px] md:text-xs mt-1 md:mt-2 opacity-50">✦</span> Designing system-driven UI that supports gameplay, narrative, and player decision flows</li>
-                        <li class="relative pl-5 md:pl-6"><span class="absolute left-0 top-0 text-[10px] md:text-xs mt-1 md:mt-2 opacity-50">✦</span> Developing modular UI frameworks for faster iteration and production pipelines</li>
-                        <li class="relative pl-5 md:pl-6"><span class="absolute left-0 top-0 text-[10px] md:text-xs mt-1 md:mt-2 opacity-50">✦</span> Seeking full-time Technical UI / Game UI roles (F-1 OPT / STEM eligible)</li>
+                <div class="reveal mb-12 md:mb-16 bg-zinc-50 dark:bg-[#1a1a1a] border border-zinc-200 dark:border-[#333] p-6 md:p-8 rounded-xl transition-colors duration-500">
+                    <h4 class="font-mono text-[10px] text-zinc-500 dark:text-gray-400 tracking-[0.2em] mb-6">CURRENT FOCUS</h4>
+                    <ul class="grid md:grid-cols-2 gap-x-12 gap-y-4 text-sm md:text-base font-light text-black dark:text-white list-none">
+                        <li class="relative pl-5"><span class="absolute left-0 top-0 text-teal-600 dark:text-[#00ffcc] font-mono">></span> Designing scalable UI systems in Unreal Engine 5 using UMG and Blueprint</li>
+                        <li class="relative pl-5"><span class="absolute left-0 top-0 text-teal-600 dark:text-[#00ffcc] font-mono">></span> Building modular UI frameworks for fast iteration and production pipelines</li>
+                        <li class="relative pl-5"><span class="absolute left-0 top-0 text-teal-600 dark:text-[#00ffcc] font-mono">></span> Creating gameplay-driven UI that supports clarity, narrative, and player decision-making</li>
+                        <li class="relative pl-5"><span class="absolute left-0 top-0 text-teal-600 dark:text-[#00ffcc] font-mono">></span> Actively seeking full-time UI Artist / Game UI roles</li>
                     </ul>
                 </div>
 
-                <!-- Career Timeline -->
-                <div class="space-y-6">
-                    
-                    <!-- Job 1 - Yellow -->
-                    <div class="reveal exp-card grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8 py-10 md:py-16 px-6 md:px-8 rounded-2xl md:rounded-3xl bg-[#FEF9C3]/60 dark:bg-amber-950/30 backdrop-blur-xl border border-white/60 dark:border-white/10 shadow-lg text-zinc-900 dark:text-amber-50">
-                        <div>
-                            <div class="text-xs md:text-sm tracking-widest uppercase opacity-60 font-bold mb-1 md:mb-2 text-zinc-600 dark:text-amber-200/60">Nov 2025 — Present</div>
-                            <div class="text-[10px] md:text-xs uppercase tracking-wider opacity-50">Remote</div>
+                <div class="space-y-4">
+                    <!-- Job 1 -->
+                    <div class="reveal bg-zinc-50 dark:bg-[#111111] border border-zinc-200 dark:border-[#222] hover:bg-zinc-100 dark:hover:bg-[#1a1a1a] p-6 md:p-8 rounded-xl flex flex-col md:flex-row md:items-start gap-6 transition-colors duration-500">
+                        <div class="md:w-1/4">
+                            <div class="font-mono text-[10px] tracking-widest text-teal-600 dark:text-[#00ffcc] mb-1">INTERNSHIP</div>
+                            <div class="font-mono text-[10px] text-zinc-500 dark:text-gray-500">VAULT PRODUCTIONS</div>
                         </div>
-                        <div class="md:col-span-3">
-                            <h4 class="text-2xl md:text-3xl font-bold mb-1 md:mb-2">UI Systems Designer</h4>
-                            <p class="text-base md:text-lg opacity-90 mb-6 md:mb-8 font-serif italic md:text-2xl">Vault Productions Private Limited · Internship</p>
-                            <ul class="opacity-80 leading-relaxed font-light max-w-4xl space-y-3 md:space-y-4 list-none text-sm md:text-base">
-                                <li class="relative pl-4 md:pl-6"><span class="absolute left-0 top-0 text-[8px] md:text-xs mt-1 md:mt-1.5 opacity-50">✦</span> Led UI system implementation for two game projects: The Dark Arrival and Suite 13</li>
-                                <li class="relative pl-4 md:pl-6"><span class="absolute left-0 top-0 text-[8px] md:text-xs mt-1 md:mt-1.5 opacity-50">✦</span> Designed and built a 3D Investigator’s Journal system integrating narrative clues</li>
-                                <li class="relative pl-4 md:pl-6"><span class="absolute left-0 top-0 text-[8px] md:text-xs mt-1 md:mt-1.5 opacity-50">✦</span> Implemented gameplay UI systems directly in Unreal Engine 5 using UMG and Blueprint</li>
-                                <li class="relative pl-4 md:pl-6"><span class="absolute left-0 top-0 text-[8px] md:text-xs mt-1 md:mt-1.5 opacity-50">✦</span> Developed modular Blueprint UI architecture improving iteration speed</li>
-                                <li class="relative pl-4 md:pl-6"><span class="absolute left-0 top-0 text-[8px] md:text-xs mt-1 md:mt-1.5 opacity-50">✦</span> Presented a live playable build at GDC 2026 to an international audience</li>
+                        <div class="md:w-3/4">
+                            <h4 class="text-xl md:text-2xl font-bold text-black dark:text-white mb-4">UI Artist / Technical UI Designer</h4>
+                            <ul class="text-sm text-zinc-600 dark:text-gray-400 space-y-3 font-light">
+                                <li><span class="text-teal-600 dark:text-[#00ffcc] font-mono mr-2">></span>Led UI system implementation across The Dark Arrival and Suite 13</li>
+                                <li><span class="text-teal-600 dark:text-[#00ffcc] font-mono mr-2">></span>Designed and built a 3D Investigator Journal integrating gameplay and narrative systems</li>
+                                <li><span class="text-teal-600 dark:text-[#00ffcc] font-mono mr-2">></span>Implemented gameplay UI directly in Unreal Engine 5 using UMG and Blueprint</li>
+                                <li><span class="text-teal-600 dark:text-[#00ffcc] font-mono mr-2">></span>Developed modular UI architecture to improve iteration speed and scalability</li>
+                                <li><span class="text-teal-600 dark:text-[#00ffcc] font-mono mr-2">></span>Presented a live playable build at GDC 2026</li>
                             </ul>
                         </div>
                     </div>
                     
-                    <!-- Job 2 - Blue -->
-                    <div class="reveal exp-card grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8 py-10 md:py-16 px-6 md:px-8 rounded-2xl md:rounded-3xl bg-[#E0F2FE]/60 dark:bg-sky-950/30 backdrop-blur-xl border border-white/60 dark:border-white/10 shadow-lg text-zinc-900 dark:text-sky-50" style="transition-delay: 0.1s;">
-                        <div>
-                            <div class="text-xs md:text-sm tracking-widest uppercase opacity-60 font-bold mb-1 md:mb-2 text-zinc-600 dark:text-sky-200/60">Sep 2025 — Dec 2025</div>
-                            <div class="text-[10px] md:text-xs uppercase tracking-wider opacity-50">San Francisco · Hybrid</div>
+                    <!-- Job 2 -->
+                    <div class="reveal bg-zinc-50 dark:bg-[#111111] border border-zinc-200 dark:border-[#222] hover:bg-zinc-100 dark:hover:bg-[#1a1a1a] p-6 md:p-8 rounded-xl flex flex-col md:flex-row md:items-start gap-6 transition-colors duration-500" style="transition-delay: 0.1s;">
+                        <div class="md:w-1/4">
+                            <div class="font-mono text-[10px] tracking-widest text-teal-600 dark:text-[#00ffcc] mb-1">INTERNSHIP</div>
+                            <div class="font-mono text-[10px] text-zinc-500 dark:text-gray-500">ACADEMY OF ART UNIVERSITY</div>
                         </div>
-                        <div class="md:col-span-3">
-                            <h4 class="text-2xl md:text-3xl font-bold mb-1 md:mb-2">Game Development Intern</h4>
-                            <p class="text-base md:text-lg opacity-90 mb-6 md:mb-8 font-serif italic md:text-2xl">Academy of Art University · Internship</p>
-                            <ul class="opacity-80 leading-relaxed font-light max-w-4xl space-y-3 md:space-y-4 list-none text-sm md:text-base">
-                                <li class="relative pl-4 md:pl-6"><span class="absolute left-0 top-0 text-[8px] md:text-xs mt-1 md:mt-1.5 opacity-50">✦</span> Worked in a cross-functional team to design and implement gameplay systems</li>
-                                <li class="relative pl-4 md:pl-6"><span class="absolute left-0 top-0 text-[8px] md:text-xs mt-1 md:mt-1.5 opacity-50">✦</span> Translated design concepts into functional in-engine implementations using Unreal Engine</li>
-                                <li class="relative pl-4 md:pl-6"><span class="absolute left-0 top-0 text-[8px] md:text-xs mt-1 md:mt-1.5 opacity-50">✦</span> Contributed to UI systems, gameplay mechanics, and asset integration</li>
+                        <div class="md:w-3/4">
+                            <h4 class="text-xl md:text-2xl font-bold text-black dark:text-white mb-4">Game Development Intern</h4>
+                            <ul class="text-sm text-zinc-600 dark:text-gray-400 space-y-3 font-light">
+                                <li><span class="text-teal-600 dark:text-[#00ffcc] font-mono mr-2">></span>Worked in a cross-functional team to design and implement gameplay systems</li>
+                                <li><span class="text-teal-600 dark:text-[#00ffcc] font-mono mr-2">></span>Translated design concepts into in-engine UI and gameplay features</li>
+                                <li><span class="text-teal-600 dark:text-[#00ffcc] font-mono mr-2">></span>Iterated on UI/UX through playtesting and feedback cycles</li>
                             </ul>
                         </div>
                     </div>
 
-                    <!-- Job 3 - Orange -->
-                    <div class="reveal exp-card grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8 py-10 md:py-16 px-6 md:px-8 rounded-2xl md:rounded-3xl bg-[#FFEDD5]/60 dark:bg-orange-950/30 backdrop-blur-xl border border-white/60 dark:border-white/10 shadow-lg text-zinc-900 dark:text-orange-50">
-                        <div>
-                            <div class="text-xs md:text-sm tracking-widest uppercase opacity-60 font-bold mb-1 md:mb-2 text-zinc-600 dark:text-orange-200/60">Mar 2025 — Aug 2025</div>
-                            <div class="text-[10px] md:text-xs uppercase tracking-wider opacity-50">Remote</div>
+                    <!-- Job 3 -->
+                    <div class="reveal bg-zinc-50 dark:bg-[#111111] border border-zinc-200 dark:border-[#222] hover:bg-zinc-100 dark:hover:bg-[#1a1a1a] p-6 md:p-8 rounded-xl flex flex-col md:flex-row md:items-start gap-6 transition-colors duration-500" style="transition-delay: 0.2s;">
+                        <div class="md:w-1/4">
+                            <div class="font-mono text-[10px] tracking-widest text-teal-600 dark:text-[#00ffcc] mb-1">FREELANCE</div>
+                            <div class="font-mono text-[10px] text-zinc-500 dark:text-gray-500">REMOTE</div>
                         </div>
-                        <div class="md:col-span-3">
-                            <h4 class="text-2xl md:text-3xl font-bold mb-1 md:mb-2">UI Designer</h4>
-                            <p class="text-base md:text-lg opacity-90 mb-6 md:mb-8 font-serif italic md:text-2xl">Freelance</p>
-                            <ul class="opacity-80 leading-relaxed font-light max-w-4xl space-y-3 md:space-y-4 list-none text-sm md:text-base">
-                                <li class="relative pl-4 md:pl-6"><span class="absolute left-0 top-0 text-[8px] md:text-xs mt-1 md:mt-1.5 opacity-50">✦</span> Led end-to-end UI/UX design for a fantasy RPG (Nekurati)</li>
-                                <li class="relative pl-4 md:pl-6"><span class="absolute left-0 top-0 text-[8px] md:text-xs mt-1 md:mt-1.5 opacity-50">✦</span> Designed menu systems, navigation flows, and interaction patterns for gameplay clarity</li>
-                                <li class="relative pl-4 md:pl-6"><span class="absolute left-0 top-0 text-[8px] md:text-xs mt-1 md:mt-1.5 opacity-50">✦</span> Delivered high-fidelity prototypes and production-ready UI for engine implementation</li>
+                        <div class="md:w-3/4">
+                            <h4 class="text-xl md:text-2xl font-bold text-black dark:text-white mb-4">UI Designer</h4>
+                            <ul class="text-sm text-zinc-600 dark:text-gray-400 space-y-3 font-light">
+                                <li><span class="text-teal-600 dark:text-[#00ffcc] font-mono mr-2">></span>Designed end-to-end UI/UX for a fantasy RPG, including menus and progression systems</li>
+                                <li><span class="text-teal-600 dark:text-[#00ffcc] font-mono mr-2">></span>Built structured navigation and interaction patterns for gameplay clarity</li>
+                                <li><span class="text-teal-600 dark:text-[#00ffcc] font-mono mr-2">></span>Delivered high-fidelity UI ready for in-engine implementation</li>
                             </ul>
                         </div>
                     </div>
 
-                    <!-- Job 4 - Green -->
-                    <div class="reveal exp-card grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8 py-10 md:py-16 px-6 md:px-8 rounded-2xl md:rounded-3xl bg-[#DCFCE7]/60 dark:bg-emerald-950/30 backdrop-blur-xl border border-white/60 dark:border-white/10 shadow-lg text-zinc-900 dark:text-emerald-50" style="transition-delay: 0.1s;">
-                        <div>
-                            <div class="text-xs md:text-sm tracking-widest uppercase opacity-60 font-bold mb-1 md:mb-2 text-zinc-600 dark:text-emerald-200/60">Feb 2025 — May 2025</div>
-                            <div class="text-[10px] md:text-xs uppercase tracking-wider opacity-50">Academic Project</div>
+                    <!-- Job 4 -->
+                    <div class="reveal bg-zinc-50 dark:bg-[#111111] border border-zinc-200 dark:border-[#222] hover:bg-zinc-100 dark:hover:bg-[#1a1a1a] p-6 md:p-8 rounded-xl flex flex-col md:flex-row md:items-start gap-6 transition-colors duration-500" style="transition-delay: 0.3s;">
+                        <div class="md:w-1/4">
+                            <div class="font-mono text-[10px] tracking-widest text-teal-600 dark:text-[#00ffcc] mb-1">ACADEMIC PROJECT</div>
+                            <div class="font-mono text-[10px] text-zinc-500 dark:text-gray-500">CUSTOMIZED ANGEL</div>
                         </div>
-                        <div class="md:col-span-3">
-                            <h4 class="text-2xl md:text-3xl font-bold mb-1 md:mb-2">Designer & Programmer</h4>
-                            <p class="text-base md:text-lg opacity-90 mb-6 md:mb-8 font-serif italic md:text-2xl">Customized Angel</p>
-                            <ul class="opacity-80 leading-relaxed font-light max-w-4xl space-y-3 md:space-y-4 list-none text-sm md:text-base">
-                                <li class="relative pl-4 md:pl-6"><span class="absolute left-0 top-0 text-[8px] md:text-xs mt-1 md:mt-1.5 opacity-50">✦</span> Designed timeline-based UI system for tracking clues and gameplay events</li>
-                                <li class="relative pl-4 md:pl-6"><span class="absolute left-0 top-0 text-[8px] md:text-xs mt-1 md:mt-1.5 opacity-50">✦</span> Built interaction systems for NPC behavior observation and loop-based gameplay</li>
-                                <li class="relative pl-4 md:pl-6"><span class="absolute left-0 top-0 text-[8px] md:text-xs mt-1 md:mt-1.5 opacity-50">✦</span> Implemented UI systems in Unity using C# and prefabs</li>
+                        <div class="md:w-3/4">
+                            <h4 class="text-xl md:text-2xl font-bold text-black dark:text-white mb-4">Designer & Programmer</h4>
+                            <ul class="text-sm text-zinc-600 dark:text-gray-400 space-y-3 font-light">
+                                <li><span class="text-teal-600 dark:text-[#00ffcc] font-mono mr-2">></span>Designed timeline-based UI systems for tracking gameplay events and clues</li>
+                                <li><span class="text-teal-600 dark:text-[#00ffcc] font-mono mr-2">></span>Built interaction systems supporting NPC behavior and loop-based gameplay</li>
+                                <li><span class="text-teal-600 dark:text-[#00ffcc] font-mono mr-2">></span>Implemented UI systems in Unity using C# and prefabs</li>
                             </ul>
                         </div>
                     </div>
-
-                    <!-- Job 5 - Purple -->
-                    <div class="reveal exp-card grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8 py-10 md:py-16 px-6 md:px-8 rounded-2xl md:rounded-3xl bg-[#F3E8FF]/60 dark:bg-indigo-950/30 backdrop-blur-xl border border-white/60 dark:border-white/10 shadow-lg text-zinc-900 dark:text-indigo-50">
-                        <div>
-                            <div class="text-xs md:text-sm tracking-widest uppercase opacity-60 font-bold mb-1 md:mb-2 text-zinc-600 dark:text-indigo-200/60">Jan 2022 — Mar 2022</div>
-                            <div class="text-[10px] md:text-xs uppercase tracking-wider opacity-50">India</div>
-                        </div>
-                        <div class="md:col-span-3">
-                            <h4 class="text-2xl md:text-3xl font-bold mb-1 md:mb-2">3D Animator</h4>
-                            <p class="text-base md:text-lg opacity-90 mb-6 md:mb-8 font-serif italic md:text-2xl">Symbiosys Technologies · Internship</p>
-                            <ul class="opacity-80 leading-relaxed font-light max-w-4xl space-y-3 md:space-y-4 list-none text-sm md:text-base">
-                                <li class="relative pl-4 md:pl-6"><span class="absolute left-0 top-0 text-[8px] md:text-xs mt-1 md:mt-1.5 opacity-50">✦</span> Created character animations and facial expressions for production content</li>
-                                <li class="relative pl-4 md:pl-6"><span class="absolute left-0 top-0 text-[8px] md:text-xs mt-1 md:mt-1.5 opacity-50">✦</span> Worked with Maya and Adobe tools for animation and lighting</li>
-                            </ul>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </section>
@@ -652,8 +656,8 @@
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 text-center md:text-left">
                     <div class="reveal">
-                        <h4 class="text-sm tracking-widest uppercase mb-6 md:mb-8 font-bold opacity-60">Engine & Code</h4>
-                        <ul class="space-y-3 md:space-y-4 text-xl md:text-2xl font-light">
+                        <h4 class="text-sm font-mono tracking-widest uppercase mb-6 md:mb-8 font-bold text-black dark:text-white">Engine & Systems</h4>
+                        <ul class="space-y-4 text-base md:text-lg font-light text-gray-600 dark:text-gray-400">
                             <li>Unreal Engine 5 (UMG)</li>
                             <li>Blueprint Logic</li>
                             <li>Unity (C#)</li>
@@ -661,8 +665,8 @@
                         </ul>
                     </div>
                     <div class="reveal" style="transition-delay: 0.1s;">
-                        <h4 class="text-sm tracking-widest uppercase mb-6 md:mb-8 font-bold opacity-60">Implementation</h4>
-                        <ul class="space-y-3 md:space-y-4 text-xl md:text-2xl font-light">
+                        <h4 class="text-sm font-mono tracking-widest uppercase mb-6 md:mb-8 font-bold text-black dark:text-white">UI Implementation</h4>
+                        <ul class="space-y-4 text-base md:text-lg font-light text-gray-600 dark:text-gray-400">
                             <li>HUDs & Menus</li>
                             <li>UI State Logic</li>
                             <li>3D / Diegetic UI</li>
@@ -670,12 +674,12 @@
                         </ul>
                     </div>
                     <div class="reveal" style="transition-delay: 0.2s;">
-                        <h4 class="text-sm tracking-widest uppercase mb-6 md:mb-8 font-bold opacity-60">Design Workflow</h4>
-                        <ul class="space-y-3 md:space-y-4 text-xl md:text-2xl font-light">
+                        <h4 class="text-sm font-mono tracking-widest uppercase mb-6 md:mb-8 font-bold text-black dark:text-white">Workflow</h4>
+                        <ul class="space-y-4 text-base md:text-lg font-light text-gray-600 dark:text-gray-400">
                             <li>Figma to Engine</li>
-                            <li>Bridging Design & Dev</li>
+                            <li>Cross-discipline Collaboration</li>
                             <li>Technical Documentation</li>
-                            <li>Rapid Prototyping</li>
+                            <li>Rapid Iteration</li>
                         </ul>
                     </div>
                 </div>
@@ -683,27 +687,29 @@
         </section>
 
         <!-- Resume Section -->
-        <section id="resume" class="py-20 md:py-32 px-5 md:px-6">
-            <div class="max-w-[1800px] mx-auto text-center border-t border-zinc-200 dark:border-zinc-800 pt-20 md:pt-32">
+        <section id="resume" class="py-24 md:py-32 px-5 md:px-6 relative">
+            <div class="max-w-4xl mx-auto text-center border-t border-black/10 dark:border-white/10 pt-20 md:pt-32">
                 <div class="reveal">
-                    <h2 class="text-xs tracking-[0.5em] uppercase opacity-40 mb-4 font-bold">DOCUMENTATION</h2>
-                    <h3 class="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight mb-6 md:mb-8">Beyond <span class="font-serif italic font-normal">Design</span> ☟</h3>
-                    <p class="text-base md:text-lg lg:text-xl font-light opacity-80 mb-4 md:mb-6 max-w-3xl mx-auto">
-                        Download my resume to explore my experience as a Technical UI Designer, including in-engine UI implementation, system architecture, and shipped gameplay UI systems.
-                    </p>
-                    <p class="text-base md:text-lg lg:text-xl font-light opacity-80 mb-10 md:mb-12 max-w-3xl mx-auto">
-                        Featuring work on <span class="italic font-serif">The Dark Arrival: Shadows of the Past</span> and <span class="italic font-serif">Suite 13</span>.
-                    </p>
-                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6">
-                        <!-- Open CV Viewer Modal -->
-                        <button onclick="openCaseStudy('resume')" class="w-full sm:w-auto group inline-flex items-center justify-center space-x-2 border border-black dark:border-white rounded-full px-8 py-4 text-xs md:text-sm tracking-[0.2em] uppercase font-bold hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300 overflow-hidden relative cursor-none">
-                            <span class="relative z-10">Download CV</span>
-                            <span class="relative z-10 group-hover:translate-x-1 transition-transform">→</span>
+                    <h2 class="text-xs tracking-[0.4em] uppercase opacity-50 mb-6 font-bold text-black dark:text-white">DOCUMENTATION</h2>
+                    <h3 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-8 text-black dark:text-white">Beyond <span class="font-serif italic font-normal">Design</span></h3>
+                    
+                    <div class="text-base md:text-lg text-gray-600 dark:text-gray-400 font-light mb-12 max-w-2xl mx-auto space-y-4">
+                        <p>A deeper look into my work designing and implementing gameplay-driven UI systems across Unreal Engine 5.</p>
+                        <p>Focused on in-engine UI, system architecture, and building scalable interfaces that support real-time gameplay.</p>
+                        <p>Featuring <span class="italic font-medium text-black dark:text-white">The Dark Arrival: Shadows of the Past</span> and <span class="italic font-medium text-black dark:text-white">Suite 13</span>.</p>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <!-- Primary Button (Frosted Glass) -->
+                        <button onclick="openCaseStudy('resume')" class="group w-full sm:w-auto bg-white/50 dark:bg-white/10 backdrop-blur-md border border-black/10 dark:border-white/20 text-black dark:text-white rounded-full px-[22px] py-[12px] font-sans font-semibold text-sm hover:bg-white/80 dark:hover:bg-white/20 hover:scale-[1.03] transition-all duration-300 ease-out cursor-none flex items-center justify-center space-x-2 shadow-[0_4px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_30px_rgba(255,255,255,0.05)]">
+                            <span>View Resume</span>
+                            <span class="group-hover:translate-x-1 transition-transform duration-300 ease-out">→</span>
                         </button>
-                        <!-- Steam Button Updated to Direct Game Link -->
-                        <a href="https://store.steampowered.com/app/3295930/THE_DARK_ARRIVAL__SHADOWS_OF_THE_PAST/" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto group inline-flex items-center justify-center space-x-2 bg-black text-white dark:bg-white dark:text-black rounded-full px-8 py-4 text-xs md:text-sm tracking-[0.2em] uppercase font-bold hover:scale-105 transition-all duration-300 shadow-lg cursor-none">
-                            <span class="relative z-10">Steam</span>
-                            <span class="relative z-10 group-hover:translate-x-1 transition-transform">↗</span>
+                        
+                        <!-- Secondary Button (Frosted Glass) -->
+                        <a href="https://store.steampowered.com/app/3295930/THE_DARK_ARRIVAL__SHADOWS_OF_THE_PAST/" target="_blank" rel="noopener noreferrer" class="group w-full sm:w-auto bg-black/5 dark:bg-black/30 backdrop-blur-md border border-black/10 dark:border-white/10 text-black dark:text-[#EAEAEA] rounded-full px-[22px] py-[12px] font-sans font-semibold text-sm hover:bg-black/10 dark:hover:border-white/30 dark:hover:text-white dark:hover:bg-white/5 hover:scale-[1.03] transition-all duration-300 ease-out cursor-none flex items-center justify-center space-x-2 shadow-[0_4px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_30px_rgba(255,255,255,0.02)]">
+                            <span>View Project</span>
+                            <span class="group-hover:translate-x-1 transition-transform duration-300 ease-out">→</span>
                         </a>
                     </div>
                 </div>
@@ -719,9 +725,10 @@
                         <h3 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">Writing & <span class="font-serif italic font-normal">Insights</span></h3>
                     </div>
                     <div class="lg:col-span-8">
-                        <p class="text-xl md:text-2xl lg:text-3xl font-light leading-relaxed">
-                            Exploring the intersection of psychology, art, and game interfaces. I write about the <span class="font-serif italic font-normal">technical nuances</span> and creative philosophies that define modern UI design.
-                        </p>
+                        <div class="text-xl md:text-2xl lg:text-3xl font-light leading-relaxed space-y-4">
+                            <p>Exploring the intersection of psychology, art, and gameplay UI.</p>
+                            <p>I write about interface design in real-time environments—focusing on clarity under pressure, player perception, and the systems that shape immersive experiences.</p>
+                        </div>
                     </div>
                 </div>
 
@@ -729,36 +736,36 @@
                     <!-- Blog 1 -->
                     <a href="https://medium.com/@jaikardevgame/mind-art-why-the-human-touch-drives-game-ui-1401c728775d" target="_blank" class="reveal group p-6 md:p-8 lg:p-12 border-b md:border-r border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-all duration-500">
                         <div class="flex justify-between items-start mb-8 md:mb-12">
-                            <span class="text-[10px] md:text-sm font-bold tracking-widest opacity-30 uppercase">Medium Article</span>
+                            <span class="text-[10px] md:text-sm font-bold tracking-widest opacity-30 uppercase">INSIGHT</span>
                             <span class="text-xl md:text-2xl group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform duration-300">↗</span>
                         </div>
-                        <h4 class="text-2xl md:text-3xl lg:text-4xl font-serif italic mb-4 md:mb-6 leading-tight group-hover:opacity-60 transition-opacity">Mind & Art: Why the human touch drives game UI</h4>
+                        <h4 class="text-2xl md:text-3xl lg:text-4xl font-serif italic mb-4 md:mb-6 leading-tight group-hover:opacity-60 transition-opacity">Mind & Art Human Touch in Game UI</h4>
                         <p class="text-sm md:text-base lg:text-lg font-light opacity-70 leading-relaxed max-w-xl">
-                            A deep dive into why human intuition and artistic intent remain the most powerful tools in designing immersive player experiences.
+                            Exploring how intuition and artistic intent shape immersive UI and player experience in modern games.
                         </p>
                     </a>
                     
                     <!-- Blog 2 -->
                     <a href="https://medium.com/@jaikardevgame/designing-the-lens-my-journey-as-a-ui-artist-c98276a52c1d" target="_blank" class="reveal group p-6 md:p-8 lg:p-12 border-b md:border-r border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-all duration-500" style="transition-delay: 0.1s;">
                         <div class="flex justify-between items-start mb-8 md:mb-12">
-                            <span class="text-[10px] md:text-sm font-bold tracking-widest opacity-30 uppercase">Medium Article</span>
+                            <span class="text-[10px] md:text-sm font-bold tracking-widest opacity-30 uppercase">INSIGHT</span>
                             <span class="text-xl md:text-2xl group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform duration-300">↗</span>
                         </div>
-                        <h4 class="text-2xl md:text-3xl lg:text-4xl font-serif italic mb-4 md:mb-6 leading-tight group-hover:opacity-60 transition-opacity">Designing the Lens: My journey as a UI Artist</h4>
+                        <h4 class="text-2xl md:text-3xl lg:text-4xl font-serif italic mb-4 md:mb-6 leading-tight group-hover:opacity-60 transition-opacity">Designing the Lens UI as Player Experience</h4>
                         <p class="text-sm md:text-base lg:text-lg font-light opacity-70 leading-relaxed max-w-xl">
-                            Reflecting on my professional evolution and the technical challenges that shaped my approach to technical UI implementation.
+                            A reflection on designing UI as the player’s primary connection to gameplay, balancing clarity, narrative, and system complexity.
                         </p>
                     </a>
 
                     <!-- Blog 3 -->
                     <a href="https://www.linkedin.com/pulse/shift-last-fare-jaikar-pothula-r1y4c" target="_blank" class="reveal group p-6 md:p-8 lg:p-12 border-b md:border-b-0 border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-all duration-500" style="transition-delay: 0.2s;">
                         <div class="flex justify-between items-start mb-8 md:mb-12">
-                            <span class="text-[10px] md:text-sm font-bold tracking-widest opacity-30 uppercase">LinkedIn Article</span>
+                            <span class="text-[10px] md:text-sm font-bold tracking-widest opacity-30 uppercase">INSIGHT</span>
                             <span class="text-xl md:text-2xl group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform duration-300">↗</span>
                         </div>
-                        <h4 class="text-2xl md:text-3xl lg:text-4xl font-serif italic mb-4 md:mb-6 leading-tight group-hover:opacity-60 transition-opacity">Shift: Last Fare — UI Narrative</h4>
+                        <h4 class="text-2xl md:text-3xl lg:text-4xl font-serif italic mb-4 md:mb-6 leading-tight group-hover:opacity-60 transition-opacity">Shift: Last Fare UI & Narrative Design</h4>
                         <p class="text-sm md:text-base lg:text-lg font-light opacity-70 leading-relaxed max-w-xl">
-                            Exploring how UI supports the narrative arc in Shift: Last Fare, focusing on diegetic elements and emotional resonance.
+                            Examining how UI supports storytelling through diegetic design, emotional pacing, and player immersion.
                         </p>
                     </a>
                 </div>
@@ -1114,7 +1121,7 @@
                     <div class="lg:col-span-5 flex flex-col gap-3 md:gap-4 w-full">
                         ${roninUX.journey.map((item, index) => `
                         <div onmouseenter="document.getElementById('exp-preview').src='${base}${item.img}'" class="group flex items-center gap-4 md:gap-6 p-4 md:p-6 rounded-2xl bg-zinc-50 dark:bg-zinc-900/40 hover:bg-white dark:hover:bg-[#111111] border border-transparent hover:border-black/10 dark:hover:border-white/10 transition-all duration-300 cursor-none shadow-sm hover:shadow-lg hover:scale-[1.02]">
-                            <div class="w-10 h-10 md:w-12 md:h-12 flex-shrink-0 rounded-full bg-zinc-200 dark:bg-zinc-800 flex items-center justify-center font-serif italic text-lg md:text-xl font-bold text-zinc-500 dark:text-zinc-400 group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition-colors duration-300">${index + 1}</div>
+                            <div class="w-10 h-10 md:w-12 h-12 flex-shrink-0 rounded-full bg-zinc-200 dark:bg-zinc-800 flex items-center justify-center font-serif italic text-lg md:text-xl font-bold text-zinc-500 dark:text-zinc-400 group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition-colors duration-300">${index + 1}</div>
                             <div class="text-lg md:text-xl font-bold tracking-tight opacity-50 group-hover:opacity-100 transition-opacity duration-300">${item.step}</div>
                             <div class="ml-auto opacity-0 group-hover:opacity-100 transform -translate-x-4 group-hover:translate-x-0 transition-all duration-300 text-black dark:text-white">→</div>
                         </div>

@@ -496,7 +496,28 @@
 
                     <!-- Right: About Snippet -->
                     <div class="lg:col-span-4 reveal lg:border-l grid-border lg:pl-12 lg:pb-4" style="transition-delay: 0.2s;">
-                        <h2 class="text-[10px] tracking-[0.4em] uppercase opacity-50 mb-8 font-bold">ABOUT ME</h2>
+                        <div class="flex justify-between items-start mb-8 relative">
+                            <h2 class="text-[10px] tracking-[0.4em] uppercase opacity-50 font-bold">ABOUT ME</h2>
+                            
+                            <!-- Interactive QR Code Reveal -->
+                            <div class="relative group z-50">
+                                <!-- Trigger Icon -->
+                                <div class="w-8 h-8 md:w-10 md:h-10 border grid-border rounded-sm flex items-center justify-center bg-[var(--hover-bg)] transition-all duration-300 group-hover:opacity-0 absolute right-0 top-0 cursor-none">
+                                    <svg class="w-4 h-4 md:w-5 md:h-5 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path>
+                                    </svg>
+                                </div>
+                                
+                                <!-- Hidden QR Code (Reveals on Hover) -->
+                                <div class="w-32 h-32 md:w-40 md:h-40 bg-white border grid-border p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 ease-out transform scale-50 group-hover:scale-100 origin-top-right absolute right-0 top-0 shadow-2xl cursor-none">
+                                    <img src="Assets/LOGO/qr.png" alt="Connect QR Code" class="w-full h-full object-contain" style="image-rendering: pixelated;">
+                                    <div class="absolute -bottom-6 right-0 text-[8px] font-bold tracking-[0.2em] uppercase opacity-70 whitespace-nowrap text-[var(--text-color)] pointer-events-none">Scan to Connect</div>
+                                </div>
+                                
+                                <!-- Spacer to keep layout intact -->
+                                <div class="w-8 h-8 md:w-10 md:h-10"></div>
+                            </div>
+                        </div>
                         <div class="text-sm md:text-base leading-relaxed space-y-6 font-medium">
                             <p>I am a <span class="font-bold">Game UI Artist</span> focused on crafting clear, responsive, and visually polished interfaces for gameplay-driven experiences.</p>
                             <p>I design HUDs, menus, and in-game UI systems that support fast decision making and maintain clarity under pressure.</p>

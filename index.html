@@ -857,43 +857,52 @@
             </div>
 
             <!-- PC / Game UI Category -->
-            <div class="p-4 md:p-6 bg-[var(--text-color)] text-[var(--bg-color)] border-b grid-border text-center text-xs md:text-sm font-bold tracking-[0.2em] uppercase font-doto reveal">
+            <div class="p-4 md:p-6 bg-[var(--text-color)] text-[var(--bg-color)] border-b grid-border text-center text-xs md:text-sm font-bold tracking-[0.2em] uppercase font-doto fade-up">
                 [ Game UI — Systems & Gameplay (PC / Console) ]
             </div>
 
             <div class="grid grid-cols-1 border-b grid-border">
                 
-                <!-- Project 2 -->
-                <div class="group cursor-pointer flex flex-col md:flex-row-reverse border-b grid-border cyber-stripes game-card relative" onclick="openCaseStudy('dark-arrival')">
-                    <div class="md:w-1/2 p-8 md:p-12 flex flex-col justify-center border-b md:border-b-0 md:border-l grid-border bg-[var(--bg-color)] transition-colors relative z-10">
+                <!-- Project 2 (Split Screen Reverse) -->
+                <div class="flex flex-col lg:flex-row-reverse h-auto lg:h-[80vh] items-center border-b grid-border cyber-stripes game-card relative" onclick="openCaseStudy('dark-arrival')">
+                    <div class="w-full lg:w-1/2 h-full p-8 md:p-16 flex flex-col justify-center border-b lg:border-b-0 lg:border-l grid-border bg-[var(--bg-color)] transition-colors relative z-10 fade-up">
                         <div class="mb-auto flex justify-between items-start">
                             <span class="inline-block px-3 py-1 text-[9px] tracking-[0.2em] uppercase mb-6 cyber-tag tag-primary">PC GAME UI</span>
                             <span class="inline-flex items-center gap-1.5 border border-[var(--accent-primary)] px-3 py-1 text-[8px] font-bold tracking-[0.2em] uppercase text-accent font-doto" style="clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);">
                                 <span class="w-1.5 h-1.5 bg-[var(--accent-primary)] animate-pulse"></span> In Dev
                             </span>
                         </div>
-                        <h4 class="text-4xl md:text-5xl font-heading font-bold uppercase tracking-tight mb-4">The Dark Arrival</h4>
-                        <p class="text-[10px] md:text-xs tracking-[0.2em] font-doto uppercase font-bold opacity-50 mb-6">> 3D Investigator's Journal / Core UI</p>
+                        <h4 class="text-4xl md:text-6xl font-heading font-bold uppercase tracking-tight mb-4">The Dark Arrival</h4>
+                        <p class="text-sm md:text-base font-medium leading-relaxed opacity-80 mb-6">Designed an interactive 3D Investigator Journal system that impacts gameplay decisions directly through diegetic UI interfaces.</p>
 
-                        <!-- Role / Tech Stack -->
-                        <div class="flex flex-wrap gap-2 mb-8">
-                            <span class="px-2 py-1 border border-[var(--border-color)] text-[8px] font-doto uppercase font-bold opacity-80">Role: UI Systems & Implementation</span>
-                            <span class="px-2 py-1 border border-[var(--accent-primary)] text-accent text-[8px] font-doto uppercase font-bold opacity-80">Engine: UE5 (UMG & Blueprints)</span>
+                        <!-- Role / Tech Stack Breakdown -->
+                        <div class="flex flex-col gap-3 mb-10">
+                            <div class="flex items-center gap-3">
+                                <span class="w-2 h-2 bg-[var(--accent-primary)]"></span>
+                                <span class="text-[10px] md:text-xs font-doto uppercase font-bold opacity-80">Role: UI Systems & Implementation</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="w-2 h-2 bg-[var(--accent-secondary)]"></span>
+                                <span class="text-[10px] md:text-xs font-doto uppercase font-bold opacity-80 text-accent">Engine: UE5 (UMG & Blueprints)</span>
+                            </div>
                         </div>
 
                         <div class="mt-auto pt-6">
                             <span class="btn-cyber pl-6 pr-0 py-0 h-10 text-[10px] font-bold tracking-[0.2em]">
-                                <span class="mr-4">View Case Study</span>
+                                <span class="mr-4">View System Diagrams</span>
                                 <div class="w-10 h-10 icon-box flex items-center justify-center">
                                     <svg class="w-3.5 h-3.5 transform -rotate-45 group-hover:rotate-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                                 </div>
                             </span>
                         </div>
                     </div>
-                    <div class="md:w-1/2 p-4 md:p-8 overflow-hidden bg-[var(--hover-bg)]">
-                        <div class="relative w-full aspect-[4/3] bg-[var(--bg-color)] flex items-center justify-center overflow-hidden tech-corners">
-                            <div class="absolute inset-0 flex items-center justify-center opacity-5 text-4xl font-heading font-bold uppercase tracking-tighter">The Dark Arrival</div>
-                            <img src="Assets/dark arrival steam image  EPIC 24.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop';" alt="The Dark Arrival" class="object-cover w-[90%] h-[90%] grayscale group-hover:grayscale-0 transition-all duration-700 relative z-10 group-hover:scale-105">
+                    <div class="w-full lg:w-1/2 h-full p-8 md:p-16 overflow-hidden bg-[var(--hover-bg)] fade-up flex items-center justify-center">
+                        <div class="relative w-full aspect-[4/3] bg-[var(--bg-color)] flex items-center justify-center overflow-hidden tech-corners shadow-2xl">
+                            <div class="absolute inset-0 flex items-center justify-center opacity-5 text-4xl font-heading font-bold uppercase tracking-tighter z-0">The Dark Arrival</div>
+                            <!-- Video replaced static image here -->
+                            <video autoplay loop muted playsinline class="object-cover w-[90%] h-[90%] grayscale group-hover:grayscale-0 transition-all duration-700 relative z-10 group-hover:scale-105">
+                                <source src="Assets/Dark Arrival/DARK ARRIVAL MAIN MENU VIDEO 1.mp4" type="video/mp4">
+                            </video>
                         </div>
                     </div>
                 </div>
@@ -1468,6 +1477,112 @@
         };
 
         // Render Functions with Narrative Structure
+        function renderDarkArrivalContent(tab) {
+            const base = "Assets/Dark Arrival/";
+            const fallbackObj = "onerror=\"this.onerror=null; this.src='https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop';\"";
+            const contentContainer = document.getElementById("cs-content");
+            if (!contentContainer) return;
+            
+            let html = "";
+            
+            if(tab === "The Challenge") {
+                html = `
+                <div class="space-y-8 animate-fade-in w-full">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 border grid-border bg-[var(--bg-color)]">
+                        <div class="p-8 md:p-12 border-b md:border-b-0 md:border-r grid-border tech-corners relative">
+                            <span class="absolute top-0 right-0 p-2 text-[10px] font-doto opacity-30">[ PROBLEM ]</span>
+                            <h4 class="text-3xl font-heading font-bold uppercase tracking-tight mb-4 text-accent">Horror Immersion</h4>
+                            <p class="font-medium text-sm leading-relaxed opacity-80">
+                                Traditional menus and static UI elements instantly break the tension in survival horror. Players needed a way to manage inventory, read lore, and navigate without leaving the terrifying atmosphere of the game world.
+                            </p>
+                        </div>
+                        <div class="p-8 md:p-12 tech-corners relative bg-[var(--hover-bg)]">
+                            <span class="absolute top-0 right-0 p-2 text-[10px] font-doto opacity-30">[ CHALLENGE ]</span>
+                            <h4 class="text-3xl font-heading font-bold uppercase tracking-tight mb-4 text-[var(--text-color)]">Diegetic Menus</h4>
+                            <p class="font-medium text-sm leading-relaxed opacity-80">
+                                Designing a fully diegetic interface (the 3D Investigator's Journal) that feels grounded in reality, while maintaining clear UX for crucial gameplay functions.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="w-full aspect-[21/9] border grid-border overflow-hidden bg-[var(--text-color)] relative flex flex-col justify-center items-center p-8 tech-corners">
+                        <img src="${base}Capsul dark arrival steam image 14.png" ${fallbackObj} class="absolute inset-0 w-full h-full object-cover opacity-30 grayscale hover:grayscale-0 transition-all duration-700 blur-sm" alt="Hero Background">
+                        <img src="${base}DARK ARRIVAL TITLE.png" ${fallbackObj} class="relative z-10 w-3/4 max-w-lg object-contain transition-transform hover:scale-105 duration-500" alt="Title">
+                    </div>
+                </div>`;
+            } 
+            else if(tab === "UI Solution") {
+                html = `
+                <div class="space-y-8 animate-fade-in w-full">
+                    <div class="border grid-border bg-[var(--hover-bg)] p-8 md:p-12 tech-corners relative">
+                        <span class="absolute top-0 left-0 p-4 text-[10px] font-doto opacity-50 text-accent">// SOLUTION</span>
+                        <h4 class="text-3xl font-heading font-bold uppercase tracking-tight mb-6 mt-4">The 3D Journal</h4>
+                        <p class="font-medium text-base leading-relaxed opacity-90 max-w-3xl">
+                            A fully interactive, in-world 3D journal. The player physically raises the book into view, flipping pages to access settings, inventory, and lore. The UI lives within the environment, ensuring the tension is never broken.
+                        </p>
+                    </div>
+                    <div class="w-full border grid-border bg-[var(--bg-color)] flex items-center justify-center p-12 tech-corners aspect-[21/9] relative overflow-hidden">
+                         <img src="${base}RED LINE.png" ${fallbackObj} class="absolute inset-x-0 top-0 w-full h-auto object-cover opacity-50 mix-blend-screen" alt="Red Line Decorator">
+                         <img src="${base}Book.png" ${fallbackObj} class="w-full max-w-2xl h-auto object-contain hover:scale-105 transition-all duration-500 relative z-10 drop-shadow-2xl" alt="3D Journal Model">
+                    </div>
+                </div>`;
+            } 
+            else if(tab === "System Flow") {
+                html = `
+                <div class="flex flex-col items-center animate-fade-in w-full space-y-12">
+                    <div class="w-full border grid-border p-8 bg-[var(--bg-color)] tech-corners relative">
+                        <h4 class="text-[10px] tracking-[0.4em] uppercase opacity-50 font-bold font-doto mb-8 text-center text-accent">[ State Transitions ]</h4>
+                        <div class="flex flex-wrap justify-center items-center gap-6">
+                            ${["Exploration", "Clue Discovery", "Open Journal", "Analyze Data", "Deduction"].map((step, i, arr) => `
+                                <div class="px-6 py-4 border border-[var(--border-color)] bg-[var(--hover-bg)] text-xs font-bold tracking-[0.2em] uppercase font-doto cyber-tag relative shadow-[4px_4px_0px_var(--accent-primary)] transition-all">${step}</div>
+                                ${i < arr.length - 1 ? '<div class="font-bold text-accent text-xl animate-pulse">➔</div>' : ''}
+                            `).join("")}
+                        </div>
+                    </div>
+                    <div class="w-full aspect-[21/9] border grid-border overflow-hidden tech-corners bg-[var(--hover-bg)] p-4 relative">
+                        <span class="absolute top-4 left-4 p-2 text-[10px] font-doto text-accent z-20 bg-[var(--bg-color)] shadow-[2px_2px_0px_var(--text-color)] cyber-tag">> Loading Screen Flow</span>
+                        <img src="${base}Loading screen image.png" ${fallbackObj} class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 border grid-border" alt="Loading Screen Flow">
+                    </div>
+                </div>`;
+            } 
+            else if(tab === "Implementation") {
+                html = `
+                <div class="space-y-8 animate-fade-in w-full">
+                    <div class="border grid-border bg-[var(--bg-color)] p-8 md:p-12 tech-corners relative">
+                        <span class="absolute top-0 right-0 p-4 text-[10px] font-doto text-accent opacity-80">// UE5 (UMG)</span>
+                        <h4 class="text-3xl font-heading font-bold uppercase tracking-tight mb-6">Engine Depth</h4>
+                        <p class="font-medium text-base leading-relaxed opacity-90 mb-8 max-w-3xl">
+                            Built entirely in Unreal Engine 5 using UMG 3D Widgets. Complex Blueprint logic manages the transitions between exploring the environment and engaging with the UI, ensuring seamless camera transitions and focus handling without losing sight of lurking threats.
+                        </p>
+                        <div class="flex flex-wrap gap-4">
+                            <span class="px-3 py-1 border border-[var(--text-color)] text-[10px] font-doto uppercase font-bold">UMG 3D Widgets</span>
+                            <span class="px-3 py-1 border border-[var(--text-color)] text-[10px] font-doto uppercase font-bold">Blueprint State Machines</span>
+                            <span class="px-3 py-1 border border-[var(--text-color)] text-[10px] font-doto uppercase font-bold">Diegetic Camera Logic</span>
+                        </div>
+                    </div>
+                    <div class="w-full border grid-border bg-[var(--text-color)] flex items-center justify-center p-8 tech-corners overflow-hidden relative aspect-video">
+                        <img src="${base}RED LINE.png" ${fallbackObj} class="absolute top-1/2 left-0 w-full h-auto object-cover opacity-50 z-0 animate-pulse" alt="Red Line Decorator">
+                        <img src="${base}Screenshot_2026-03-31_195708.png" ${fallbackObj} class="w-auto h-[90%] object-contain hover:scale-105 transition-all duration-500 relative z-10 drop-shadow-2xl" alt="Implementation Model">
+                    </div>
+                </div>`;
+            }
+            else if(tab === "Result") {
+                html = `
+                <div class="space-y-8 animate-fade-in w-full flex flex-col items-center">
+                    <div class="w-full border grid-border bg-[var(--bg-color)] p-8 tech-corners mb-4">
+                        <h4 class="text-xl font-bold font-heading uppercase text-accent mb-2 text-center">Live Interface Preview</h4>
+                        <p class="text-xs opacity-70 text-center font-doto uppercase">The final main menu integration.</p>
+                    </div>
+                    <div class="w-full relative border grid-border bg-[var(--text-color)] aspect-video flex items-center justify-center p-2 tech-corners shadow-2xl">
+                        <video autoplay loop muted playsinline class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                            <source src="${base}DARK ARRIVAL MAIN MENU VIDEO 1.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>`;
+            }
+            
+            contentContainer.innerHTML = html;
+        }
+
         function renderAngelContent(tab) {
             const base = "Assets/Customized_Angel_Case_Study/CUSTOMIZED ANGEL/";
             const fallbackObj = "onerror=\"this.onerror=null; this.src='https://images.unsplash.com/photo-1618331835717-801e976710b2?q=80&w=1000&auto=format&fit=crop';\"";
@@ -1877,8 +1992,10 @@
             container.innerHTML = tabsHTML + contentHTML;
             
             // Render specific project content
-            if (projectId === 'customized-angel' || projectId === 'dark-arrival' || projectId === 'suite-13') {
+            if (projectId === 'customized-angel' || projectId === 'suite-13') {
                 renderAngelContent(activeUxTab); // Using Angel's layout as generic for UE5/Unity tech projects until specific ones are added
+            } else if (projectId === 'dark-arrival') {
+                renderDarkArrivalContent(activeUxTab);
             } else if (projectId === 'tale-of-ronin') {
                 renderRoninContent(activeUxTab);
             } else if (projectId === 'find-the-dog') {

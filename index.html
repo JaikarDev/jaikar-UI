@@ -18,7 +18,7 @@
                         sans: ['Inter', 'sans-serif'],
                         heading: ['Space Grotesk', 'sans-serif'],
                         serif: ['Playfair Display', 'serif'],
-                        doto: ['Doto', 'sans-serif'], // Added Doto to Tailwind config
+                        doto: ['Doto', 'sans-serif'],
                     },
                     colors: {
                         brand: {
@@ -36,19 +36,28 @@
         }
     </script>
     <style>
+        /* NTE Inspired Base Theme */
         :root {
-            --bg-color: #F4F4F0;
-            --text-color: #111111;
-            --border-color: rgba(0, 0, 0, 0.15);
+            --bg-color: #F8F8F8;
+            --text-color: #0A0A0A;
+            --border-color: rgba(0, 0, 0, 0.2);
             --hover-bg: rgba(0, 0, 0, 0.05);
             --pattern-color: rgba(0, 0, 0, 0.1);
+            
+            /* Light Mode Accents (Red & Cyber Yellow) */
+            --accent-primary: #FF003C;
+            --accent-secondary: #FFCC00;
         }
         .dark {
             --bg-color: #0A0A0A;
-            --text-color: #F4F4F0;
+            --text-color: #F8F8F8;
             --border-color: rgba(255, 255, 255, 0.15);
             --hover-bg: rgba(255, 255, 255, 0.05);
             --pattern-color: rgba(255, 255, 255, 0.1);
+            
+            /* Dark Mode Accents (Neon Cyan & Hot Pink) */
+            --accent-primary: #00F0FF;
+            --accent-secondary: #FF007B;
         }
 
         body {
@@ -67,24 +76,24 @@
             border-color: var(--border-color);
         }
 
-        /* Modern Custom Scrollbar (Red Frosted Glass) */
+        /* Modern Custom Scrollbar (NTE Style) */
         :root {
             --sb-track: var(--bg-color);
-            --sb-thumb-grad: linear-gradient(135deg, rgba(239, 68, 68, 0.5) 0%, rgba(185, 28, 28, 0.4) 100%);
-            --sb-thumb-hover-grad: linear-gradient(135deg, rgba(239, 68, 68, 0.7) 0%, rgba(185, 28, 28, 0.6) 100%);
+            --sb-thumb-grad: var(--text-color);
+            --sb-thumb-hover-grad: var(--accent-primary);
             --sb-border: var(--bg-color);
         }
         .dark {
-            --sb-track: #1A1A1A;
-            --sb-thumb-grad: linear-gradient(135deg, rgba(239, 68, 68, 0.4) 0%, rgba(185, 28, 28, 0.3) 100%);
-            --sb-thumb-hover-grad: linear-gradient(135deg, rgba(239, 68, 68, 0.6) 0%, rgba(185, 28, 28, 0.5) 100%);
-            --sb-border: #1A1A1A;
+            --sb-track: #0A0A0A;
+            --sb-thumb-grad: #F8F8F8;
+            --sb-thumb-hover-grad: var(--accent-primary);
+            --sb-border: #0A0A0A;
         }
 
         ::-webkit-scrollbar {
-            width: 14px;
+            width: 12px;
             background-color: var(--sb-track);
-            border-left: 1px solid var(--border-color);
+            border-left: 1px dashed var(--border-color);
         }
 
         ::-webkit-scrollbar-track {
@@ -93,45 +102,13 @@
 
         ::-webkit-scrollbar-thumb {
             background: var(--sb-thumb-grad);
-            border-radius: 10px;
-            border: 3px solid var(--sb-border);
+            border: 2px solid var(--sb-border);
             background-clip: padding-box;
-            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4);
+            border-radius: 0px; /* Sharp corners for scrollbar */
         }
 
         ::-webkit-scrollbar-thumb:hover {
             background: var(--sb-thumb-hover-grad);
-        }
-
-        /* Scrollbar Arrows */
-        ::-webkit-scrollbar-button:single-button {
-            background-color: var(--sb-track);
-            display: block;
-            background-size: 10px;
-            background-repeat: no-repeat;
-            background-position: center;
-        }
-
-        /* Light Mode Arrows (Red) */
-        ::-webkit-scrollbar-button:single-button:vertical:decrement {
-            height: 18px;
-            width: 14px;
-            border-bottom: 1px solid var(--border-color);
-            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><path d='M50 30 L80 70 L20 70 Z' fill='%23ef4444' stroke='%23ef4444' stroke-width='10' stroke-linejoin='round'/></svg>");
-        }
-        ::-webkit-scrollbar-button:single-button:vertical:increment {
-            height: 18px;
-            width: 14px;
-            border-top: 1px solid var(--border-color);
-            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><path d='M20 30 L80 30 L50 70 Z' fill='%23ef4444' stroke='%23ef4444' stroke-width='10' stroke-linejoin='round'/></svg>");
-        }
-
-        /* Dark Mode Arrows (Red) */
-        .dark ::-webkit-scrollbar-button:single-button:vertical:decrement {
-            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><path d='M50 30 L80 70 L20 70 Z' fill='%23dc2626' stroke='%23dc2626' stroke-width='10' stroke-linejoin='round'/></svg>");
-        }
-        .dark ::-webkit-scrollbar-button:single-button:vertical:increment {
-            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><path d='M20 30 L80 30 L50 70 Z' fill='%23dc2626' stroke='%23dc2626' stroke-width='10' stroke-linejoin='round'/></svg>");
         }
 
         * {
@@ -142,37 +119,148 @@
             overflow: hidden;
         }
 
+        /* NTE Tech UI Elements */
+        
+        /* Cyber Cut-Corner Buttons */
+        .btn-cyber {
+            position: relative;
+            background: var(--bg-color);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .btn-cyber::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--text-color);
+            z-index: -1;
+            transform: translateX(-101%);
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .btn-cyber:hover {
+            color: var(--bg-color);
+            border-color: var(--text-color);
+        }
+
+        .btn-cyber:hover::before {
+            transform: translateX(0);
+        }
+
+        .btn-cyber .icon-box {
+            background: var(--hover-bg);
+            border-left: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-cyber:hover .icon-box {
+            background: transparent;
+            border-left-color: var(--bg-color);
+        }
+
+        /* Tech HUD Corners for Images */
+        .tech-corners {
+            position: relative;
+        }
+        .tech-corners::before, .tech-corners::after {
+            content: '';
+            position: absolute;
+            width: 16px; height: 16px;
+            border: 2px solid var(--accent-primary);
+            pointer-events: none;
+            z-index: 20;
+            transition: all 0.3s ease;
+        }
+        .tech-corners::before {
+            top: -1px; left: -1px;
+            border-right: none; border-bottom: none;
+        }
+        .tech-corners::after {
+            bottom: -1px; right: -1px;
+            border-left: none; border-top: none;
+        }
+        .group:hover .tech-corners::before {
+            width: 30px; height: 30px;
+        }
+        .group:hover .tech-corners::after {
+            width: 30px; height: 30px;
+        }
+
+        /* Diagonal Stripe Background */
+        .cyber-stripes {
+            background-image: repeating-linear-gradient(
+                -45deg,
+                transparent,
+                transparent 4px,
+                var(--hover-bg) 4px,
+                var(--hover-bg) 8px
+            );
+        }
+
+        /* Accent Text Colors */
+        .text-accent {
+            color: var(--accent-primary);
+        }
+
+        /* Navigation Pill Update */
+        #nav-pill {
+            transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+            background: var(--text-color);
+            border-bottom: 2px solid var(--accent-primary);
+            clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+            z-index: -1;
+        }
+        
+        .nav-item {
+            transition: color 0.3s ease;
+            color: var(--text-color);
+        }
+        .nav-item.active-pill {
+            color: var(--bg-color);
+        }
+
+        /* Tags Update */
+        .cyber-tag {
+            clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+            background: var(--text-color);
+            color: var(--bg-color);
+            font-family: 'Doto', sans-serif;
+            border: none;
+        }
+
+
         /* Adaptive & Interactive Custom Cursor */
         #cursor-dot {
             position: fixed;
             top: 0; left: 0;
             width: 8px; height: 8px;
-            background-color: var(--text-color);
-            border-radius: 50%;
+            background-color: var(--accent-primary);
+            border-radius: 0;
             pointer-events: none;
             z-index: 9999;
-            mix-blend-mode: difference;
-            transform: translate(calc(var(--x, -100px) - 50%), calc(var(--y, -100px) - 50%)) scale(var(--dot-scale, 1));
-            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease, opacity 0.3s ease;
+            transform: translate(calc(var(--x, -100px) - 50%), calc(var(--y, -100px) - 50%)) scale(var(--dot-scale, 1)) rotate(45deg);
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
             will-change: transform;
         }
 
         #cursor-ring {
             position: fixed;
             top: 0; left: 0;
-            width: 36px; height: 36px;
-            border: 1px solid var(--text-color);
-            border-radius: 50%;
+            width: 40px; height: 40px;
+            border: 1px dashed var(--text-color);
+            border-radius: 0;
             pointer-events: none;
             z-index: 9998;
-            mix-blend-mode: difference;
             transform: translate(calc(var(--rx, -100px) - 50%), calc(var(--ry, -100px) - 50%)) scale(var(--ring-scale, 1));
-            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, opacity 0.3s ease;
             will-change: transform;
         }
-
-        .dark #cursor-dot { background-color: #ffffff; }
-        .dark #cursor-ring { border-color: #ffffff; }
 
         /* Cursor Interaction States */
         body.cursor-hover #cursor-dot {
@@ -180,15 +268,14 @@
             opacity: 0;
         }
         body.cursor-hover #cursor-ring {
-            --ring-scale: 1.6;
-            background-color: var(--text-color);
-            border-color: transparent;
-        }
-        .dark body.cursor-hover #cursor-ring {
-            background-color: #ffffff;
+            --ring-scale: 1.5;
+            background-color: transparent;
+            border: 1px solid var(--accent-primary);
+            border-radius: 50%;
         }
         body.cursor-clicking #cursor-ring {
-            --ring-scale: 1.1;
+            --ring-scale: 0.8;
+            border-style: solid;
         }
 
         /* Touch Device Overrides */
@@ -228,6 +315,7 @@
             align-items: center;
             justify-content: center;
             transition: background-color 0.3s;
+            clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
         }
 
         /* Marquee Animation */
@@ -243,38 +331,9 @@
             white-space: nowrap;
         }
 
-        /* Pill Navigation Styles */
-        #nav-pill {
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            /* Light Theme: Black and Orange Frosted Glass */
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(249, 115, 22, 0.5) 100%);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(0, 0, 0, 0.2);
-            border-bottom-color: rgba(249, 115, 22, 0.4);
-            box-shadow: 0 4px 15px -3px rgba(249, 115, 22, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.1);
-        }
-        
-        .dark #nav-pill {
-            /* Dark Theme: White and Orange Frosted Glass */
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(249, 115, 22, 0.5) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-bottom-color: rgba(249, 115, 22, 0.5);
-            box-shadow: 0 4px 15px -3px rgba(249, 115, 22, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.6);
-        }
-        
-        .nav-item {
-            transition: color 0.3s ease;
-            color: var(--text-color);
-        }
-        .nav-item.active-pill {
-            color: var(--bg-color);
-        }
-
         /* Hover Effects */
         .hover-accent:hover {
-            color: var(--text-color);
-            opacity: 0.5;
+            color: var(--accent-primary);
         }
 
         /* Modal Styles */
@@ -313,37 +372,6 @@
             letter-spacing: -0.04em;
         }
 
-        /* Frosted Red Glass Button Style */
-        .btn-frosted-red {
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.5) 0%, rgba(185, 28, 28, 0.4) 100%);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-bottom-color: rgba(255, 255, 255, 0.1);
-            border-right-color: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-            box-shadow: 0 10px 30px -10px rgba(220, 38, 38, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.4);
-            transition: all 0.3s ease;
-        }
-        .dark .btn-frosted-red {
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.4) 0%, rgba(185, 28, 28, 0.3) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-bottom-color: rgba(255, 255, 255, 0.05);
-            border-right-color: rgba(255, 255, 255, 0.05);
-            box-shadow: 0 10px 30px -10px rgba(220, 38, 38, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.2);
-        }
-        .btn-frosted-red:hover,
-        .group:hover .btn-frosted-red {
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.7) 0%, rgba(185, 28, 28, 0.6) 100%);
-            box-shadow: 0 15px 40px -10px rgba(220, 38, 38, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.5);
-            border-color: rgba(255, 255, 255, 0.4);
-        }
-        
-        .btn-icon-circle {
-            background-color: #ffffff;
-            color: #111111; 
-        }
-
         /* Text Outline for Hero Name */
         .text-outline {
             color: transparent !important;
@@ -357,13 +385,13 @@
 
         /* Marquee Magnifying Glass Styles */
         .text-gradient-cool {
-            background: linear-gradient(90deg, #10b981, #581c87, #3b82f6);
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
         .text-gradient-warm {
-            background: linear-gradient(90deg, #ef4444, #f97316);
+            background: linear-gradient(90deg, var(--accent-secondary), var(--accent-primary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -372,6 +400,66 @@
             clip-path: circle(120px at var(--mouse-x, -150px) var(--mouse-y, -150px));
             opacity: 0;
             transition: opacity 0.3s ease;
+        }
+
+        /* Cinematic Sequence Effect */
+        .cinematic-slice {
+            transition: opacity 0.1s ease, filter 0.1s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            /* To make sure they align perfectly as one continuous image */
+            background-size: 400% 100%;
+        }
+        .cinematic-slice:nth-child(1) { background-position: 0% 50%; }
+        .cinematic-slice:nth-child(2) { background-position: 33.333% 50%; }
+        .cinematic-slice:nth-child(3) { background-position: 66.666% 50%; }
+        .cinematic-slice:nth-child(4) { background-position: 100% 50%; }
+        
+        .slice-overlay {
+            position: absolute;
+            inset: 0;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.4);
+            border-right: 1px solid rgba(255,255,255,0.15);
+            pointer-events: none;
+        }
+
+        /* Sakura Cherry Blossom Effect for Light Mode */
+        #sakura-container {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 5;
+            overflow: hidden;
+            display: block; /* Active in Light Mode */
+        }
+        .dark #sakura-container {
+            display: none; /* Hidden in Dark Mode */
+        }
+        .sakura-wrapper {
+            position: absolute;
+            top: -10%;
+            animation: sakura-fall linear infinite;
+        }
+        .sakura-sway {
+            animation: sakura-sway ease-in-out infinite alternate;
+        }
+        .sakura-petal {
+            width: 14px;
+            height: 18px;
+            background: linear-gradient(135deg, rgba(255, 183, 197, 0.95) 0%, rgba(255, 209, 220, 0.7) 100%);
+            border-radius: 15px 2px 15px 2px;
+            box-shadow: 0 0 6px rgba(255, 183, 197, 0.5);
+            animation: sakura-spin linear infinite;
+        }
+        @keyframes sakura-fall {
+            0% { top: -10%; }
+            100% { top: 110%; }
+        }
+        @keyframes sakura-sway {
+            0% { transform: translateX(-40px); }
+            100% { transform: translateX(40px); }
+        }
+        @keyframes sakura-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -387,9 +475,9 @@
     <div id="case-study-modal" class="fixed inset-0 z-[200] overflow-y-auto">
         <!-- Close Button (Sticky) -->
         <div class="sticky top-0 left-0 w-full z-[210] p-4 md:p-6 flex justify-end pointer-events-none">
-            <button onclick="closeCaseStudy()" class="pointer-events-auto group inline-flex items-center gap-3 btn-frosted-red rounded-full pl-6 pr-1.5 py-1.5 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 cursor-none">
-                <span>Close</span>
-                <div class="w-8 h-8 rounded-full btn-icon-circle flex items-center justify-center">
+            <button onclick="closeCaseStudy()" class="pointer-events-auto group btn-cyber text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 cursor-none pl-6 pr-0 py-0 h-10">
+                <span class="mr-4">Close</span>
+                <div class="w-10 h-10 icon-box flex items-center justify-center">
                     <svg class="w-4 h-4 transform group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </div>
             </button>
@@ -419,22 +507,24 @@
     <!-- Mobile Fullscreen Menu -->
     <div id="mobile-menu" class="fixed inset-0 z-[150] flex flex-col items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300" style="background-color: var(--bg-color);">
         <div class="flex flex-col items-center space-y-8">
-            <!-- CHANGED TO DOTO -->
-            <a href="#home" class="mobile-nav-item text-4xl font-doto font-bold uppercase tracking-tight hover:opacity-50 transition-opacity">HOME</a>
-            <a href="#works" class="mobile-nav-item text-4xl font-doto font-bold uppercase tracking-tight hover:opacity-50 transition-opacity">WORKS</a>
-            <a href="#approach" class="mobile-nav-item text-4xl font-doto font-bold uppercase tracking-tight hover:opacity-50 transition-opacity">APPROACH</a>
-            <a href="#experience" class="mobile-nav-item text-4xl font-doto font-bold uppercase tracking-tight hover:opacity-50 transition-opacity">EXPERIENCE</a>
-            <a href="#about" class="mobile-nav-item text-4xl font-doto font-bold uppercase tracking-tight hover:opacity-50 transition-opacity">ABOUT</a>
-            <a href="#skills" class="mobile-nav-item text-4xl font-doto font-bold uppercase tracking-tight hover:opacity-50 transition-opacity">SKILLS</a>
-            <a href="#resume" class="mobile-nav-item text-4xl font-doto font-bold uppercase tracking-tight hover:opacity-50 transition-opacity">RESUME</a>
-            <a href="#blog" class="mobile-nav-item text-4xl font-doto font-bold uppercase tracking-tight hover:opacity-50 transition-opacity">BLOG</a>
+            <a href="#home" class="mobile-nav-item text-4xl font-doto font-bold uppercase tracking-tight hover:text-accent transition-opacity">HOME</a>
+            <a href="#works" class="mobile-nav-item text-4xl font-doto font-bold uppercase tracking-tight hover:text-accent transition-opacity">WORKS</a>
+            <a href="#approach" class="mobile-nav-item text-4xl font-doto font-bold uppercase tracking-tight hover:text-accent transition-opacity">APPROACH</a>
+            <a href="#experience" class="mobile-nav-item text-4xl font-doto font-bold uppercase tracking-tight hover:text-accent transition-opacity">EXPERIENCE</a>
+            <a href="#about" class="mobile-nav-item text-4xl font-doto font-bold uppercase tracking-tight hover:text-accent transition-opacity">ABOUT</a>
+            <a href="#skills" class="mobile-nav-item text-4xl font-doto font-bold uppercase tracking-tight hover:text-accent transition-opacity">SKILLS</a>
+            <a href="#resume" class="mobile-nav-item text-4xl font-doto font-bold uppercase tracking-tight hover:text-accent transition-opacity">RESUME</a>
+            <a href="#blog" class="mobile-nav-item text-4xl font-doto font-bold uppercase tracking-tight hover:text-accent transition-opacity">BLOG</a>
         </div>
     </div>
 
     <!-- Navigation -->
     <nav id="main-nav" class="fixed top-0 left-0 w-full z-[160] border-b grid-border transition-all duration-300" style="background-color: var(--bg-color);">
-        <div class="max-w-[1800px] mx-auto px-5 md:px-8 py-5 flex items-center justify-between border-x grid-border">
-            
+        <div class="max-w-[1800px] mx-auto px-5 md:px-8 py-5 flex items-center justify-between border-x grid-border relative">
+            <!-- Decorative HUD + -->
+            <div class="absolute top-2 left-2 text-[8px] opacity-30 font-doto">+</div>
+            <div class="absolute bottom-2 right-2 text-[8px] opacity-30 font-doto">+</div>
+
             <div class="flex items-center gap-6 md:gap-10">
                 <!-- Logo -->
                 <a href="#home" class="block w-12 h-12 flex-shrink-0 cursor-none group z-10">
@@ -442,9 +532,9 @@
                     <img src="Assets/LOGO/ON WHITE.png" alt="Jaikar Pothula Logo" class="w-full h-full object-contain hidden dark:block group-hover:scale-105 transition-transform" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=JP&background=0A0A0A&color=F4F4F0&size=128';">
                 </a>
 
-                <!-- Sliding Pill Navigation container (Desktop Only) -->
-                <div id="nav-wrapper" class="relative items-center hidden lg:flex">
-                    <div id="nav-pill" class="absolute h-[38px] rounded-full opacity-0 pointer-events-none z-0"></div>
+                <!-- Sliding Tech Navigation container (Desktop Only) -->
+                <div id="nav-wrapper" class="relative items-center hidden lg:flex font-doto">
+                    <div id="nav-pill" class="absolute h-[38px] opacity-0 pointer-events-none z-0"></div>
                     
                     <div class="flex space-x-2 relative z-10">
                         <a href="#home" class="nav-item px-4 py-2 text-[10px] tracking-[0.2em] uppercase font-bold">HOME</a>
@@ -459,14 +549,14 @@
                 </div>
             </div>
 
-            <div class="flex items-center ml-auto gap-4">
-                <button onclick="toggleTheme()" class="theme-toggle-btn border grid-border rounded-full hover:bg-[var(--text-color)] hover:text-[var(--bg-color)] transition-colors z-[160]">
+            <div class="flex items-center ml-auto gap-4 relative z-10">
+                <button onclick="toggleTheme()" class="theme-toggle-btn border grid-border hover:bg-[var(--text-color)] hover:text-[var(--bg-color)] transition-colors z-[160]">
                     <svg id="sun-icon" class="hidden dark:block w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" /></svg>
                     <svg id="moon-icon" class="block dark:hidden w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
                 </button>
                 
                 <!-- Mobile Hamburger Button -->
-                <button id="mobile-menu-btn" class="lg:hidden w-10 h-10 flex flex-col justify-center items-center gap-[5px] border grid-border rounded-full hover:bg-[var(--text-color)] hover:text-[var(--bg-color)] transition-colors z-[160]">
+                <button id="mobile-menu-btn" class="lg:hidden w-10 h-10 flex flex-col justify-center items-center gap-[5px] border grid-border hover:bg-[var(--text-color)] hover:text-[var(--bg-color)] transition-colors z-[160]" style="clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);">
                     <span class="w-4 h-[2px] bg-current transition-all duration-300"></span>
                     <span class="w-4 h-[2px] bg-current transition-all duration-300"></span>
                 </button>
@@ -478,40 +568,53 @@
     <main class="relative z-20 max-w-[1800px] mx-auto border-x grid-border pt-20">
         
         <!-- Hero Section -->
-        <section id="home" class="relative min-h-[90vh] flex flex-col border-b grid-border">
+        <section id="home" class="relative min-h-[90vh] flex flex-col border-b grid-border overflow-hidden">
+            
+            <!-- Cinematic Background Sequence -->
+            <div id="hero-cinematic-bg" class="absolute inset-0 z-0 pointer-events-none flex opacity-0 transition-opacity duration-300">
+                <div class="cinematic-slice w-1/4 h-full relative" style="background-image: url('https://images.unsplash.com/photo-1605379399642-870262d3d051?q=80&w=2000&auto=format&fit=crop');"><div class="slice-overlay"></div></div>
+                <div class="cinematic-slice w-1/4 h-full relative" style="background-image: url('https://images.unsplash.com/photo-1605379399642-870262d3d051?q=80&w=2000&auto=format&fit=crop');"><div class="slice-overlay"></div></div>
+                <div class="cinematic-slice w-1/4 h-full relative" style="background-image: url('https://images.unsplash.com/photo-1605379399642-870262d3d051?q=80&w=2000&auto=format&fit=crop');"><div class="slice-overlay"></div></div>
+                <div class="cinematic-slice w-1/4 h-full relative" style="background-image: url('https://images.unsplash.com/photo-1605379399642-870262d3d051?q=80&w=2000&auto=format&fit=crop');"><div class="slice-overlay"></div></div>
+            </div>
+
             <div class="flex-grow flex flex-col justify-center px-5 md:px-8 py-20 relative z-10">
+                <!-- Tech Decorators -->
+                <div class="absolute top-8 left-8 text-[10px] font-doto opacity-40">// SYSTEM.INIT</div>
+                <div class="absolute bottom-8 right-8 text-[10px] font-doto opacity-40">[ V.2.0.26 ]</div>
+
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-0 items-end">
                     
                     <!-- Left: Name -->
                     <div class="lg:col-span-8 reveal">
                         <h1 class="flex flex-col items-start text-left relative z-20">
-                            <span class="font-heading uppercase font-bold editorial-title text-red-600 relative z-0">JAIKAR</span>
+                            <span class="font-heading uppercase font-bold editorial-title text-accent relative z-0">JAIKAR</span>
                             <span class="font-heading uppercase font-bold editorial-title text-outline relative z-10 -mt-[0.12em]">POTHULA</span>
                         </h1>
                         <div class="mt-8 md:mt-12 flex items-center gap-6">
-                            <div class="w-12 h-[1px] bg-[var(--text-color)]"></div>
-                            <p class="text-[10px] md:text-xs tracking-[0.3em] md:tracking-[0.5em] uppercase font-bold">Game UI Artist | Systems & Gameplay</p>
+                            <div class="w-12 h-[1px] bg-[var(--accent-primary)]"></div>
+                            <p class="text-[10px] md:text-xs tracking-[0.3em] md:tracking-[0.5em] uppercase font-bold font-doto text-accent">Game UI Artist | Systems & Gameplay</p>
                         </div>
                     </div>
 
                     <!-- Right: About Snippet -->
                     <div class="lg:col-span-4 reveal lg:border-l grid-border lg:pl-12 lg:pb-4" style="transition-delay: 0.2s;">
                         <div class="flex justify-between items-start mb-8 relative">
-                            <h2 class="text-[10px] tracking-[0.4em] uppercase opacity-50 font-bold">ABOUT ME</h2>
+                            <h2 class="text-[10px] tracking-[0.4em] uppercase opacity-50 font-bold font-doto">// ABOUT ME</h2>
                             
                             <!-- Interactive QR Code Reveal -->
                             <div class="relative group z-50">
                                 <!-- Trigger Icon -->
-                                <div class="w-8 h-8 md:w-10 md:h-10 border grid-border rounded-sm flex items-center justify-center bg-[var(--hover-bg)] transition-all duration-300 group-hover:opacity-0 absolute right-0 top-0 cursor-none">
-                                    <svg class="w-4 h-4 md:w-5 md:h-5 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div class="w-8 h-8 md:w-10 md:h-10 border grid-border flex items-center justify-center bg-[var(--hover-bg)] transition-all duration-300 group-hover:opacity-0 absolute right-0 top-0 cursor-none" style="clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);">
+                                    <svg class="w-4 h-4 md:w-5 md:h-5 opacity-60 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path>
                                     </svg>
                                 </div>
                                 
                                 <!-- Hidden QR Code (Reveals on Hover) -->
-                                <div class="w-32 h-32 md:w-40 md:h-40 bg-white border grid-border p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 ease-out transform scale-50 group-hover:scale-100 origin-top-right absolute right-0 top-0 shadow-2xl cursor-none">
-                                    <img src="Assets/LOGO/qr.png" alt="Connect QR Code" class="w-full h-full object-contain" style="image-rendering: pixelated;">
-                                    <div class="absolute -bottom-6 right-0 text-[8px] font-bold tracking-[0.2em] uppercase opacity-70 whitespace-nowrap text-[var(--text-color)] pointer-events-none">Scan to Connect</div>
+                                <div class="w-32 h-32 md:w-40 md:h-40 bg-[var(--bg-color)] border border-[var(--accent-primary)] p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 ease-out transform scale-50 group-hover:scale-100 origin-top-right absolute right-0 top-0 shadow-2xl cursor-none" style="clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);">
+                                    <img src="Assets/LOGO/qr.png" alt="Connect QR Code" class="w-full h-full object-contain invert dark:invert-0" style="image-rendering: pixelated;">
+                                    <div class="absolute -bottom-6 right-0 text-[8px] font-bold tracking-[0.2em] font-doto uppercase opacity-70 whitespace-nowrap text-[var(--accent-primary)] pointer-events-none">Scan_To_Connect</div>
                                 </div>
                                 
                                 <!-- Spacer to keep layout intact -->
@@ -519,13 +622,16 @@
                             </div>
                         </div>
                         <div class="text-sm md:text-base leading-relaxed space-y-6 font-medium">
-                            <p>I am a <span class="font-bold">Game UI Artist</span> focused on crafting clear, responsive, and visually polished interfaces for gameplay-driven experiences.</p>
+                            <p>I am a <span class="font-bold text-accent">Game UI Artist</span> focused on crafting clear, responsive, and visually polished interfaces for gameplay-driven experiences.</p>
                             <p>I design HUDs, menus, and in-game UI systems that support fast decision making and maintain clarity under pressure.</p>
-                            <p>Experienced in <span class="font-bold">Unreal Engine 5</span> and <span class="font-bold">Unity</span>, I build UI directly in engine and collaborate across disciplines to deliver production-ready results.</p>
+                            <p>Experienced in <span class="font-bold text-accent">Unreal Engine 5</span> and <span class="font-bold text-accent">Unity</span>, I build UI directly in engine and collaborate across disciplines to deliver production-ready results.</p>
                         </div>
-                        <div class="mt-12 pt-8 border-t grid-border space-y-3">
-                            <p class="text-[9px] md:text-[10px] tracking-[0.2em] opacity-50 uppercase font-bold">SAY HELLO! SAY こんにちは! SAY HOLA! SAY నమస్కారం!</p>
-                            <a href="mailto:Jaikardevgame@gmail.com" class="block text-lg md:text-xl font-bold font-heading hover:italic transition-all uppercase underline decoration-2 underline-offset-4 break-all">Jaikardevgame@gmail.com</a>
+                        <div class="mt-12 pt-8 border-t grid-border space-y-3 relative">
+                            <!-- Target Decals -->
+                            <div class="absolute top-0 right-0 w-2 h-2 border-t border-r border-[var(--accent-primary)] mt-[-1px]"></div>
+                            
+                            <p class="text-[9px] md:text-[10px] tracking-[0.2em] opacity-50 uppercase font-bold font-doto">SAY HELLO! SAY こんにちは! SAY HOLA! SAY నమస్కారం!</p>
+                            <a href="mailto:Jaikardevgame@gmail.com" class="block text-lg md:text-xl font-bold font-heading hover:text-accent hover:italic transition-all uppercase underline decoration-2 underline-offset-4 break-all">Jaikardevgame@gmail.com</a>
                         </div>
                     </div>
 
@@ -534,20 +640,19 @@
         </section>
 
         <!-- Detailed Bio Section -->
-        <section id="about" class="border-b grid-border">
+        <section id="about" class="border-b grid-border relative">
             <div class="grid grid-cols-1 lg:grid-cols-12">
                 <div class="lg:col-span-4 p-8 md:p-12 border-b lg:border-b-0 lg:border-r grid-border reveal">
-                    <h2 class="text-[10px] tracking-[0.4em] uppercase opacity-50 font-bold">Philosophy</h2>
+                    <h2 class="text-[10px] tracking-[0.4em] uppercase opacity-50 font-bold font-doto">// PHILOSOPHY</h2>
                 </div>
                 <div class="lg:col-span-8 p-8 md:p-12 reveal">
-                    <!-- CHANGED TO DOTO -->
                     <p class="text-3xl md:text-5xl lg:text-6xl font-doto italic leading-tight mb-12">
                         I design and implement UI systems that connect gameplay, narrative, and player interaction.
                     </p>
                     <div class="grid md:grid-cols-2 gap-12 text-sm md:text-base font-medium leading-relaxed">
                         <div class="space-y-6">
                             <p>
-                                My work focuses on building modular, scalable UI frameworks in <span class="font-bold">Unreal Engine 5</span> and <span class="font-bold">Unity</span> that are production-ready and easy to iterate on.
+                                My work focuses on building modular, scalable UI frameworks in <span class="font-bold text-accent">Unreal Engine 5</span> and <span class="font-bold text-accent">Unity</span> that are production-ready and easy to iterate on.
                             </p>
                             <p>
                                 I prioritize clarity, readability, and performance—ensuring UI supports gameplay without breaking immersion. I focus on systems where UI plays a critical role in guiding the player experience.
@@ -568,38 +673,39 @@
 
         <!-- Works Section -->
         <section id="works" class="border-b grid-border">
-            <div class="p-8 md:p-12 border-b grid-border reveal">
-                <h2 class="text-[10px] tracking-[0.4em] uppercase opacity-50 mb-6 font-bold">LATEST PROJECTS</h2>
-                <!-- CHANGED TO DOTO -->
-                <h3 class="text-5xl md:text-7xl font-doto font-bold tracking-tighter uppercase"><span class="text-red-600">Interfaces That</span> <br><span class="font-doto italic font-normal normal-case">Drive Gameplay</span></h3>
+            <div class="p-8 md:p-12 border-b grid-border reveal relative">
+                <!-- Tech Decorators -->
+                <div class="absolute right-12 top-12 text-[10px] font-doto opacity-30">[ REC ]</div>
+                <h2 class="text-[10px] tracking-[0.4em] uppercase opacity-50 mb-6 font-bold font-doto">// LATEST PROJECTS</h2>
+                <h3 class="text-5xl md:text-7xl font-doto font-bold tracking-tighter uppercase"><span class="text-accent">Interfaces That</span> <br><span class="font-doto italic font-normal normal-case">Drive Gameplay</span></h3>
             </div>
 
             <!-- Mobile UI Category -->
-            <div class="p-4 md:p-6 bg-[var(--text-color)] text-[var(--bg-color)] border-b grid-border text-center text-xs md:text-sm font-bold tracking-[0.2em] uppercase reveal">
-                Mobile UI — Live-Service & Casual Systems
+            <div class="p-4 md:p-6 bg-[var(--text-color)] text-[var(--bg-color)] border-b grid-border text-center text-xs md:text-sm font-bold tracking-[0.2em] uppercase font-doto reveal">
+                [ Mobile UI — Live-Service & Casual Systems ]
             </div>
             
             <div class="grid grid-cols-1 border-b grid-border">
                 <!-- Project 1 -->
-                <div class="group cursor-pointer flex flex-col md:flex-row border-b grid-border last:border-b-0" onclick="openCaseStudy('find-the-dog')">
-                    <div class="md:w-1/2 p-8 md:p-12 flex flex-col justify-center border-b md:border-b-0 md:border-r grid-border group-hover:bg-[var(--hover-bg)] transition-colors">
+                <div class="group cursor-pointer flex flex-col md:flex-row border-b grid-border last:border-b-0 cyber-stripes" onclick="openCaseStudy('find-the-dog')">
+                    <div class="md:w-1/2 p-8 md:p-12 flex flex-col justify-center border-b md:border-b-0 md:border-r grid-border bg-[var(--bg-color)] transition-colors relative z-10">
                         <div class="mb-auto">
-                            <span class="inline-block border border-current px-3 py-1 rounded-full text-[9px] font-bold tracking-[0.2em] uppercase mb-6">MOBILE UI</span>
+                            <span class="inline-block px-3 py-1 text-[9px] tracking-[0.2em] uppercase mb-6 cyber-tag">MOBILE UI</span>
                         </div>
                         <h4 class="text-4xl md:text-5xl font-heading font-bold uppercase tracking-tight mb-4">Find the Dog</h4>
-                        <p class="text-[10px] md:text-xs tracking-[0.2em] uppercase font-bold opacity-50 mb-8">Live-Service / Casual / Mobile UX</p>
+                        <p class="text-[10px] md:text-xs tracking-[0.2em] font-doto uppercase font-bold opacity-50 mb-8">> Live-Service / Casual / Mobile UX</p>
                         <div class="mt-auto pt-6">
-                            <span class="inline-flex items-center gap-3 btn-frosted-red rounded-full pl-5 pr-1.5 py-1.5 text-[10px] font-bold tracking-[0.2em] uppercase transition-all duration-300">
-                                <span>View Case Study</span>
-                                <div class="w-7 h-7 rounded-full btn-icon-circle flex items-center justify-center">
+                            <span class="btn-cyber pl-6 pr-0 py-0 h-10 text-[10px] font-bold tracking-[0.2em]">
+                                <span class="mr-4">View Case Study</span>
+                                <div class="w-10 h-10 icon-box flex items-center justify-center">
                                     <svg class="w-3.5 h-3.5 transform -rotate-45 group-hover:rotate-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                                 </div>
                             </span>
                         </div>
                     </div>
-                    <div class="md:w-1/2 p-4 md:p-8 bg-[var(--bg-color)] overflow-hidden">
-                        <div class="relative w-full aspect-[4/3] bg-[#EFEFEF] dark:bg-[#1A1A1A] flex items-center justify-center overflow-hidden">
-                            <div class="absolute inset-0 flex items-center justify-center opacity-10 text-4xl font-heading font-bold uppercase tracking-tighter">Find the Dog</div>
+                    <div class="md:w-1/2 p-4 md:p-8 overflow-hidden bg-[var(--hover-bg)]">
+                        <div class="relative w-full aspect-[4/3] bg-[var(--bg-color)] flex items-center justify-center overflow-hidden tech-corners">
+                            <div class="absolute inset-0 flex items-center justify-center opacity-5 text-4xl font-heading font-bold uppercase tracking-tighter">Find the Dog</div>
                             <img src="Assets/Find the Dog/jaikar-pothula-main-title-1.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=2000&auto=format&fit=crop';" alt="Find the Dog" class="object-cover w-[90%] h-[90%] grayscale group-hover:grayscale-0 transition-all duration-700 relative z-10 group-hover:scale-105">
                         </div>
                     </div>
@@ -607,113 +713,113 @@
             </div>
 
             <!-- PC / Game UI Category -->
-            <div class="p-4 md:p-6 bg-[var(--text-color)] text-[var(--bg-color)] border-b grid-border text-center text-xs md:text-sm font-bold tracking-[0.2em] uppercase reveal">
-                Game UI — Systems & Gameplay (PC / Console)
+            <div class="p-4 md:p-6 bg-[var(--text-color)] text-[var(--bg-color)] border-b grid-border text-center text-xs md:text-sm font-bold tracking-[0.2em] uppercase font-doto reveal">
+                [ Game UI — Systems & Gameplay (PC / Console) ]
             </div>
 
             <div class="grid grid-cols-1 border-b grid-border">
                 
                 <!-- Project 2 -->
-                <div class="group cursor-pointer flex flex-col md:flex-row-reverse border-b grid-border" onclick="openCaseStudy('dark-arrival')">
-                    <div class="md:w-1/2 p-8 md:p-12 flex flex-col justify-center border-b md:border-b-0 md:border-l grid-border group-hover:bg-[var(--hover-bg)] transition-colors">
+                <div class="group cursor-pointer flex flex-col md:flex-row-reverse border-b grid-border cyber-stripes" onclick="openCaseStudy('dark-arrival')">
+                    <div class="md:w-1/2 p-8 md:p-12 flex flex-col justify-center border-b md:border-b-0 md:border-l grid-border bg-[var(--bg-color)] transition-colors relative z-10">
                         <div class="mb-auto flex justify-between items-start">
-                            <span class="inline-block border border-current px-3 py-1 rounded-full text-[9px] font-bold tracking-[0.2em] uppercase mb-6">PC GAME UI</span>
-                            <span class="inline-flex items-center gap-1.5 border border-current px-3 py-1 rounded-full text-[8px] font-bold tracking-[0.2em] uppercase">
-                                <span class="w-1.5 h-1.5 rounded-full bg-[var(--text-color)] animate-pulse"></span> In Dev
+                            <span class="inline-block px-3 py-1 text-[9px] tracking-[0.2em] uppercase mb-6 cyber-tag">PC GAME UI</span>
+                            <span class="inline-flex items-center gap-1.5 border border-[var(--accent-primary)] px-3 py-1 text-[8px] font-bold tracking-[0.2em] uppercase text-accent font-doto" style="clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);">
+                                <span class="w-1.5 h-1.5 bg-[var(--accent-primary)] animate-pulse"></span> In Dev
                             </span>
                         </div>
                         <h4 class="text-4xl md:text-5xl font-heading font-bold uppercase tracking-tight mb-4">The Dark Arrival</h4>
-                        <p class="text-[10px] md:text-xs tracking-[0.2em] uppercase font-bold opacity-50 mb-8">3D Investigator's Journal / Core UI / UE5</p>
+                        <p class="text-[10px] md:text-xs tracking-[0.2em] font-doto uppercase font-bold opacity-50 mb-8">> 3D Investigator's Journal / Core UI / UE5</p>
                         <div class="mt-auto pt-6">
-                            <span class="inline-flex items-center gap-3 btn-frosted-red rounded-full pl-5 pr-1.5 py-1.5 text-[10px] font-bold tracking-[0.2em] uppercase transition-all duration-300">
-                                <span>View Case Study</span>
-                                <div class="w-7 h-7 rounded-full btn-icon-circle flex items-center justify-center">
+                            <span class="btn-cyber pl-6 pr-0 py-0 h-10 text-[10px] font-bold tracking-[0.2em]">
+                                <span class="mr-4">View Case Study</span>
+                                <div class="w-10 h-10 icon-box flex items-center justify-center">
                                     <svg class="w-3.5 h-3.5 transform -rotate-45 group-hover:rotate-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                                 </div>
                             </span>
                         </div>
                     </div>
-                    <div class="md:w-1/2 p-4 md:p-8 bg-[var(--bg-color)] overflow-hidden">
-                        <div class="relative w-full aspect-[4/3] bg-[#EFEFEF] dark:bg-[#1A1A1A] flex items-center justify-center overflow-hidden">
-                            <div class="absolute inset-0 flex items-center justify-center opacity-10 text-4xl font-heading font-bold uppercase tracking-tighter">The Dark Arrival</div>
+                    <div class="md:w-1/2 p-4 md:p-8 overflow-hidden bg-[var(--hover-bg)]">
+                        <div class="relative w-full aspect-[4/3] bg-[var(--bg-color)] flex items-center justify-center overflow-hidden tech-corners">
+                            <div class="absolute inset-0 flex items-center justify-center opacity-5 text-4xl font-heading font-bold uppercase tracking-tighter">The Dark Arrival</div>
                             <img src="Assets/dark arrival steam image  EPIC 24.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop';" alt="The Dark Arrival" class="object-cover w-[90%] h-[90%] grayscale group-hover:grayscale-0 transition-all duration-700 relative z-10 group-hover:scale-105">
                         </div>
                     </div>
                 </div>
 
                 <!-- Project 3 -->
-                <div class="group cursor-pointer flex flex-col md:flex-row border-b grid-border" onclick="openCaseStudy('suite-13')">
-                    <div class="md:w-1/2 p-8 md:p-12 flex flex-col justify-center border-b md:border-b-0 md:border-r grid-border group-hover:bg-[var(--hover-bg)] transition-colors">
+                <div class="group cursor-pointer flex flex-col md:flex-row border-b grid-border cyber-stripes" onclick="openCaseStudy('suite-13')">
+                    <div class="md:w-1/2 p-8 md:p-12 flex flex-col justify-center border-b md:border-b-0 md:border-r grid-border bg-[var(--bg-color)] transition-colors relative z-10">
                         <div class="mb-auto flex justify-between items-start">
-                            <span class="inline-block border border-current px-3 py-1 rounded-full text-[9px] font-bold tracking-[0.2em] uppercase mb-6">PC GAME UI</span>
-                            <span class="inline-flex items-center gap-1.5 border border-current px-3 py-1 rounded-full text-[8px] font-bold tracking-[0.2em] uppercase">
-                                <span class="w-1.5 h-1.5 rounded-full bg-[var(--text-color)] animate-pulse"></span> In Dev
+                            <span class="inline-block px-3 py-1 text-[9px] tracking-[0.2em] uppercase mb-6 cyber-tag">PC GAME UI</span>
+                            <span class="inline-flex items-center gap-1.5 border border-[var(--accent-primary)] px-3 py-1 text-[8px] font-bold tracking-[0.2em] uppercase text-accent font-doto" style="clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);">
+                                <span class="w-1.5 h-1.5 bg-[var(--accent-primary)] animate-pulse"></span> In Dev
                             </span>
                         </div>
                         <h4 class="text-4xl md:text-5xl font-heading font-bold uppercase tracking-tight mb-4">Suite 13</h4>
-                        <p class="text-[10px] md:text-xs tracking-[0.2em] uppercase font-bold opacity-50 mb-8">System-driven UI / Gameplay HUD</p>
+                        <p class="text-[10px] md:text-xs tracking-[0.2em] font-doto uppercase font-bold opacity-50 mb-8">> System-driven UI / Gameplay HUD</p>
                         <div class="mt-auto pt-6">
-                            <span class="inline-flex items-center gap-3 btn-frosted-red rounded-full pl-5 pr-1.5 py-1.5 text-[10px] font-bold tracking-[0.2em] uppercase transition-all duration-300">
-                                <span>View Case Study</span>
-                                <div class="w-7 h-7 rounded-full btn-icon-circle flex items-center justify-center">
+                            <span class="btn-cyber pl-6 pr-0 py-0 h-10 text-[10px] font-bold tracking-[0.2em]">
+                                <span class="mr-4">View Case Study</span>
+                                <div class="w-10 h-10 icon-box flex items-center justify-center">
                                     <svg class="w-3.5 h-3.5 transform -rotate-45 group-hover:rotate-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                                 </div>
                             </span>
                         </div>
                     </div>
-                    <div class="md:w-1/2 p-4 md:p-8 bg-[var(--bg-color)] overflow-hidden">
-                        <div class="relative w-full aspect-[4/3] bg-[#EFEFEF] dark:bg-[#1A1A1A] flex items-center justify-center overflow-hidden">
-                            <div class="absolute inset-0 flex items-center justify-center opacity-10 text-4xl font-heading font-bold uppercase tracking-tighter">Suite 13</div>
+                    <div class="md:w-1/2 p-4 md:p-8 overflow-hidden bg-[var(--hover-bg)]">
+                        <div class="relative w-full aspect-[4/3] bg-[var(--bg-color)] flex items-center justify-center overflow-hidden tech-corners">
+                            <div class="absolute inset-0 flex items-center justify-center opacity-5 text-4xl font-heading font-bold uppercase tracking-tighter">Suite 13</div>
                             <img src="Assets/Main Menu Reference 2.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=2070&auto=format&fit=crop';" alt="Suite 13" class="object-cover w-[90%] h-[90%] grayscale group-hover:grayscale-0 transition-all duration-700 relative z-10 group-hover:scale-105">
                         </div>
                     </div>
                 </div>
 
                 <!-- Project 4 -->
-                <div class="group cursor-pointer flex flex-col md:flex-row-reverse border-b grid-border" onclick="openCaseStudy('customized-angel')">
-                    <div class="md:w-1/2 p-8 md:p-12 flex flex-col justify-center border-b md:border-b-0 md:border-l grid-border group-hover:bg-[var(--hover-bg)] transition-colors">
+                <div class="group cursor-pointer flex flex-col md:flex-row-reverse border-b grid-border cyber-stripes" onclick="openCaseStudy('customized-angel')">
+                    <div class="md:w-1/2 p-8 md:p-12 flex flex-col justify-center border-b md:border-b-0 md:border-l grid-border bg-[var(--bg-color)] transition-colors relative z-10">
                         <div class="mb-auto">
-                            <span class="inline-block border border-current px-3 py-1 rounded-full text-[9px] font-bold tracking-[0.2em] uppercase mb-6">PC GAME UI</span>
+                            <span class="inline-block px-3 py-1 text-[9px] tracking-[0.2em] uppercase mb-6 cyber-tag">PC GAME UI</span>
                         </div>
                         <h4 class="text-4xl md:text-5xl font-heading font-bold uppercase tracking-tight mb-4">Customized Angel</h4>
-                        <p class="text-[10px] md:text-xs tracking-[0.2em] uppercase font-bold opacity-50 mb-8">Timeline UI / Interaction Systems / Unity</p>
+                        <p class="text-[10px] md:text-xs tracking-[0.2em] font-doto uppercase font-bold opacity-50 mb-8">> Timeline UI / Interaction Systems / Unity</p>
                         <div class="mt-auto pt-6">
-                            <span class="inline-flex items-center gap-3 btn-frosted-red rounded-full pl-5 pr-1.5 py-1.5 text-[10px] font-bold tracking-[0.2em] uppercase transition-all duration-300">
-                                <span>View Case Study</span>
-                                <div class="w-7 h-7 rounded-full btn-icon-circle flex items-center justify-center">
+                            <span class="btn-cyber pl-6 pr-0 py-0 h-10 text-[10px] font-bold tracking-[0.2em]">
+                                <span class="mr-4">View Case Study</span>
+                                <div class="w-10 h-10 icon-box flex items-center justify-center">
                                     <svg class="w-3.5 h-3.5 transform -rotate-45 group-hover:rotate-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                                 </div>
                             </span>
                         </div>
                     </div>
-                    <div class="md:w-1/2 p-4 md:p-8 bg-[var(--bg-color)] overflow-hidden">
-                        <div class="relative w-full aspect-[4/3] bg-[#EFEFEF] dark:bg-[#1A1A1A] flex items-center justify-center overflow-hidden">
-                            <div class="absolute inset-0 flex items-center justify-center opacity-10 text-4xl font-heading font-bold uppercase tracking-tighter">Customized Angel</div>
+                    <div class="md:w-1/2 p-4 md:p-8 overflow-hidden bg-[var(--hover-bg)]">
+                        <div class="relative w-full aspect-[4/3] bg-[var(--bg-color)] flex items-center justify-center overflow-hidden tech-corners">
+                            <div class="absolute inset-0 flex items-center justify-center opacity-5 text-4xl font-heading font-bold uppercase tracking-tighter">Customized Angel</div>
                             <img src="Assets/jaikar-pothula-title.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=2071&auto=format&fit=crop';" alt="Customized Angel" class="object-cover w-[90%] h-[90%] grayscale group-hover:grayscale-0 transition-all duration-700 relative z-10 group-hover:scale-105">
                         </div>
                     </div>
                 </div>
 
                 <!-- Project 5 -->
-                <div class="group cursor-pointer flex flex-col md:flex-row border-b grid-border last:border-b-0" onclick="openCaseStudy('tale-of-ronin')">
-                    <div class="md:w-1/2 p-8 md:p-12 flex flex-col justify-center border-b md:border-b-0 md:border-r grid-border group-hover:bg-[var(--hover-bg)] transition-colors">
+                <div class="group cursor-pointer flex flex-col md:flex-row border-b grid-border last:border-b-0 cyber-stripes" onclick="openCaseStudy('tale-of-ronin')">
+                    <div class="md:w-1/2 p-8 md:p-12 flex flex-col justify-center border-b md:border-b-0 md:border-r grid-border bg-[var(--bg-color)] transition-colors relative z-10">
                         <div class="mb-auto">
-                            <span class="inline-block border border-current px-3 py-1 rounded-full text-[9px] font-bold tracking-[0.2em] uppercase mb-6">PC GAME UI</span>
+                            <span class="inline-block px-3 py-1 text-[9px] tracking-[0.2em] uppercase mb-6 cyber-tag">PC GAME UI</span>
                         </div>
                         <h4 class="text-4xl md:text-5xl font-heading font-bold uppercase tracking-tight mb-4">Tale of Ronin</h4>
-                        <p class="text-[10px] md:text-xs tracking-[0.2em] uppercase font-bold opacity-50 mb-8">UI/UX Design / Core Systems</p>
+                        <p class="text-[10px] md:text-xs tracking-[0.2em] font-doto uppercase font-bold opacity-50 mb-8">> UI/UX Design / Core Systems</p>
                         <div class="mt-auto pt-6">
-                            <span class="inline-flex items-center gap-3 btn-frosted-red rounded-full pl-5 pr-1.5 py-1.5 text-[10px] font-bold tracking-[0.2em] uppercase transition-all duration-300">
-                                <span>View Case Study</span>
-                                <div class="w-7 h-7 rounded-full btn-icon-circle flex items-center justify-center">
+                            <span class="btn-cyber pl-6 pr-0 py-0 h-10 text-[10px] font-bold tracking-[0.2em]">
+                                <span class="mr-4">View Case Study</span>
+                                <div class="w-10 h-10 icon-box flex items-center justify-center">
                                     <svg class="w-3.5 h-3.5 transform -rotate-45 group-hover:rotate-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                                 </div>
                             </span>
                         </div>
                     </div>
-                    <div class="md:w-1/2 p-4 md:p-8 bg-[var(--bg-color)] overflow-hidden">
-                        <div class="relative w-full aspect-[4/3] bg-[#EFEFEF] dark:bg-[#1A1A1A] flex items-center justify-center overflow-hidden">
-                            <div class="absolute inset-0 flex items-center justify-center opacity-10 text-4xl font-heading font-bold uppercase tracking-tighter">Tale of Ronin</div>
+                    <div class="md:w-1/2 p-4 md:p-8 overflow-hidden bg-[var(--hover-bg)]">
+                        <div class="relative w-full aspect-[4/3] bg-[var(--bg-color)] flex items-center justify-center overflow-hidden tech-corners">
+                            <div class="absolute inset-0 flex items-center justify-center opacity-5 text-4xl font-heading font-bold uppercase tracking-tighter">Tale of Ronin</div>
                             <img src="Assets/HERO.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1509114397022-ed747cca3f65?q=80&w=2070&auto=format&fit=crop';" alt="Tale of Ronin" class="object-cover w-[90%] h-[90%] grayscale group-hover:grayscale-0 transition-all duration-700 relative z-10 group-hover:scale-105">
                         </div>
                     </div>
@@ -725,12 +831,10 @@
         <section id="approach" class="border-b grid-border">
             <div class="grid grid-cols-1 lg:grid-cols-12 border-b grid-border">
                 <div class="lg:col-span-4 p-8 md:p-12 border-b lg:border-b-0 lg:border-r grid-border reveal">
-                    <h2 class="text-[10px] tracking-[0.4em] uppercase opacity-50 font-bold mb-4">APPROACH</h2>
-                    <!-- CHANGED TO DOTO -->
-                    <h3 class="text-4xl md:text-5xl font-doto font-bold tracking-tighter uppercase"><span class="text-red-600">Ideas into</span> <br><span class="font-doto italic font-normal normal-case">Impact</span></h3>
+                    <h2 class="text-[10px] tracking-[0.4em] uppercase opacity-50 font-bold mb-4 font-doto">// APPROACH</h2>
+                    <h3 class="text-4xl md:text-5xl font-doto font-bold tracking-tighter uppercase"><span class="text-accent">Ideas into</span> <br><span class="font-doto italic font-normal normal-case">Impact</span></h3>
                 </div>
                 <div class="lg:col-span-8 p-8 md:p-12 reveal flex flex-col justify-center">
-                    <!-- CHANGED TO DOTO -->
                     <p class="text-xl md:text-3xl font-doto font-medium leading-relaxed mb-6">
                         I design UI systems that connect creative vision with scalable technical execution supporting gameplay, narrative, and player decision making.
                     </p>
@@ -742,36 +846,33 @@
 
             <div class="grid md:grid-cols-3">
                 <div class="p-8 md:p-12 border-b md:border-b-0 md:border-r grid-border hover:bg-[var(--hover-bg)] transition-colors reveal">
-                    <span class="text-3xl font-serif italic block mb-8">01</span>
-                    <!-- CHANGED TO DOTO -->
+                    <span class="text-3xl font-serif italic block mb-8 text-accent">01</span>
                     <h4 class="text-2xl font-doto font-bold mb-4 uppercase tracking-tighter">System Design</h4>
                     <p class="text-sm font-medium opacity-70 mb-8">Translating gameplay systems into clear, structured UI that supports player understanding and interaction.</p>
-                    <ul class="text-xs font-bold tracking-wide uppercase opacity-50 space-y-3 list-none">
-                        <li>— Complex Mechanics to UI</li>
-                        <li>— Timelines & Evidence Boards</li>
-                        <li>— Information Hierarchy</li>
+                    <ul class="text-xs font-bold font-doto tracking-wide uppercase opacity-50 space-y-3 list-none">
+                        <li>> Complex Mechanics to UI</li>
+                        <li>> Timelines & Evidence Boards</li>
+                        <li>> Information Hierarchy</li>
                     </ul>
                 </div>
                 <div class="p-8 md:p-12 border-b md:border-b-0 md:border-r grid-border hover:bg-[var(--hover-bg)] transition-colors reveal" style="transition-delay: 0.1s;">
-                    <span class="text-3xl font-serif italic block mb-8">02</span>
-                    <!-- CHANGED TO DOTO -->
+                    <span class="text-3xl font-serif italic block mb-8 text-accent">02</span>
                     <h4 class="text-2xl font-doto font-bold mb-4 uppercase tracking-tighter">Architecture</h4>
                     <p class="text-sm font-medium opacity-70 mb-8">Building modular, scalable UI frameworks that are production-ready and adaptable.</p>
-                    <ul class="text-xs font-bold tracking-wide uppercase opacity-50 space-y-3 list-none">
-                        <li>— UMG & Blueprint Frameworks</li>
-                        <li>— Reusable Components</li>
-                        <li>— Cross-Team Scalability</li>
+                    <ul class="text-xs font-bold font-doto tracking-wide uppercase opacity-50 space-y-3 list-none">
+                        <li>> UMG & Blueprint Frameworks</li>
+                        <li>> Reusable Components</li>
+                        <li>> Cross-Team Scalability</li>
                     </ul>
                 </div>
                 <div class="p-8 md:p-12 hover:bg-[var(--hover-bg)] transition-colors reveal" style="transition-delay: 0.2s;">
-                    <span class="text-3xl font-serif italic block mb-8">03</span>
-                    <!-- CHANGED TO DOTO -->
+                    <span class="text-3xl font-serif italic block mb-8 text-accent">03</span>
                     <h4 class="text-2xl font-doto font-bold mb-4 uppercase tracking-tighter">Implementation</h4>
                     <p class="text-sm font-medium opacity-70 mb-8">Bringing UI systems to life directly in-engine with real gameplay integration.</p>
-                    <ul class="text-xs font-bold tracking-wide uppercase opacity-50 space-y-3 list-none">
-                        <li>— UE5 & Unity Integration</li>
-                        <li>— Diegetic Interface Logic</li>
-                        <li>— Performance & Responsiveness</li>
+                    <ul class="text-xs font-bold font-doto tracking-wide uppercase opacity-50 space-y-3 list-none">
+                        <li>> UE5 & Unity Integration</li>
+                        <li>> Diegetic Interface Logic</li>
+                        <li>> Performance & Responsiveness</li>
                     </ul>
                 </div>
             </div>
@@ -780,19 +881,19 @@
             <div class="border-t grid-border p-8 md:p-12 bg-[var(--text-color)] text-[var(--bg-color)] reveal">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                     <div class="md:col-span-1">
-                        <h4 class="text-sm font-bold tracking-[0.4em] uppercase opacity-50">Tools & Flow</h4>
+                        <h4 class="text-sm font-bold tracking-[0.4em] uppercase font-doto text-accent">Tools & Flow</h4>
                     </div>
                     <div class="md:col-span-3 grid grid-cols-2 md:grid-cols-3 gap-8">
                         <div>
-                            <span class="block text-[10px] uppercase tracking-widest opacity-50 mb-2">Design</span>
+                            <span class="block text-[10px] font-doto uppercase tracking-widest opacity-50 mb-2">Design</span>
                             <span class="block font-serif italic text-xl">Figma, PS, Ai</span>
                         </div>
                         <div>
-                            <span class="block text-[10px] uppercase tracking-widest opacity-50 mb-2">Engine</span>
+                            <span class="block text-[10px] font-doto uppercase tracking-widest opacity-50 mb-2">Engine</span>
                             <span class="block font-serif italic text-xl">UE5, Unity</span>
                         </div>
                         <div>
-                            <span class="block text-[10px] uppercase tracking-widest opacity-50 mb-2">Pipeline</span>
+                            <span class="block text-[10px] font-doto uppercase tracking-widest opacity-50 mb-2">Pipeline</span>
                             <span class="block font-serif italic text-xl">Git, After Effects</span>
                         </div>
                     </div>
@@ -803,13 +904,14 @@
         <!-- Experience Section -->
         <section id="experience" class="border-b grid-border">
             <div class="grid grid-cols-1 lg:grid-cols-12 border-b grid-border">
-                <div class="lg:col-span-4 p-8 md:p-12 border-b lg:border-b-0 lg:border-r grid-border reveal">
-                    <h2 class="text-[10px] tracking-[0.4em] uppercase opacity-50 font-bold mb-4">CAREER LOG</h2>
-                    <h3 class="text-4xl md:text-5xl font-doto text-red-600 font-bold tracking-tighter uppercase">Experience</h3>
+                <div class="lg:col-span-4 p-8 md:p-12 border-b lg:border-b-0 lg:border-r grid-border reveal relative">
+                    <div class="absolute right-8 top-8 text-[10px] font-doto opacity-30">[ EXP ]</div>
+                    <h2 class="text-[10px] tracking-[0.4em] uppercase opacity-50 font-bold mb-4 font-doto">// CAREER LOG</h2>
+                    <h3 class="text-4xl md:text-5xl font-doto text-accent font-bold tracking-tighter uppercase">Experience</h3>
                 </div>
-                <div class="lg:col-span-8 p-8 md:p-12 reveal flex flex-col justify-center">
-                    <div class="border border-current p-6">
-                        <h4 class="text-[10px] tracking-[0.2em] font-bold uppercase mb-4 opacity-50">CURRENT FOCUS</h4>
+                <div class="lg:col-span-8 p-8 md:p-12 reveal flex flex-col justify-center bg-[var(--hover-bg)]">
+                    <div class="border border-[var(--accent-primary)] p-6 relative bg-[var(--bg-color)]" style="clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);">
+                        <h4 class="text-[10px] font-doto text-accent tracking-[0.2em] font-bold uppercase mb-4 opacity-80">> CURRENT FOCUS</h4>
                         <p class="text-sm md:text-base font-medium">
                             Designing scalable UI systems in Unreal Engine 5 using UMG and Blueprint. Building modular UI frameworks for fast iteration and production pipelines. Actively seeking full-time UI Artist / Game UI roles.
                         </p>
@@ -823,16 +925,16 @@
                 <!-- Job 1 -->
                 <div class="grid grid-cols-1 md:grid-cols-12 border-b grid-border hover:bg-[var(--hover-bg)] transition-colors reveal">
                     <div class="md:col-span-4 p-6 md:p-8 border-b md:border-b-0 md:border-r grid-border flex flex-col justify-between">
-                        <span class="text-[10px] font-bold tracking-[0.2em] uppercase opacity-50 mb-2">Internship</span>
-                        <span class="text-sm font-heading font-bold uppercase">Vault Productions</span>
+                        <span class="text-[10px] font-bold tracking-[0.2em] uppercase opacity-50 mb-2 font-doto">Internship</span>
+                        <span class="text-sm font-heading font-bold uppercase text-accent">Vault Productions</span>
                     </div>
                     <div class="md:col-span-8 p-6 md:p-8">
                         <h4 class="text-2xl font-serif italic mb-4">UI Artist / Technical UI Designer</h4>
                         <ul class="text-sm font-medium space-y-2 opacity-80 list-none">
-                            <li>— Led UI system implementation across The Dark Arrival and Suite 13</li>
-                            <li>— Designed and built a 3D Investigator Journal integrating gameplay</li>
-                            <li>— Implemented gameplay UI directly in Unreal Engine 5 using UMG</li>
-                            <li>— Presented a live playable build at GDC 2026</li>
+                            <li><span class="opacity-50">></span> Led UI system implementation across The Dark Arrival and Suite 13</li>
+                            <li><span class="opacity-50">></span> Designed and built a 3D Investigator Journal integrating gameplay</li>
+                            <li><span class="opacity-50">></span> Implemented gameplay UI directly in Unreal Engine 5 using UMG</li>
+                            <li><span class="opacity-50">></span> Presented a live playable build at GDC 2026</li>
                         </ul>
                     </div>
                 </div>
@@ -840,15 +942,15 @@
                 <!-- Job 2 -->
                 <div class="grid grid-cols-1 md:grid-cols-12 border-b grid-border hover:bg-[var(--hover-bg)] transition-colors reveal">
                     <div class="md:col-span-4 p-6 md:p-8 border-b md:border-b-0 md:border-r grid-border flex flex-col justify-between">
-                        <span class="text-[10px] font-bold tracking-[0.2em] uppercase opacity-50 mb-2">Internship</span>
-                        <span class="text-sm font-heading font-bold uppercase">Academy of Art University</span>
+                        <span class="text-[10px] font-bold tracking-[0.2em] uppercase opacity-50 mb-2 font-doto">Internship</span>
+                        <span class="text-sm font-heading font-bold uppercase text-accent">Academy of Art University</span>
                     </div>
                     <div class="md:col-span-8 p-6 md:p-8">
                         <h4 class="text-2xl font-serif italic mb-4">Game Development Intern</h4>
                         <ul class="text-sm font-medium space-y-2 opacity-80 list-none">
-                            <li>— Worked in a cross-functional team to design systems</li>
-                            <li>— Translated concepts into in-engine UI and features</li>
-                            <li>— Iterated on UI/UX through playtesting cycles</li>
+                            <li><span class="opacity-50">></span> Worked in a cross-functional team to design systems</li>
+                            <li><span class="opacity-50">></span> Translated concepts into in-engine UI and features</li>
+                            <li><span class="opacity-50">></span> Iterated on UI/UX through playtesting cycles</li>
                         </ul>
                     </div>
                 </div>
@@ -856,15 +958,15 @@
                 <!-- Job 3 -->
                 <div class="grid grid-cols-1 md:grid-cols-12 border-b grid-border hover:bg-[var(--hover-bg)] transition-colors reveal">
                     <div class="md:col-span-4 p-6 md:p-8 border-b md:border-b-0 md:border-r grid-border flex flex-col justify-between">
-                        <span class="text-[10px] font-bold tracking-[0.2em] uppercase opacity-50 mb-2">Freelance</span>
-                        <span class="text-sm font-heading font-bold uppercase">Remote</span>
+                        <span class="text-[10px] font-bold tracking-[0.2em] uppercase opacity-50 mb-2 font-doto">Freelance</span>
+                        <span class="text-sm font-heading font-bold uppercase text-accent">Remote</span>
                     </div>
                     <div class="md:col-span-8 p-6 md:p-8">
                         <h4 class="text-2xl font-serif italic mb-4">UI Designer</h4>
                         <ul class="text-sm font-medium space-y-2 opacity-80 list-none">
-                            <li>— Designed end-to-end UI/UX for a fantasy RPG</li>
-                            <li>— Built structured navigation and interaction patterns</li>
-                            <li>— Delivered high-fidelity UI ready for in-engine implementation</li>
+                            <li><span class="opacity-50">></span> Designed end-to-end UI/UX for a fantasy RPG</li>
+                            <li><span class="opacity-50">></span> Built structured navigation and interaction patterns</li>
+                            <li><span class="opacity-50">></span> Delivered high-fidelity UI ready for in-engine implementation</li>
                         </ul>
                     </div>
                 </div>
@@ -872,15 +974,15 @@
                 <!-- Job 4 -->
                 <div class="grid grid-cols-1 md:grid-cols-12 border-b grid-border hover:bg-[var(--hover-bg)] transition-colors reveal">
                     <div class="md:col-span-4 p-6 md:p-8 border-b md:border-b-0 md:border-r grid-border flex flex-col justify-between">
-                        <span class="text-[10px] font-bold tracking-[0.2em] uppercase opacity-50 mb-2">Academic Project</span>
-                        <span class="text-sm font-heading font-bold uppercase">Customized Angel</span>
+                        <span class="text-[10px] font-bold tracking-[0.2em] uppercase opacity-50 mb-2 font-doto">Academic Project</span>
+                        <span class="text-sm font-heading font-bold uppercase text-accent">Customized Angel</span>
                     </div>
                     <div class="md:col-span-8 p-6 md:p-8">
                         <h4 class="text-2xl font-serif italic mb-4">Designer & Programmer</h4>
                         <ul class="text-sm font-medium space-y-2 opacity-80 list-none">
-                            <li>— Designed timeline-based UI systems for tracking gameplay events</li>
-                            <li>— Built interaction systems supporting NPC behavior</li>
-                            <li>— Implemented UI systems in Unity using C#</li>
+                            <li><span class="opacity-50">></span> Designed timeline-based UI systems for tracking gameplay events</li>
+                            <li><span class="opacity-50">></span> Built interaction systems supporting NPC behavior</li>
+                            <li><span class="opacity-50">></span> Implemented UI systems in Unity using C#</li>
                         </ul>
                     </div>
                 </div>
@@ -889,41 +991,41 @@
         </section>
 
         <!-- Core Strengths / Skills Section -->
-        <section id="skills" class="py-20 md:py-32 px-8 md:px-12 border-b grid-border bg-[var(--bg-color)]">
+        <section id="skills" class="py-20 md:py-32 px-8 md:px-12 border-b grid-border bg-[var(--hover-bg)]">
             <div class="max-w-6xl mx-auto">
-                <h2 class="text-[10px] tracking-[0.4em] uppercase opacity-50 font-bold mb-20 text-center font-doto reveal">Core Strengths</h2>
+                <h2 class="text-[10px] tracking-[0.4em] uppercase opacity-50 font-bold mb-20 text-center font-doto reveal">// Core Strengths</h2>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-12">
                     <!-- Engine & Systems -->
-                    <div class="reveal">
-                        <h4 class="text-[11px] font-bold tracking-[0.2em] uppercase mb-10 font-doto">Engine & Systems</h4>
-                        <ul class="space-y-6 text-sm md:text-base font-medium opacity-70 list-none">
-                            <li>Unreal Engine 5 (UMG)</li>
-                            <li>Blueprint Logic</li>
-                            <li>Unity (C#)</li>
-                            <li>Modular UI Architecture</li>
+                    <div class="reveal p-6 bg-[var(--bg-color)] border grid-border tech-corners">
+                        <h4 class="text-[11px] font-bold tracking-[0.2em] uppercase mb-10 font-doto text-accent">Engine & Systems</h4>
+                        <ul class="space-y-6 text-sm md:text-base font-medium opacity-80 list-none font-doto">
+                            <li>> Unreal Engine 5 (UMG)</li>
+                            <li>> Blueprint Logic</li>
+                            <li>> Unity (C#)</li>
+                            <li>> Modular UI Architecture</li>
                         </ul>
                     </div>
 
                     <!-- UI Implementation -->
-                    <div class="reveal" style="transition-delay: 0.1s;">
-                        <h4 class="text-[11px] font-bold tracking-[0.2em] uppercase mb-10 font-doto">UI Implementation</h4>
-                        <ul class="space-y-6 text-sm md:text-base font-medium opacity-70 list-none">
-                            <li>HUDs & Menus</li>
-                            <li>UI State Logic</li>
-                            <li>3D / Diegetic UI</li>
-                            <li>Narrative Interaction</li>
+                    <div class="reveal p-6 bg-[var(--bg-color)] border grid-border tech-corners" style="transition-delay: 0.1s;">
+                        <h4 class="text-[11px] font-bold tracking-[0.2em] uppercase mb-10 font-doto text-accent">UI Implementation</h4>
+                        <ul class="space-y-6 text-sm md:text-base font-medium opacity-80 list-none font-doto">
+                            <li>> HUDs & Menus</li>
+                            <li>> UI State Logic</li>
+                            <li>> 3D / Diegetic UI</li>
+                            <li>> Narrative Interaction</li>
                         </ul>
                     </div>
 
                     <!-- Workflow -->
-                    <div class="reveal" style="transition-delay: 0.2s;">
-                        <h4 class="text-[11px] font-bold tracking-[0.2em] uppercase mb-10 font-doto">Workflow</h4>
-                        <ul class="space-y-6 text-sm md:text-base font-medium opacity-70 list-none">
-                            <li>Figma to Engine</li>
-                            <li>Cross-discipline Collaboration</li>
-                            <li>Technical Documentation</li>
-                            <li>Rapid Iteration</li>
+                    <div class="reveal p-6 bg-[var(--bg-color)] border grid-border tech-corners" style="transition-delay: 0.2s;">
+                        <h4 class="text-[11px] font-bold tracking-[0.2em] uppercase mb-10 font-doto text-accent">Workflow</h4>
+                        <ul class="space-y-6 text-sm md:text-base font-medium opacity-80 list-none font-doto">
+                            <li>> Figma to Engine</li>
+                            <li>> Cross-discipline Collab</li>
+                            <li>> Technical Docs</li>
+                            <li>> Rapid Iteration</li>
                         </ul>
                     </div>
                 </div>
@@ -932,23 +1034,24 @@
 
         <!-- Resume CTA Section -->
         <section id="resume" class="py-32 px-5 md:px-8 border-b grid-border relative bg-[var(--text-color)] text-[var(--bg-color)] flex flex-col items-center justify-center text-center">
-            <div class="reveal max-w-3xl">
-                <h2 class="text-[10px] tracking-[0.5em] uppercase opacity-50 mb-8 font-bold">DOCUMENTATION</h2>
+            <div class="absolute inset-0 cyber-stripes opacity-10 pointer-events-none"></div>
+            <div class="reveal max-w-3xl relative z-10">
+                <h2 class="text-[10px] tracking-[0.5em] uppercase opacity-50 mb-8 font-bold font-doto">// DOCUMENTATION</h2>
                 <!-- CHANGED TO DOTO -->
-                <h3 class="text-5xl md:text-7xl font-doto text-red-600 font-bold tracking-tighter uppercase mb-10">Beyond Design</h3>
+                <h3 class="text-5xl md:text-7xl font-doto text-accent font-bold tracking-tighter uppercase mb-10">Beyond Design</h3>
                 <p class="text-base md:text-xl font-medium leading-relaxed opacity-80 mb-12">
                     A deeper look into my work designing and implementing gameplay-driven UI systems across Unreal Engine 5. Focused on in-engine UI, system architecture, and building scalable interfaces that support real-time gameplay.
                 </p>
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full">
-                    <button onclick="openCaseStudy('resume')" class="group w-full sm:w-auto inline-flex items-center justify-between sm:justify-center gap-4 btn-frosted-red rounded-full pl-8 pr-2 py-2 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 cursor-none">
-                        <span>View Resume</span>
-                        <div class="w-10 h-10 rounded-full btn-icon-circle flex items-center justify-center flex-shrink-0">
+                    <button onclick="openCaseStudy('resume')" class="group w-full sm:w-auto inline-flex items-center justify-between sm:justify-center btn-cyber text-[var(--text-color)] pl-6 pr-0 py-0 h-12 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 cursor-none" style="background: var(--bg-color); border-color: var(--bg-color);">
+                        <span class="mr-4">View Resume</span>
+                        <div class="w-12 h-12 icon-box flex items-center justify-center border-l-2 border-l-[var(--text-color)] bg-transparent group-hover:bg-[var(--text-color)] group-hover:text-[var(--bg-color)]">
                             <svg class="w-5 h-5 transform -rotate-45 group-hover:rotate-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                         </div>
                     </button>
-                    <a href="https://store.steampowered.com/app/3295930/THE_DARK_ARRIVAL__SHADOWS_OF_THE_PAST/" target="_blank" rel="noopener noreferrer" class="group w-full sm:w-auto inline-flex items-center justify-between sm:justify-center gap-4 btn-frosted-red rounded-full pl-8 pr-2 py-2 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 cursor-none">
-                        <span>View Steam Page</span>
-                        <div class="w-10 h-10 rounded-full btn-icon-circle flex items-center justify-center flex-shrink-0">
+                    <a href="https://store.steampowered.com/app/3295930/THE_DARK_ARRIVAL__SHADOWS_OF_THE_PAST/" target="_blank" rel="noopener noreferrer" class="group w-full sm:w-auto inline-flex items-center justify-between sm:justify-center btn-cyber text-[var(--text-color)] pl-6 pr-0 py-0 h-12 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 cursor-none" style="background: var(--bg-color); border-color: var(--bg-color);">
+                        <span class="mr-4">View Steam Page</span>
+                        <div class="w-12 h-12 icon-box flex items-center justify-center border-l-2 border-l-[var(--text-color)] bg-transparent group-hover:bg-[var(--text-color)] group-hover:text-[var(--bg-color)]">
                             <svg class="w-5 h-5 transform -rotate-45 group-hover:rotate-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                         </div>
                     </a>
@@ -959,16 +1062,15 @@
         <!-- Blog Section -->
         <section id="blog" class="border-b grid-border">
             <div class="p-8 md:p-12 border-b grid-border reveal">
-                <h2 class="text-[10px] tracking-[0.4em] uppercase opacity-50 mb-4 font-bold">THOUGHTS</h2>
-                <!-- CHANGED TO DOTO -->
-                <h3 class="text-4xl md:text-5xl font-doto font-bold tracking-tighter uppercase"><span class="text-red-600">Writing &</span> <br><span class="font-doto italic font-normal normal-case">Insights</span></h3>
+                <h2 class="text-[10px] tracking-[0.4em] uppercase opacity-50 mb-4 font-bold font-doto">// THOUGHTS</h2>
+                <h3 class="text-4xl md:text-5xl font-doto font-bold tracking-tighter uppercase"><span class="text-accent">Writing &</span> <br><span class="font-doto italic font-normal normal-case">Insights</span></h3>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3">
                 <!-- Blog 1 -->
                 <a href="https://medium.com/@jaikardevgame/mind-art-why-the-human-touch-drives-game-ui-1401c728775d" target="_blank" class="block group p-8 md:p-10 border-b md:border-b-0 md:border-r grid-border hover:bg-[var(--hover-bg)] transition-colors reveal">
                     <div class="flex justify-between items-start mb-8">
-                        <span class="text-[10px] font-bold tracking-[0.2em] opacity-50 uppercase">INSIGHT</span>
+                        <span class="text-[10px] font-bold tracking-[0.2em] text-accent uppercase font-doto">[ INSIGHT ]</span>
                         <span class="text-xl group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform">↗</span>
                     </div>
                     <!-- CHANGED TO DOTO -->
@@ -979,7 +1081,7 @@
                 <!-- Blog 2 -->
                 <a href="https://medium.com/@jaikardevgame/designing-the-lens-my-journey-as-a-ui-artist-c98276a52c1d" target="_blank" class="block group p-8 md:p-10 border-b md:border-b-0 md:border-r grid-border hover:bg-[var(--hover-bg)] transition-colors reveal" style="transition-delay: 0.1s;">
                     <div class="flex justify-between items-start mb-8">
-                        <span class="text-[10px] font-bold tracking-[0.2em] opacity-50 uppercase">INSIGHT</span>
+                        <span class="text-[10px] font-bold tracking-[0.2em] text-accent uppercase font-doto">[ INSIGHT ]</span>
                         <span class="text-xl group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform">↗</span>
                     </div>
                     <!-- CHANGED TO DOTO -->
@@ -988,9 +1090,9 @@
                 </a>
 
                 <!-- Blog 3 -->
-                <a href="https://www.linkedin.com/pulse/shift-last-fare-jaikarpothula-r1y4c" target="_blank" class="block group p-8 md:p-10 hover:bg-[var(--hover-bg)] transition-colors reveal" style="transition-delay: 0.2s;">
+                <a href="https://www.linkedin.com/pulse/shift-last-fare-jaikar-pothula-r1y4c/?trackingId=Mm5eCeW9S2K6xUH7ik4YdQ%3D%3D" target="_blank" class="block group p-8 md:p-10 hover:bg-[var(--hover-bg)] transition-colors reveal" style="transition-delay: 0.2s;">
                     <div class="flex justify-between items-start mb-8">
-                        <span class="text-[10px] font-bold tracking-[0.2em] opacity-50 uppercase">INSIGHT</span>
+                        <span class="text-[10px] font-bold tracking-[0.2em] text-accent uppercase font-doto">[ INSIGHT ]</span>
                         <span class="text-xl group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform">↗</span>
                     </div>
                     <!-- CHANGED TO DOTO -->
@@ -1006,19 +1108,19 @@
             <!-- Base Layer (Normal text) -->
             <div class="marquee-container flex w-[300%] md:w-[200%]">
                 <div class="animate-marquee flex whitespace-nowrap items-center text-4xl md:text-7xl font-heading font-bold uppercase tracking-tighter">
-                    <span class="mx-6 md:mx-10 transition-all">SAY HELLO!</span> <span class="text-xl opacity-30 font-serif italic">x</span>
-                    <span class="mx-6 md:mx-10 transition-all">LET'S COLLABORATE</span> <span class="text-xl opacity-30 font-serif italic">x</span>
-                    <span class="mx-6 md:mx-10 transition-all">SAY HOLA!</span> <span class="text-xl opacity-30 font-serif italic">x</span>
-                    <span class="mx-6 md:mx-10 transition-all">OPEN FOR WORK</span> <span class="text-xl opacity-30 font-serif italic">x</span>
-                    <span class="mx-6 md:mx-10 transition-all">GET IN TOUCH</span> <span class="text-xl opacity-30 font-serif italic">x</span>
-                    <span class="mx-6 md:mx-10 transition-all">SAY నమస్కారం!</span> <span class="text-xl opacity-30 font-serif italic">x</span>
+                    <span class="mx-6 md:mx-10 transition-all">SAY HELLO!</span> <span class="text-xl opacity-30 font-serif italic text-accent">x</span>
+                    <span class="mx-6 md:mx-10 transition-all">LET'S COLLABORATE</span> <span class="text-xl opacity-30 font-serif italic text-accent">x</span>
+                    <span class="mx-6 md:mx-10 transition-all">SAY HOLA!</span> <span class="text-xl opacity-30 font-serif italic text-accent">x</span>
+                    <span class="mx-6 md:mx-10 transition-all">OPEN FOR WORK</span> <span class="text-xl opacity-30 font-serif italic text-accent">x</span>
+                    <span class="mx-6 md:mx-10 transition-all">GET IN TOUCH</span> <span class="text-xl opacity-30 font-serif italic text-accent">x</span>
+                    <span class="mx-6 md:mx-10 transition-all">SAY నమస్కారం!</span> <span class="text-xl opacity-30 font-serif italic text-accent">x</span>
                     
-                    <span class="mx-6 md:mx-10 transition-all">SAY HELLO!</span> <span class="text-xl opacity-30 font-serif italic">x</span>
-                    <span class="mx-6 md:mx-10 transition-all">LET'S COLLABORATE</span> <span class="text-xl opacity-30 font-serif italic">x</span>
-                    <span class="mx-6 md:mx-10 transition-all">SAY HOLA!</span> <span class="text-xl opacity-30 font-serif italic">x</span>
-                    <span class="mx-6 md:mx-10 transition-all">OPEN FOR WORK</span> <span class="text-xl opacity-30 font-serif italic">x</span>
-                    <span class="mx-6 md:mx-10 transition-all">GET IN TOUCH</span> <span class="text-xl opacity-30 font-serif italic">x</span>
-                    <span class="mx-6 md:mx-10 transition-all">SAY నమస్కారం!</span> <span class="text-xl opacity-30 font-serif italic">x</span>
+                    <span class="mx-6 md:mx-10 transition-all">SAY HELLO!</span> <span class="text-xl opacity-30 font-serif italic text-accent">x</span>
+                    <span class="mx-6 md:mx-10 transition-all">LET'S COLLABORATE</span> <span class="text-xl opacity-30 font-serif italic text-accent">x</span>
+                    <span class="mx-6 md:mx-10 transition-all">SAY HOLA!</span> <span class="text-xl opacity-30 font-serif italic text-accent">x</span>
+                    <span class="mx-6 md:mx-10 transition-all">OPEN FOR WORK</span> <span class="text-xl opacity-30 font-serif italic text-accent">x</span>
+                    <span class="mx-6 md:mx-10 transition-all">GET IN TOUCH</span> <span class="text-xl opacity-30 font-serif italic text-accent">x</span>
+                    <span class="mx-6 md:mx-10 transition-all">SAY నమస్కారం!</span> <span class="text-xl opacity-30 font-serif italic text-accent">x</span>
                 </div>
             </div>
 
@@ -1026,27 +1128,26 @@
             <div id="marquee-mask" class="absolute inset-0 bg-[var(--text-color)] pointer-events-none marquee-mask flex flex-col justify-center">
                 <div class="marquee-container flex w-[300%] md:w-[200%]">
                     <div class="animate-marquee flex whitespace-nowrap items-center text-4xl md:text-7xl font-heading font-bold uppercase tracking-tighter">
-                        <span class="mx-6 md:mx-10 text-gradient-warm transition-all">SAY HELLO!</span> <span class="text-xl opacity-50 font-serif italic text-[var(--bg-color)]">x</span>
-                        <span class="mx-6 md:mx-10 text-gradient-cool transition-all">LET'S COLLABORATE</span> <span class="text-xl opacity-50 font-serif italic text-[var(--bg-color)]">x</span>
-                        <span class="mx-6 md:mx-10 text-gradient-warm transition-all">SAY HOLA!</span> <span class="text-xl opacity-50 font-serif italic text-[var(--bg-color)]">x</span>
-                        <span class="mx-6 md:mx-10 text-gradient-cool transition-all">OPEN FOR WORK</span> <span class="text-xl opacity-50 font-serif italic text-[var(--bg-color)]">x</span>
-                        <span class="mx-6 md:mx-10 text-gradient-cool transition-all">GET IN TOUCH</span> <span class="text-xl opacity-50 font-serif italic text-[var(--bg-color)]">x</span>
-                        <span class="mx-6 md:mx-10 text-gradient-warm transition-all">SAY నమస్కారం!</span> <span class="text-xl opacity-50 font-serif italic text-[var(--bg-color)]">x</span>
+                        <span class="mx-6 md:mx-10 text-gradient-warm transition-all">SAY HELLO!</span> <span class="text-xl font-serif italic text-[var(--bg-color)]">x</span>
+                        <span class="mx-6 md:mx-10 text-gradient-cool transition-all">LET'S COLLABORATE</span> <span class="text-xl font-serif italic text-[var(--bg-color)]">x</span>
+                        <span class="mx-6 md:mx-10 text-gradient-warm transition-all">SAY HOLA!</span> <span class="text-xl font-serif italic text-[var(--bg-color)]">x</span>
+                        <span class="mx-6 md:mx-10 text-gradient-cool transition-all">OPEN FOR WORK</span> <span class="text-xl font-serif italic text-[var(--bg-color)]">x</span>
+                        <span class="mx-6 md:mx-10 text-gradient-cool transition-all">GET IN TOUCH</span> <span class="text-xl font-serif italic text-[var(--bg-color)]">x</span>
+                        <span class="mx-6 md:mx-10 text-gradient-warm transition-all">SAY నమస్కారం!</span> <span class="text-xl font-serif italic text-[var(--bg-color)]">x</span>
                         
-                        <span class="mx-6 md:mx-10 text-gradient-warm transition-all">SAY HELLO!</span> <span class="text-xl opacity-50 font-serif italic text-[var(--bg-color)]">x</span>
-                        <span class="mx-6 md:mx-10 text-gradient-cool transition-all">LET'S COLLABORATE</span> <span class="text-xl opacity-50 font-serif italic text-[var(--bg-color)]">x</span>
-                        <span class="mx-6 md:mx-10 text-gradient-warm transition-all">SAY HOLA!</span> <span class="text-xl opacity-50 font-serif italic text-[var(--bg-color)]">x</span>
-                        <span class="mx-6 md:mx-10 text-gradient-cool transition-all">OPEN FOR WORK</span> <span class="text-xl opacity-50 font-serif italic text-[var(--bg-color)]">x</span>
-                        <span class="mx-6 md:mx-10 text-gradient-cool transition-all">GET IN TOUCH</span> <span class="text-xl opacity-50 font-serif italic text-[var(--bg-color)]">x</span>
-                        <span class="mx-6 md:mx-10 text-gradient-warm transition-all">SAY నమస్కారం!</span> <span class="text-xl opacity-50 font-serif italic text-[var(--bg-color)]">x</span>
+                        <span class="mx-6 md:mx-10 text-gradient-warm transition-all">SAY HELLO!</span> <span class="text-xl font-serif italic text-[var(--bg-color)]">x</span>
+                        <span class="mx-6 md:mx-10 text-gradient-cool transition-all">LET'S COLLABORATE</span> <span class="text-xl font-serif italic text-[var(--bg-color)]">x</span>
+                        <span class="mx-6 md:mx-10 text-gradient-warm transition-all">SAY HOLA!</span> <span class="text-xl font-serif italic text-[var(--bg-color)]">x</span>
+                        <span class="mx-6 md:mx-10 text-gradient-cool transition-all">OPEN FOR WORK</span> <span class="text-xl font-serif italic text-[var(--bg-color)]">x</span>
+                        <span class="mx-6 md:mx-10 text-gradient-cool transition-all">GET IN TOUCH</span> <span class="text-xl font-serif italic text-[var(--bg-color)]">x</span>
+                        <span class="mx-6 md:mx-10 text-gradient-warm transition-all">SAY నమస్కారం!</span> <span class="text-xl font-serif italic text-[var(--bg-color)]">x</span>
                     </div>
                 </div>
             </div>
         </a>
 
         <!-- Footer -->
-        <!-- CHANGED TO DOTO -->
-        <footer class="p-8 md:p-12 flex flex-col md:flex-row justify-between items-center text-[10px] tracking-[0.2em] font-bold uppercase font-doto">
+        <footer class="p-8 md:p-12 flex flex-col md:flex-row justify-between items-center text-[10px] tracking-[0.2em] font-bold uppercase font-doto bg-[var(--hover-bg)]">
             <p class="mb-6 md:mb-0 text-center opacity-50">© 2026 JAIKAR POTHULA / ALL RIGHTS RESERVED.</p>
             <div class="flex flex-wrap justify-center gap-x-6 gap-y-4">
                 <a href="https://www.linkedin.com/in/jaikar-pothula-489b681a5/" target="_blank" rel="noopener noreferrer" class="hover-accent">LINKEDIN</a>
@@ -1217,7 +1318,7 @@
                     <div class="flex flex-wrap justify-center items-center gap-4 mb-8">
                         ${["Input", "Timeline", "Event", "Output"].map((step, i) => `
                             <div class="px-6 py-2 border grid-border text-xs font-bold tracking-[0.2em] uppercase">${step}</div>
-                            ${i < 3 ? '<div class="font-bold opacity-50">+</div>' : ''}
+                            ${i < 3 ? '<div class="font-bold opacity-50 text-accent">+</div>' : ''}
                         `).join("")}
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border grid-border">
@@ -1251,10 +1352,10 @@
                         `).join("")}
                     </div>
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-0 border grid-border">
-                        <div class="border-b lg:border-b-0 lg:border-r grid-border aspect-video bg-[var(--hover-bg)] flex items-center justify-center p-8">
+                        <div class="border-b lg:border-b-0 lg:border-r grid-border aspect-video bg-[var(--hover-bg)] flex items-center justify-center p-8 tech-corners">
                             <img src="${base}7.png" ${fallbackObj} class="w-full h-full object-contain grayscale hover:grayscale-0 transition-all duration-500" alt="Interaction Step 1">
                         </div>
-                        <div class="aspect-video bg-[var(--hover-bg)] flex items-center justify-center p-8">
+                        <div class="aspect-video bg-[var(--hover-bg)] flex items-center justify-center p-8 tech-corners">
                             <img src="${base}8.png" ${fallbackObj} class="w-full h-full object-contain grayscale hover:grayscale-0 transition-all duration-500" alt="Interaction Step 2">
                         </div>
                     </div>
@@ -1299,19 +1400,19 @@
                     
                     <!-- SECTION 1: GAMEPLAY -->
                     <div class="w-full border grid-border p-6 md:p-12">
-                        <h4 class="text-xs font-bold tracking-[0.4em] uppercase opacity-50 mb-12 text-center">Core Loop</h4>
+                        <h4 class="text-xs font-bold font-doto tracking-[0.4em] uppercase opacity-50 mb-12 text-center text-accent">[ Core Loop ]</h4>
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-0 border grid-border">
                             <div class="border-b lg:border-b-0 lg:border-r grid-border bg-[var(--hover-bg)] p-6 md:p-12 flex flex-col items-center">
-                                <div class="w-full aspect-[4/3] flex items-center justify-center border grid-border p-2 bg-[var(--text-color)]">
+                                <div class="w-full aspect-[4/3] flex items-center justify-center border grid-border p-2 bg-[var(--text-color)] tech-corners">
                                     <img src="${base}GAME PLAY 1.gif" ${fallbackGif1} class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
                                 </div>
-                                <p class="text-center mt-8 text-[10px] font-bold tracking-[0.2em] uppercase">1. Search</p>
+                                <p class="text-center mt-8 text-[10px] font-bold tracking-[0.2em] uppercase font-doto">> 1. Search</p>
                             </div>
                             <div class="bg-[var(--hover-bg)] p-6 md:p-12 flex flex-col items-center">
-                                <div class="w-full aspect-[4/3] flex items-center justify-center border grid-border p-2 bg-[var(--text-color)] relative">
+                                <div class="w-full aspect-[4/3] flex items-center justify-center border grid-border p-2 bg-[var(--text-color)] relative tech-corners">
                                     <img src="${base}GAME PLAY 2.gif" ${fallbackGif1} class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
                                 </div>
-                                <p class="text-center mt-8 text-[10px] font-bold tracking-[0.2em] uppercase">2. Identify</p>
+                                <p class="text-center mt-8 text-[10px] font-bold tracking-[0.2em] uppercase font-doto">> 2. Identify</p>
                             </div>
                         </div>
                     </div>
@@ -1320,14 +1421,14 @@
                     <div class="w-full border-y grid-border py-12">
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-0 border grid-border mx-6 md:mx-12">
                             <div class="relative border-b lg:border-b-0 lg:border-r grid-border p-4 bg-[var(--hover-bg)]">
-                                <span class="absolute top-8 left-8 z-20 bg-[var(--text-color)] text-[var(--bg-color)] px-4 py-2 text-[9px] tracking-[0.2em] font-bold uppercase">Before</span>
-                                <div class="w-full aspect-video border grid-border overflow-hidden">
+                                <span class="absolute top-8 left-8 z-20 bg-[var(--text-color)] text-[var(--bg-color)] px-4 py-2 text-[9px] font-doto tracking-[0.2em] font-bold uppercase cyber-tag">Before</span>
+                                <div class="w-full aspect-video border grid-border overflow-hidden tech-corners">
                                     <img src="${base}EVERY IMAGE/Non highlight.png" ${fallbackObj} class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
                                 </div>
                             </div>
                             <div class="relative p-4 bg-[var(--hover-bg)]">
-                                <span class="absolute top-8 left-8 z-20 bg-[var(--text-color)] text-[var(--bg-color)] px-4 py-2 text-[9px] tracking-[0.2em] font-bold uppercase">After</span>
-                                <div class="w-full aspect-video border grid-border overflow-hidden">
+                                <span class="absolute top-8 left-8 z-20 bg-[var(--accent-primary)] text-[var(--bg-color)] px-4 py-2 text-[9px] font-doto tracking-[0.2em] font-bold uppercase cyber-tag">After</span>
+                                <div class="w-full aspect-video border grid-border overflow-hidden tech-corners">
                                     <img src="${base}EVERY IMAGE/Highlight.png" ${fallbackObj} class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
                                 </div>
                             </div>
@@ -1357,7 +1458,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-l grid-border">
                             ${["Main Menu.png", "Inside game Main menu.png", "INSIDE GAME UI.png", "Search where the dog in the map.png", "Daily Puzzle.png", "Dog collections.png", "Vip Membership.png", "Settings.png"].map(img => `
                             <div class="border-b border-r grid-border p-6 bg-[var(--hover-bg)] aspect-[4/3]">
-                                <img src="${base}EVERY IMAGE/${img}" ${fallbackObj} class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 border grid-border">
+                                <img src="${base}EVERY IMAGE/${img}" ${fallbackObj} class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 border grid-border tech-corners">
                             </div>
                             `).join('')}
                         </div>
@@ -1365,21 +1466,21 @@
 
                     <!-- SECTION 5: SYSTEM FLOW -->
                     <div class="w-full border-y grid-border py-16 flex flex-col items-center">
-                        <h4 class="text-[10px] font-bold tracking-[0.4em] uppercase opacity-50 mb-12 text-center">Core System Flow</h4>
+                        <h4 class="text-[10px] font-bold tracking-[0.4em] uppercase opacity-50 mb-12 text-center font-doto text-accent">[ Core System Flow ]</h4>
                         <div class="flex flex-wrap justify-center items-center gap-4 px-6">
                             ${["Main Menu", "Daily Quests", "Matchmaking", "Core Loop", "Rewards", "Shop"].map((node, i, arr) => `
-                                <div class="px-6 py-3 border grid-border bg-[var(--hover-bg)] font-bold text-[10px] tracking-[0.2em] uppercase">
+                                <div class="px-6 py-3 font-bold text-[10px] tracking-[0.2em] uppercase cyber-tag">
                                     ${node}
                                 </div>
-                                ${i < arr.length - 1 ? `<div class="font-bold opacity-30">+</div>` : ''}
+                                ${i < arr.length - 1 ? `<div class="font-bold opacity-30 text-accent">></div>` : ''}
                             `).join('')}
                         </div>
                     </div>
 
                     <!-- SECTION 6: GAME OVERVIEW -->
                     <div class="w-full px-6 md:px-12 flex flex-col items-center">
-                        <h4 class="text-[10px] font-bold tracking-[0.4em] uppercase opacity-50 mb-8 text-center">Gameplay Overview</h4>
-                        <div class="w-full border grid-border p-2 bg-[var(--text-color)]">
+                        <h4 class="text-[10px] font-bold tracking-[0.4em] uppercase opacity-50 mb-8 text-center font-doto text-accent">[ Gameplay Overview ]</h4>
+                        <div class="w-full border grid-border p-2 bg-[var(--text-color)] tech-corners">
                             <img src="${base}Game overview/jaikar-pothula-overview.png" ${fallbackObj} class="w-full h-auto object-cover grayscale hover:grayscale-0 transition-all duration-500">
                         </div>
                     </div>
@@ -1401,22 +1502,22 @@
             if(tab === "Overview") {
                 html = `
                 <div class="space-y-12 animate-fade-in w-full">
-                    <div class="w-full aspect-[21/9] border grid-border overflow-hidden bg-[var(--text-color)] relative flex flex-col justify-end p-8 md:p-12">
+                    <div class="w-full aspect-[21/9] border grid-border overflow-hidden bg-[var(--text-color)] relative flex flex-col justify-end p-8 md:p-12 tech-corners">
                         <img src="Assets/HERO.png" ${fallbackObj} class="absolute inset-0 w-full h-full object-cover opacity-60 grayscale hover:grayscale-0 transition-all duration-700" alt="Hero">
                         <div class="relative z-10 text-[var(--bg-color)]">
-                            <span class="text-[10px] font-bold tracking-[0.4em] uppercase opacity-80 mb-2 block">Tale of Ronin</span>
+                            <span class="text-[10px] font-bold tracking-[0.4em] uppercase opacity-80 mb-2 block font-doto text-accent">// Tale of Ronin</span>
                             <h4 class="text-4xl md:text-7xl font-heading font-bold uppercase tracking-tighter leading-none">A Sumi-e <span class="font-serif italic font-normal normal-case">Journey</span></h4>
                         </div>
                     </div>
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-0 border grid-border">
                         <div class="p-8 md:p-12 border-b lg:border-b-0 lg:border-r grid-border bg-[var(--hover-bg)] flex flex-col justify-center">
-                            <h5 class="text-3xl font-heading font-bold uppercase tracking-tight mb-6">Core Philosophy</h5>
+                            <h5 class="text-3xl font-heading font-bold uppercase tracking-tight mb-6 text-accent">Core Philosophy</h5>
                             <p class="opacity-80 leading-relaxed font-medium text-base">
                                 Minimal UI for maximum immersion. The interface blends seamlessly into the ink-washed world, utilizing strong hierarchy and theme-driven interactions to guide the player without breaking the fourth wall.
                             </p>
                         </div>
                         <div class="p-8 bg-[var(--hover-bg)] flex items-center justify-center">
-                            <img src="${base}TALE OF RONIN VISUAL MOOD BOARD.png" ${fallbackObj} class="w-full h-full object-cover border grid-border grayscale hover:grayscale-0 transition-all duration-500" alt="Mood Board">
+                            <img src="${base}TALE OF RONIN VISUAL MOOD BOARD.png" ${fallbackObj} class="w-full h-full object-cover border grid-border grayscale hover:grayscale-0 transition-all duration-500 tech-corners" alt="Mood Board">
                         </div>
                     </div>
                 </div>`;
@@ -1424,13 +1525,13 @@
             else if(tab === "System Flow") {
                 html = `
                 <div class="flex flex-col items-center animate-fade-in w-full">
-                    <div class="w-full aspect-video md:aspect-[21/9] mb-12 border grid-border bg-[var(--hover-bg)] relative p-4 flex items-center justify-center">
+                    <div class="w-full aspect-video md:aspect-[21/9] mb-12 border grid-border bg-[var(--hover-bg)] relative p-4 flex items-center justify-center tech-corners">
                         <img id="flow-preview" src="${base}TALE OF RONIN VISUAL MOOD BOARD.png" ${fallbackObj} class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 border grid-border" alt="Preview">
-                        <div class="absolute bottom-8 left-8 bg-[var(--text-color)] text-[var(--bg-color)] px-4 py-2 text-[10px] font-bold tracking-[0.2em] uppercase" id="flow-label">System Preview</div>
+                        <div class="absolute bottom-8 left-8 bg-[var(--text-color)] text-[var(--bg-color)] px-4 py-2 text-[10px] font-bold tracking-[0.2em] uppercase font-doto cyber-tag" id="flow-label">System Preview</div>
                     </div>
                     <div class="flex flex-wrap justify-center gap-4 w-full max-w-4xl">
                         ${roninUX.flow.map(step => `
-                        <button onmouseenter="document.getElementById('flow-preview').src='${base}TALE OF RONIN VISUAL MOOD BOARD.png'; document.getElementById('flow-label').innerText='${step}'" class="px-6 py-3 border grid-border hover:bg-[var(--text-color)] hover:text-[var(--bg-color)] transition-colors text-[10px] font-bold tracking-[0.2em] uppercase">
+                        <button onmouseenter="document.getElementById('flow-preview').src='${base}TALE OF RONIN VISUAL MOOD BOARD.png'; document.getElementById('flow-label').innerText='${step}'" class="px-6 py-3 border grid-border hover:bg-[var(--text-color)] hover:text-[var(--bg-color)] transition-colors text-[10px] font-bold tracking-[0.2em] uppercase font-doto">
                             ${step}
                         </button>
                         `).join("")}
@@ -1443,7 +1544,7 @@
                     ${roninUX.visualImages.map(img => `
                     <div class="border-b border-r grid-border bg-[var(--hover-bg)] p-8 flex flex-col items-center justify-center relative">
                         <img src="${base}${img}" ${fallbackObj} class="w-full h-auto object-contain max-h-[300px] grayscale hover:grayscale-0 transition-all duration-500 mb-6" alt="${img}">
-                        <span class="text-[9px] font-bold tracking-[0.2em] uppercase opacity-50">${img.replace('.png','').replace(/-/g, ' ')}</span>
+                        <span class="text-[9px] font-bold tracking-[0.2em] uppercase opacity-50 font-doto">${img.replace('.png','').replace(/-/g, ' ')}</span>
                     </div>
                     `).join("")}
                 </div>`;
@@ -1452,10 +1553,10 @@
                 html = `
                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-0 border-t border-l grid-border animate-fade-in w-full">
                     ${roninUX.interactionImages.map(item => `
-                    <div class="border-b border-r grid-border aspect-square bg-[var(--hover-bg)] flex flex-col items-center relative overflow-hidden">
+                    <div class="border-b border-r grid-border aspect-square bg-[var(--hover-bg)] flex flex-col items-center relative overflow-hidden tech-corners">
                         <img src="${base}${item.file}" ${fallbackObj} class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 absolute inset-0" alt="${item.label}">
                         <div class="absolute inset-x-0 bottom-0 p-4 bg-[var(--text-color)] text-[var(--bg-color)]">
-                            <span class="text-[9px] font-bold tracking-[0.2em] uppercase block text-center">${item.label}</span>
+                            <span class="text-[9px] font-bold tracking-[0.2em] uppercase block text-center font-doto">${item.label}</span>
                         </div>
                     </div>
                     `).join("")}
@@ -1467,13 +1568,13 @@
                     <div class="lg:col-span-5 flex flex-col border-b lg:border-b-0 lg:border-r grid-border">
                         ${roninUX.journey.map((item, index) => `
                         <div onmouseenter="document.getElementById('exp-preview').src='${base}${item.img}'" class="flex items-center gap-6 p-6 border-b grid-border last:border-b-0 hover:bg-[var(--text-color)] hover:text-[var(--bg-color)] transition-colors cursor-none group">
-                            <div class="text-xl font-serif italic opacity-50 group-hover:opacity-100">0${index + 1}</div>
-                            <div class="text-sm font-bold tracking-widest uppercase">${item.step}</div>
+                            <div class="text-xl font-serif italic opacity-50 group-hover:opacity-100 text-accent">0${index + 1}</div>
+                            <div class="text-sm font-bold tracking-widest uppercase font-doto">${item.step}</div>
                         </div>
                         `).join("")}
                     </div>
                     <div class="lg:col-span-7 bg-[var(--hover-bg)] p-8 md:p-12 flex items-center justify-center">
-                        <div class="w-full aspect-[4/3] border grid-border overflow-hidden">
+                        <div class="w-full aspect-[4/3] border grid-border overflow-hidden tech-corners">
                             <img id="exp-preview" src="${base}11.png" ${fallbackObj} class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" alt="Experience Preview">
                         </div>
                     </div>
@@ -1509,27 +1610,30 @@
             tabsConfig.forEach(tab => {
                 const isActive = activeUxTab === tab.id;
                 const activeClasses = isActive 
-                    ? 'bg-[var(--text-color)] text-[var(--bg-color)]' 
+                    ? 'bg-[var(--text-color)] text-[var(--bg-color)] border-b-2 border-b-[var(--accent-primary)]' 
                     : 'hover:bg-[var(--hover-bg)]';
                 
                 tabsHTML += `
-                    <button onclick="switchTab('${tab.id}')" class="px-6 py-4 border-r grid-border last:border-r-0 text-[10px] font-bold tracking-[0.2em] uppercase transition-colors ${activeClasses}">
+                    <button onclick="switchTab('${tab.id}')" class="px-6 py-4 border-r grid-border last:border-r-0 text-[10px] font-bold tracking-[0.2em] uppercase transition-colors font-doto ${activeClasses}">
                         ${tab.label}
                     </button>
                 `;
             });
             tabsHTML += `</div>`;
 
-            let contentHTML = `<div class="p-8 md:p-12 border grid-border bg-[var(--hover-bg)]">`;
+            let contentHTML = `<div class="p-8 md:p-12 border grid-border bg-[var(--hover-bg)] relative">`;
+            
+            // Add decorative corner to the content area
+            contentHTML += `<div class="absolute right-0 top-0 w-4 h-4 border-l border-b border-[var(--accent-primary)]"></div>`;
             
             const listData = data[activeUxTab] || [];
             
             if (activeUxTab === 'flow') {
                 contentHTML += `<div class="flex flex-wrap gap-4 items-center justify-center">`;
                 listData.forEach((item, index) => {
-                    contentHTML += `<div class="px-6 py-3 border grid-border bg-[var(--bg-color)] text-xs font-bold tracking-[0.2em] uppercase">${item}</div>`;
+                    contentHTML += `<div class="px-6 py-3 text-xs font-bold tracking-[0.2em] uppercase cyber-tag">${item}</div>`;
                     if (index < listData.length - 1) {
-                        contentHTML += `<div class="font-bold opacity-30">+</div>`;
+                        contentHTML += `<div class="font-bold opacity-30 text-accent">></div>`;
                     }
                 });
                 contentHTML += `</div>`;
@@ -1538,27 +1642,27 @@
                 listData.forEach((item, index) => {
                     contentHTML += `
                         <div class="flex gap-6 p-6 border-b grid-border items-center hover:bg-[var(--text-color)] hover:text-[var(--bg-color)] transition-colors">
-                            <div class="text-lg font-serif italic opacity-50">0${index + 1}</div>
-                            <div class="text-sm font-medium tracking-wide uppercase">${item}</div>
+                            <div class="text-lg font-serif italic opacity-50 text-accent">0${index + 1}</div>
+                            <div class="text-sm font-medium tracking-wide uppercase font-doto">${item}</div>
                         </div>`;
                 });
                 contentHTML += `</div>`;
             } else if (activeUxTab === 'architecture') {
                 contentHTML += `<div class="grid grid-cols-2 md:grid-cols-3 gap-0 border-t border-l grid-border max-w-4xl mx-auto">`;
                 listData.forEach(item => {
-                    contentHTML += `<div class="p-6 border-b border-r grid-border bg-[var(--bg-color)] text-center text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase">${item}</div>`;
+                    contentHTML += `<div class="p-6 border-b border-r grid-border bg-[var(--bg-color)] text-center text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase font-doto hover:text-accent transition-colors">${item}</div>`;
                 });
                 contentHTML += `</div>`;
             } else if (activeUxTab === 'interaction') {
-                contentHTML += `<ol class="list-decimal list-inside space-y-4 max-w-2xl mx-auto text-sm font-medium leading-relaxed opacity-90">`;
+                contentHTML += `<ol class="list-decimal list-inside space-y-4 max-w-2xl mx-auto text-sm font-medium leading-relaxed opacity-90 font-doto">`;
                 listData.forEach(item => {
-                    contentHTML += `<li class="pl-2 border-b grid-border pb-4">${item}</li>`;
+                    contentHTML += `<li class="pl-2 border-b grid-border pb-4 hover:text-accent transition-colors">${item}</li>`;
                 });
                 contentHTML += `</ol>`;
             } else { // decisions and impact
                 contentHTML += `<ul class="space-y-4 max-w-2xl mx-auto text-sm font-medium leading-relaxed opacity-90 list-none">`;
                 listData.forEach(item => {
-                    contentHTML += `<li class="relative pl-6 border-b grid-border pb-4"><span class="absolute left-0 top-0 opacity-50">—</span> ${item}</li>`;
+                    contentHTML += `<li class="relative pl-6 border-b grid-border pb-4 hover:text-accent transition-colors font-doto"><span class="absolute left-0 top-0 opacity-50">></span> ${item}</li>`;
                 });
                 contentHTML += `</ul>`;
             }
@@ -1589,15 +1693,15 @@
             if (id === 'resume') {
                 csHeaderContainer.innerHTML = `
                     <div class="pt-32 pb-16 text-center flex flex-col items-center">
-                        <h2 class="text-[10px] tracking-[0.5em] uppercase opacity-50 mb-6 font-bold">Jaikar Pothula</h2>
+                        <h2 class="text-[10px] tracking-[0.5em] uppercase opacity-50 mb-6 font-bold font-doto text-accent">// Jaikar Pothula</h2>
                         <h3 class="text-4xl md:text-6xl font-heading font-bold tracking-tighter uppercase max-w-4xl mb-6">${data.title}</h3>
-                        <p class="text-[10px] tracking-[0.2em] uppercase font-bold">UI/UX • Interaction • System Design</p>
+                        <p class="text-[10px] tracking-[0.2em] uppercase font-bold font-doto">UI/UX • Interaction • System Design</p>
                     </div>
                 `;
             } else if (id === 'find-the-dog') {
                 csHeaderContainer.innerHTML = `
                     <div class="pt-32 pb-16 text-center flex flex-col items-center border-b grid-border w-full">
-                        <h2 class="text-[10px] tracking-[0.5em] uppercase opacity-50 mb-6 font-bold">CASE STUDY</h2>
+                        <h2 class="text-[10px] tracking-[0.5em] uppercase opacity-50 mb-6 font-bold font-doto text-accent">// CASE STUDY</h2>
                         <h3 class="text-5xl md:text-7xl font-heading font-bold tracking-tighter uppercase max-w-4xl mb-8">${data.title}</h3>
                         <p class="text-sm font-medium opacity-70 max-w-2xl leading-relaxed">
                             Currently developing a hidden object game in Unity.<br>
@@ -1608,7 +1712,7 @@
             } else {
                 csHeaderContainer.innerHTML = `
                     <div class="pt-32 pb-16 text-center flex flex-col items-center">
-                        <h2 class="text-[10px] tracking-[0.5em] uppercase opacity-50 mb-6 font-bold">CASE STUDY</h2>
+                        <h2 class="text-[10px] tracking-[0.5em] uppercase opacity-50 mb-6 font-bold font-doto text-accent">// CASE STUDY</h2>
                         <h3 class="text-5xl md:text-7xl font-heading font-bold tracking-tighter uppercase max-w-4xl">${data.title}</h3>
                     </div>
                 `;
@@ -1627,8 +1731,8 @@
                 tabs.forEach((tab, index) => {
                     const btn = document.createElement("button");
                     btn.textContent = tab;
-                    const inactiveClasses = "px-6 py-4 border-r grid-border last:border-r-0 text-[10px] font-bold tracking-[0.2em] uppercase transition-colors hover:bg-[var(--hover-bg)]";
-                    const activeClasses = "px-6 py-4 border-r grid-border last:border-r-0 text-[10px] font-bold tracking-[0.2em] uppercase transition-colors bg-[var(--text-color)] text-[var(--bg-color)]";
+                    const inactiveClasses = "px-6 py-4 border-r grid-border last:border-r-0 text-[10px] font-bold tracking-[0.2em] uppercase transition-colors hover:bg-[var(--hover-bg)] font-doto";
+                    const activeClasses = "px-6 py-4 border-r grid-border last:border-r-0 text-[10px] font-bold tracking-[0.2em] uppercase transition-colors bg-[var(--text-color)] text-[var(--bg-color)] border-b-2 border-b-[var(--accent-primary)] font-doto";
                     
                     btn.className = index === 0 ? activeClasses : inactiveClasses;
                     
@@ -1654,8 +1758,8 @@
                 tabs.forEach((tab, index) => {
                     const btn = document.createElement("button");
                     btn.textContent = tab;
-                    const inactiveClasses = "px-6 py-4 border-r grid-border last:border-r-0 text-[10px] font-bold tracking-[0.2em] uppercase transition-colors hover:bg-[var(--hover-bg)]";
-                    const activeClasses = "px-6 py-4 border-r grid-border last:border-r-0 text-[10px] font-bold tracking-[0.2em] uppercase transition-colors bg-[var(--text-color)] text-[var(--bg-color)]";
+                    const inactiveClasses = "px-6 py-4 border-r grid-border last:border-r-0 text-[10px] font-bold tracking-[0.2em] uppercase transition-colors hover:bg-[var(--hover-bg)] font-doto";
+                    const activeClasses = "px-6 py-4 border-r grid-border last:border-r-0 text-[10px] font-bold tracking-[0.2em] uppercase transition-colors bg-[var(--text-color)] text-[var(--bg-color)] border-b-2 border-b-[var(--accent-primary)] font-doto";
                     
                     btn.className = index === 0 ? activeClasses : inactiveClasses;
                     
@@ -1678,18 +1782,18 @@
                 const sectionsContainer = document.getElementById('cs-sections');
                 sectionsContainer.innerHTML = `
                     <div class="flex flex-col items-center w-full animate-fade-in py-12">
-                        <a href="${data.pdf}" download target="_blank" class="mb-16 w-full max-w-sm sm:w-auto group inline-flex items-center justify-between sm:justify-center gap-4 btn-frosted-red rounded-full pl-8 pr-2 py-2 text-[10px] md:text-xs tracking-[0.2em] uppercase font-bold transition-all duration-300 cursor-none">
-                            <span>Download PDF</span>
-                            <div class="w-10 h-10 rounded-full btn-icon-circle flex flex-shrink-0 items-center justify-center">
-                                <svg class="w-5 h-5 transform -rotate-45 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        <a href="${data.pdf}" download target="_blank" class="mb-16 w-full max-w-sm sm:w-auto group inline-flex items-center justify-between sm:justify-center btn-cyber text-[var(--text-color)] pl-6 pr-0 py-0 h-10 text-[10px] md:text-xs tracking-[0.2em] uppercase font-bold transition-all duration-300 cursor-none">
+                            <span class="mr-4">Download PDF</span>
+                            <div class="w-10 h-10 icon-box flex items-center justify-center">
+                                <svg class="w-4 h-4 transform -rotate-45 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                             </div>
                         </a>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl mx-auto">
-                            <div class="border grid-border p-4 bg-[var(--hover-bg)]">
+                            <div class="border grid-border p-4 bg-[var(--hover-bg)] tech-corners">
                                 <img src="Assets/Jaikar_Pothula_UI_Systems_Designer_Resume/Jaikar_Pothula_UI_Systems_Designer_Resume-1.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586281380349-632531db7ed4?q=80&w=2070&auto=format&fit=crop';" alt="Resume Page 1" class="w-full border grid-border grayscale hover:grayscale-0 transition-all duration-500">
                             </div>
-                            <div class="border grid-border p-4 bg-[var(--hover-bg)]">
+                            <div class="border grid-border p-4 bg-[var(--hover-bg)] tech-corners">
                                 <img src="Assets/Jaikar_Pothula_UI_Systems_Designer_Resume/Jaikar_Pothula_UI_Systems_Designer_Resume-2.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1618331835717-801e976710b2?q=80&w=1000&auto=format&fit=crop';" alt="Resume Page 2" class="w-full border grid-border grayscale hover:grayscale-0 transition-all duration-500">
                             </div>
                         </div>
@@ -1706,19 +1810,19 @@
                 if (data.playLink) {
                     const label = data.playLink.includes('steam') ? 'Visit on Steam' : 'Play Game';
                     buttonsHTML += `
-                        <a href="${data.playLink}" target="_blank" class="w-full max-w-sm group inline-flex items-center justify-between gap-4 btn-frosted-red rounded-full pl-6 md:pl-8 pr-2 py-2 text-[10px] md:text-xs tracking-[0.2em] uppercase font-bold transition-all duration-300 cursor-none">
-                            <span>${label}</span>
-                            <div class="w-8 h-8 md:w-10 md:h-10 rounded-full btn-icon-circle flex flex-shrink-0 items-center justify-center">
-                                <svg class="w-4 h-4 md:w-5 md:h-5 transform -rotate-45 group-hover:rotate-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        <a href="${data.playLink}" target="_blank" class="w-full max-w-sm group inline-flex items-center justify-between btn-cyber pl-6 pr-0 py-0 h-10 text-[10px] md:text-xs tracking-[0.2em] uppercase font-bold transition-all duration-300 cursor-none">
+                            <span class="mr-4">${label}</span>
+                            <div class="w-10 h-10 icon-box flex items-center justify-center">
+                                <svg class="w-3.5 h-3.5 transform -rotate-45 group-hover:rotate-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                             </div>
                         </a>
                     `;
                 }
                 buttonsHTML += `
-                    <a href="${data.pdf}" download target="_blank" class="w-full max-w-sm group inline-flex items-center justify-between gap-4 btn-frosted-red rounded-full pl-6 md:pl-8 pr-2 py-2 text-[10px] md:text-xs tracking-[0.2em] uppercase font-bold transition-all duration-300 cursor-none">
-                        <span>Download PDF</span>
-                        <div class="w-8 h-8 md:w-10 md:h-10 rounded-full btn-icon-circle flex flex-shrink-0 items-center justify-center">
-                            <svg class="w-4 h-4 md:w-5 md:h-5 transform -rotate-45 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    <a href="${data.pdf}" download target="_blank" class="w-full max-w-sm group inline-flex items-center justify-between btn-cyber pl-6 pr-0 py-0 h-10 text-[10px] md:text-xs tracking-[0.2em] uppercase font-bold transition-all duration-300 cursor-none mt-4">
+                        <span class="mr-4">Download PDF</span>
+                        <div class="w-10 h-10 icon-box flex items-center justify-center">
+                            <svg class="w-3.5 h-3.5 transform -rotate-45 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                         </div>
                     </a>
                 `;
@@ -1841,7 +1945,9 @@
                 // Canvas line drawing
                 ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
                 const isDark = document.documentElement.classList.contains('dark');
-                const color = isDark ? '255, 255, 255' : '0, 0, 0';
+                
+                // Use RGB values of the accent colors for the trail
+                const accentRGB = isDark ? '0, 240, 255' : '255, 0, 60'; // NTE Cyan vs NTE Red
                 
                 points = points.filter(p => p.age < maxPoints);
 
@@ -1851,15 +1957,15 @@
                         const p2 = points[i];
                         
                         const opacity = Math.max(0, 1 - (p2.age / maxPoints));
-                        const size = Math.max(0.1, (1 - (p2.age / maxPoints)) * 25); 
+                        const size = Math.max(0.1, (1 - (p2.age / maxPoints)) * 15); // Slightly thinner trail for tech vibe
                         
                         ctx.beginPath();
                         ctx.moveTo(p1.x, p1.y);
                         ctx.lineTo(p2.x, p2.y);
-                        ctx.strokeStyle = `rgba(${color}, ${opacity * 0.2})`;
+                        ctx.strokeStyle = `rgba(${accentRGB}, ${opacity * 0.4})`;
                         ctx.lineWidth = size;
-                        ctx.lineCap = 'round';
-                        ctx.lineJoin = 'round';
+                        ctx.lineCap = 'butt'; // Sharp line caps
+                        ctx.lineJoin = 'miter';
                         ctx.stroke();
                     }
                 }
@@ -1881,8 +1987,17 @@
                 }
             }
         }
+        
+        // --- Trigger Cinematic Sequence automatically on load ---
+        window.addEventListener("load", () => {
+            reveal();
+            setTimeout(triggerCinematic, 800); // Wait just a moment for the page to settle before starting the intro flash
+            
+            // --- Init Sakura Effect ---
+            createSakura();
+        });
+        
         window.addEventListener("scroll", reveal);
-        window.addEventListener("load", reveal);
 
         const setupCursorHovers = () => {
             if(isTouchDevice) return;
@@ -1938,6 +2053,128 @@
                 }
             });
         });
+
+        // --- Cinematic Sequence Logic ---
+        const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+        let isCinematicPlaying = false;
+
+        async function triggerCinematic() {
+            if (isCinematicPlaying) return;
+            isCinematicPlaying = true;
+            
+            const isDark = document.documentElement.classList.contains('dark');
+            const bgContainer = document.getElementById('hero-cinematic-bg');
+            const slices = document.querySelectorAll('.cinematic-slice');
+            
+            // 1. Reveal container
+            bgContainer.style.opacity = isDark ? '1' : '0.85'; // Slightly lighter overlay for light mode to ensure text pop
+            
+            // Flash 1: Full Normal (or Inverted for Light Mode)
+            slices.forEach(s => {
+                s.style.filter = isDark ? 'none' : 'invert(1) hue-rotate(180deg) brightness(1.2)';
+                s.style.transform = 'scale(1.05)';
+            });
+            await sleep(150);
+            
+            // Flash 2: Glitch
+            slices.forEach(s => {
+                s.style.filter = isDark ? 'invert(1) hue-rotate(90deg)' : 'invert(0.2) hue-rotate(-90deg) contrast(2)';
+                s.style.transform = 'scale(1)';
+            });
+            await sleep(100);
+            
+            // Flash 3: Extreme mode
+            slices.forEach(s => {
+                s.style.filter = isDark ? 'brightness(0.3) contrast(1.5) hue-rotate(180deg)' : 'invert(1) brightness(1.5) contrast(1.2)';
+            });
+            await sleep(150);
+            
+            // The "Split" - Slices display different environments/times
+            slices[0].style.filter = isDark 
+                ? 'sepia(0.6) hue-rotate(-15deg) saturate(1.5)' 
+                : 'invert(1) sepia(0.4) hue-rotate(-15deg) saturate(1.5) brightness(1.1)'; // Sunset
+            slices[0].style.transform = 'scale(1.02) translateY(-1%)';
+            
+            slices[1].style.filter = isDark 
+                ? 'brightness(0.4) contrast(1.3) hue-rotate(200deg)' 
+                : 'invert(1) hue-rotate(180deg) saturate(1.5) brightness(1.1)'; // Night / Cool Blue
+            slices[1].style.transform = 'scale(1.02) translateY(1%)';
+            
+            slices[2].style.filter = isDark 
+                ? 'grayscale(100%) contrast(1.4)' 
+                : 'invert(1) grayscale(100%) contrast(1.2) brightness(1.2)'; // B&W
+            slices[2].style.transform = 'scale(1.02) translateY(-0.5%)';
+            
+            slices[3].style.filter = isDark 
+                ? 'saturate(1.5) contrast(1.1)' 
+                : 'invert(1) saturate(2) brightness(1.1)'; // Vibrant Day
+            slices[3].style.transform = 'scale(1.02) translateY(0.5%)';
+            
+            // Hold the split view
+            await sleep(2500);
+            
+            // Flash out
+            slices.forEach(s => {
+                s.style.filter = isDark ? 'brightness(2)' : 'brightness(2) invert(1)';
+                s.style.transform = 'scale(1.1)';
+            });
+            await sleep(100);
+            
+            // Hide and reset
+            bgContainer.style.opacity = '0';
+            await sleep(300); // wait for fade out
+            
+            // Reset transforms and filters
+            slices.forEach(s => {
+                s.style.filter = 'none';
+                s.style.transform = 'scale(1)';
+            });
+            
+            isCinematicPlaying = false;
+        }
+
+        // --- Sakura Blossom Effect ---
+        function createSakura() {
+            const container = document.createElement('div');
+            container.id = 'sakura-container';
+            document.body.appendChild(container);
+
+            const petalCount = 35; // Adjust this number for more or fewer petals
+
+            for (let i = 0; i < petalCount; i++) {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'sakura-wrapper';
+                
+                // Randomize starting positions and timings
+                const left = Math.random() * 100; // 0 to 100vw
+                const fallDuration = 8 + Math.random() * 7; // 8s to 15s fall duration
+                const fallDelay = Math.random() * -15; // Negative delay to start mid-animation
+                
+                wrapper.style.left = `${left}%`;
+                wrapper.style.animationDuration = `${fallDuration}s`;
+                wrapper.style.animationDelay = `${fallDelay}s`;
+
+                const sway = document.createElement('div');
+                sway.className = 'sakura-sway';
+                const swayDuration = 2 + Math.random() * 3;
+                sway.style.animationDuration = `${swayDuration}s`;
+                sway.style.animationDelay = `${Math.random() * -5}s`;
+
+                const petal = document.createElement('div');
+                petal.className = 'sakura-petal';
+                const spinDuration = 3 + Math.random() * 5;
+                const scale = 0.5 + Math.random() * 0.8;
+                const opacity = 0.5 + Math.random() * 0.5;
+                
+                petal.style.animationDuration = `${spinDuration}s`;
+                petal.style.transform = `scale(${scale})`;
+                petal.style.opacity = opacity;
+
+                sway.appendChild(petal);
+                wrapper.appendChild(sway);
+                container.appendChild(wrapper);
+            }
+        }
     </script>
 </body>
 </html>

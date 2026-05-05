@@ -13,7 +13,7 @@
         tailwind.config = {
             darkMode: 'class',
             theme: {
-                extend: {
+                extend: {      
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                         heading: ['Space Grotesk', 'sans-serif'],
@@ -914,7 +914,7 @@
                             <div class="w-full h-full relative overflow-hidden bg-[var(--text-color)]">
                                 <div class="absolute inset-0 flex items-center justify-center opacity-5 text-4xl font-heading font-bold uppercase tracking-tighter z-0">The Dark Arrival</div>
                                 <video autoplay loop muted playsinline class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-700 relative z-10 group-hover:scale-105">
-                                    <source src="Assets/Dark Arrival/DARK ARRIVAL MAIN MENU VIDEO 1.mp4" type="video/mp4">
+                                    <source src="Assets/Videos/DARK ARRIVAL MAIN MENU VIDEO 1.mp4" type="video/mp4">
                                 </video>
                             </div>
                         </div>
@@ -959,7 +959,7 @@
                             <div class="w-full h-full relative overflow-hidden bg-[var(--text-color)]">
                                 <div class="absolute inset-0 flex items-center justify-center opacity-5 text-4xl font-heading font-bold uppercase tracking-tighter z-0">Suite 13</div>
                                 <video autoplay loop muted playsinline class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-700 relative z-10 group-hover:scale-105">
-                                    <source src="Assets/Suite13/Main menu video.mp4" type="video/mp4">
+                                    <source src="Assets/Videos/Main menu video.mp4" type="video/mp4">
                                 </video>
                             </div>
                         </div>
@@ -1000,7 +1000,7 @@
                         <div class="relative w-full aspect-[4/3] flex items-center justify-center tech-corners shadow-2xl">
                             <div class="w-full h-full relative overflow-hidden bg-[var(--text-color)]">
                                 <div class="absolute inset-0 flex items-center justify-center opacity-5 text-4xl font-heading font-bold uppercase tracking-tighter z-0">Customized Angel</div>
-                                <img src="Assets/jaikar-pothula-title.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=2071&auto=format&fit=crop';" alt="Customized Angel" class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-700 relative z-10 group-hover:scale-105">
+                                <img src="Assets/Videos/jaikar-pothula-title.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=2071&auto=format&fit=crop';" alt="Customized Angel" class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-700 relative z-10 group-hover:scale-105">
                             </div>
                         </div>
                     </div>
@@ -1040,7 +1040,56 @@
                         <div class="relative w-full aspect-[4/3] flex items-center justify-center tech-corners shadow-2xl">
                             <div class="w-full h-full relative overflow-hidden bg-[var(--text-color)]">
                                 <div class="absolute inset-0 flex items-center justify-center opacity-5 text-4xl font-heading font-bold uppercase tracking-tighter z-0">Tale of Ronin</div>
-                                <img src="Assets/HERO.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1509114397022-ed747cca3f65?q=80&w=2070&auto=format&fit=crop';" alt="Tale of Ronin" class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-700 relative z-10 group-hover:scale-105">
+                                <img src="Assets/Videos/HERO.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1509114397022-ed747cca3f65?q=80&w=2070&auto=format&fit=crop';" alt="Tale of Ronin" class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-700 relative z-10 group-hover:scale-105">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NEW SECTION: UX/UI Applications -->
+            <div class="p-4 md:p-6 bg-[var(--text-color)] text-[var(--bg-color)] border-y grid-border text-center text-xs md:text-sm font-bold tracking-[0.2em] uppercase font-doto fade-up mt-12">
+                [ UX/UI Applications — Concept & Prototyping ]
+            </div>
+
+            <div class="grid grid-cols-1 border-b grid-border">
+                <!-- Smart Guardian -->
+                <div class="flex flex-col lg:flex-row h-auto lg:h-[80vh] items-center border-b grid-border last:border-b-0 cyber-stripes game-card relative" onclick="openCaseStudy('smart-guardian')">
+                    <div class="w-full lg:w-1/2 h-full p-8 md:p-16 flex flex-col justify-center border-b lg:border-b-0 lg:border-r grid-border bg-[var(--bg-color)] transition-colors relative z-10 fade-up">
+                        <div class="mb-auto">
+                            <span class="inline-block px-3 py-1 text-[9px] tracking-[0.2em] uppercase mb-6 cyber-tag tag-primary">APP CONCEPT</span>
+                        </div>
+                        <h4 class="text-4xl md:text-6xl font-heading font-bold uppercase tracking-tight mb-4">Smart Guardian</h4>
+                        <p class="text-sm md:text-base font-medium leading-relaxed opacity-80 mb-6">An AI-driven elder safety application featuring fall detection, health monitoring, and an interactive emergency response system.</p>
+
+                        <!-- Role / Tech Stack -->
+                        <div class="flex flex-col gap-3 mb-10">
+                            <div class="flex items-center gap-3">
+                                <span class="w-2 h-2 bg-[var(--accent-primary)]"></span>
+                                <span class="text-[10px] md:text-xs font-doto uppercase font-bold opacity-80">Role: Product & UX Designer</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="w-2 h-2 bg-[var(--accent-secondary)]"></span>
+                                <span class="text-[10px] md:text-xs font-doto uppercase font-bold opacity-80 text-accent">Tools: Figma, Web Prototyping</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-auto pt-6">
+                            <span class="btn-cyber pl-6 pr-0 py-0 h-10 text-[10px] font-bold tracking-[0.2em]">
+                                <span class="mr-4">View App Breakdown</span>
+                                <div class="w-10 h-10 icon-box flex items-center justify-center">
+                                    <svg class="w-3.5 h-3.5 transform -rotate-45 group-hover:rotate-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-1/2 h-full p-8 md:p-16 overflow-hidden bg-[var(--hover-bg)] fade-up flex items-center justify-center">
+                        <div class="relative w-full aspect-[4/3] flex items-center justify-center tech-corners shadow-2xl">
+                            <div class="w-full h-full relative overflow-hidden bg-[var(--text-color)]">
+                                <div class="absolute inset-0 flex items-center justify-center opacity-5 text-4xl font-heading font-bold uppercase tracking-tighter z-0">Smart Guardian</div>
+                                <video autoplay loop muted playsinline class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-700 relative z-10 group-hover:scale-105">
+                                    <source src="Assets/Smart Guardian/Screen Recording 2026-05-04 143739.mp4" type="video/mp4">
+                                </video>
                             </div>
                         </div>
                     </div>
@@ -1281,6 +1330,113 @@
             </div>
         </section>
 
+        <!-- Featured Showcase Section -->
+        <section id="showcase" class="py-20 md:py-32 px-5 md:px-8 border-b grid-border relative bg-[var(--hover-bg)]">
+            <div class="max-w-[1800px] mx-auto">
+                <div class="mb-12 md:mb-16 text-center reveal flex flex-col items-center">
+                    <h2 class="text-[10px] tracking-[0.4em] uppercase opacity-50 font-bold mb-6 font-doto">// VISUAL SHOWCASE</h2>
+                    
+                    <!-- Styled to match the uploaded reference exactly -->
+                    <h3 class="text-4xl md:text-6xl lg:text-7xl font-doto font-bold tracking-widest uppercase leading-tight mb-8">
+                        <span class="text-[var(--accent-primary)] dark:text-[#CCFF00]">JAIKAR INTERACTIVE</span> <br>
+                        <span class="font-doto italic font-normal capitalize text-[var(--text-color)] dark:text-[#F8F8F8]">Systems Gallery</span>
+                    </h3>
+                    
+                    <!-- Ties the game showcase directly to your Technical UI skills -->
+                    <div class="flex flex-wrap justify-center gap-4 w-full max-w-2xl border-y border-[var(--border-color)] py-6 mb-8">
+                        <div class="flex flex-col items-center px-4">
+                            <span class="text-[8px] font-doto uppercase opacity-50 mb-2">> FOCUS</span>
+                            <span class="text-xs font-bold uppercase tracking-widest">Technical UI</span>
+                        </div>
+                        <div class="w-[1px] bg-[var(--border-color)] hidden md:block"></div>
+                        <div class="flex flex-col items-center px-4">
+                            <span class="text-[8px] font-doto uppercase opacity-50 mb-2">> SYSTEMS</span>
+                            <span class="text-xs font-bold uppercase tracking-widest text-accent">HUD & Motion</span>
+                        </div>
+                        <div class="w-[1px] bg-[var(--border-color)] hidden md:block"></div>
+                        <div class="flex flex-col items-center px-4">
+                            <span class="text-[8px] font-doto uppercase opacity-50 mb-2">> ASSETS</span>
+                            <span class="text-xs font-bold uppercase tracking-widest">Live Gallery</span>
+                        </div>
+                    </div>
+                    
+                    <p class="text-sm md:text-base font-medium leading-relaxed opacity-80 max-w-2xl text-center">
+                        A curated collection of UI motion, menu prototypes, layout structures, and in-engine implementations across my recent projects.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-[1800px] mx-auto reveal px-2 md:px-4">
+                    <!-- 1. DARK ARRIVAL MAIN MENU VIDEO 1.mp4 -->
+                    <div class="col-span-2 md:col-span-2 row-span-2 relative border grid-border bg-[var(--bg-color)] tech-corners p-2 group overflow-hidden">
+                         <div class="absolute top-4 left-4 z-20 bg-[var(--accent-primary)] text-[var(--bg-color)] px-3 py-1 text-[8px] font-doto tracking-[0.2em] font-bold uppercase cyber-tag opacity-0 group-hover:opacity-100 transition-opacity">> UE5 MAIN MENU</div>
+                         <video autoplay loop muted playsinline class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 aspect-video">
+                              <source src="Assets/Videos/DARK ARRIVAL MAIN MENU VIDEO 1.mp4" type="video/mp4">
+                         </video>
+                    </div>
+
+                    <!-- 2. OPTIONS VIDEO.mp4 -->
+                    <div class="col-span-2 md:col-span-2 row-span-1 relative border grid-border bg-[var(--bg-color)] tech-corners p-2 group overflow-hidden">
+                         <div class="absolute top-4 left-4 z-20 bg-[var(--text-color)] text-[var(--bg-color)] px-3 py-1 text-[8px] font-doto tracking-[0.2em] font-bold uppercase cyber-tag opacity-0 group-hover:opacity-100 transition-opacity">> OPTIONS UX</div>
+                         <video autoplay loop muted playsinline class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 aspect-[21/9]">
+                              <source src="Assets/Videos/OPTIONS VIDEO.mp4" type="video/mp4">
+                         </video>
+                    </div>
+
+                    <!-- 3. Small capusule.png -->
+                    <div class="col-span-1 md:col-span-1 row-span-1 relative border grid-border bg-[var(--bg-color)] tech-corners p-2 group overflow-hidden">
+                         <div class="absolute top-4 left-4 z-20 bg-[var(--text-color)] text-[var(--bg-color)] px-3 py-1 text-[8px] font-doto tracking-[0.2em] font-bold uppercase cyber-tag opacity-0 group-hover:opacity-100 transition-opacity">> CAPSULE</div>
+                         <img src="Assets/Videos/Small capusule.png" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 aspect-square" alt="Small Capsule">
+                    </div>
+
+                    <!-- 4. PsI78P.gif -->
+                    <div class="col-span-1 md:col-span-1 row-span-1 relative border grid-border bg-[var(--bg-color)] tech-corners p-2 group overflow-hidden">
+                        <div class="absolute top-4 left-4 z-20 bg-[var(--text-color)] text-[var(--bg-color)] px-3 py-1 text-[8px] font-doto tracking-[0.2em] font-bold uppercase cyber-tag opacity-0 group-hover:opacity-100 transition-opacity">> TIMELINE</div>
+                        <img src="Assets/Videos/PsI78P.gif" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 aspect-square" alt="Gameplay Loop">
+                    </div>
+
+                    <!-- 5. Main menu video.mp4 (Suite 13) -->
+                    <div class="col-span-2 md:col-span-2 row-span-1 relative border grid-border bg-[var(--bg-color)] tech-corners p-2 group overflow-hidden">
+                         <div class="absolute top-4 left-4 z-20 bg-[var(--text-color)] text-[var(--bg-color)] px-3 py-1 text-[8px] font-doto tracking-[0.2em] font-bold uppercase cyber-tag opacity-0 group-hover:opacity-100 transition-opacity">> HUD LOGIC</div>
+                         <video autoplay loop muted playsinline class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 aspect-video md:aspect-[21/9]">
+                              <source src="Assets/Videos/Main menu video.mp4" type="video/mp4">
+                         </video>
+                    </div>
+
+                    <!-- 6. HERO.png -->
+                    <div class="col-span-2 md:col-span-2 row-span-1 relative border grid-border bg-[var(--bg-color)] tech-corners p-2 group overflow-hidden">
+                        <div class="absolute top-4 left-4 z-20 bg-[var(--text-color)] text-[var(--bg-color)] px-3 py-1 text-[8px] font-doto tracking-[0.2em] font-bold uppercase cyber-tag opacity-0 group-hover:opacity-100 transition-opacity">> VISUAL THEME</div>
+                        <img src="Assets/Videos/HERO.png" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 aspect-video md:aspect-[21/9]" alt="Tale of Ronin">
+                    </div>
+
+                    <!-- 7. MAIN MENU.mp4 -->
+                    <div class="col-span-2 md:col-span-2 row-span-1 relative border grid-border bg-[var(--bg-color)] tech-corners p-2 group overflow-hidden">
+                         <div class="absolute top-4 left-4 z-20 bg-[var(--text-color)] text-[var(--bg-color)] px-3 py-1 text-[8px] font-doto tracking-[0.2em] font-bold uppercase cyber-tag opacity-0 group-hover:opacity-100 transition-opacity">> INTERFACE</div>
+                         <video autoplay loop muted playsinline class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 aspect-video md:aspect-[21/9]">
+                              <source src="Assets/Videos/MAIN MENU.mp4" type="video/mp4">
+                         </video>
+                    </div>
+
+                    <!-- 8. jaikar-pothula-title.png -->
+                    <div class="col-span-1 md:col-span-1 row-span-1 relative border grid-border bg-[var(--bg-color)] tech-corners p-2 group overflow-hidden">
+                        <div class="absolute top-4 left-4 z-20 bg-[var(--text-color)] text-[var(--bg-color)] px-3 py-1 text-[8px] font-doto tracking-[0.2em] font-bold uppercase cyber-tag opacity-0 group-hover:opacity-100 transition-opacity">> TITLE</div>
+                        <img src="Assets/Videos/jaikar-pothula-title.png" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 aspect-square" alt="Customized Angel">
+                    </div>
+
+                    <!-- 9. Capsul dark arrival steam image 14.png -->
+                    <div class="col-span-1 md:col-span-1 row-span-1 relative border grid-border bg-[var(--bg-color)] tech-corners p-2 group overflow-hidden">
+                        <div class="absolute top-4 left-4 z-20 bg-[var(--text-color)] text-[var(--bg-color)] px-3 py-1 text-[8px] font-doto tracking-[0.2em] font-bold uppercase cyber-tag opacity-0 group-hover:opacity-100 transition-opacity">> STEAM ART</div>
+                        <img src="Assets/Videos/Capsul dark arrival steam image 14.png" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 aspect-square" alt="Dark Arrival Steam">
+                    </div>
+
+                    <!-- 10. TALE OF RONIN VISUAL MOOD BOARD.png -->
+                    <div class="col-span-2 md:col-span-4 row-span-1 relative border grid-border bg-[var(--bg-color)] tech-corners p-2 group overflow-hidden">
+                        <div class="absolute top-4 left-4 z-20 bg-[var(--accent-secondary)] text-[var(--text-color)] px-3 py-1 text-[8px] font-doto tracking-[0.2em] font-bold uppercase cyber-tag opacity-0 group-hover:opacity-100 transition-opacity">> MOOD BOARD</div>
+                        <img src="Assets/Videos/TALE OF RONIN VISUAL MOOD BOARD.png" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt="Mood Board">
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Blog Section -->
         <section id="blog" class="border-b grid-border bg-[var(--bg-color)]">
             <div class="p-8 md:p-12 border-b grid-border reveal">
@@ -1421,6 +1577,15 @@
 
         // --- Data Structure for Case Studies ---
         const caseStudyData = {
+            'smart-guardian': {
+                title: 'Smart Guardian',
+                pdf: '#', 
+                playLink: 'https://69eff7255c35f6a00c5068a4--tourmaline-gingersnap-67b9f5.netlify.app/',
+                customButtonText: 'Smart Guardian AI Elder Safety Check',
+                role: 'Product & UX Designer',
+                engine: 'Web Prototype',
+                tools: 'Figma, Netlify'
+            },
             'find-the-dog': {
                 title: 'Find the Dog',
                 pdf: 'Assets/Find the Dog/find_the_dog_case_study.pdf',
@@ -1516,7 +1681,127 @@
             ]
         };
 
-        // Render Functions with Narrative Structure
+        function renderGuardianContent(tab) {
+            const base = "Assets/Smart Guardian/";
+            const fallbackObj = "onerror=\"this.onerror=null; this.src='https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop';\"";
+            const contentContainer = document.getElementById("cs-content");
+            if (!contentContainer) return;
+            
+            let html = "";
+            
+            if(tab === "The Problem") {
+                html = `
+                <div class="space-y-8 animate-fade-in w-full">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 border grid-border bg-[var(--bg-color)]">
+                        <div class="p-8 md:p-12 border-b md:border-b-0 md:border-r grid-border tech-corners relative">
+                            <span class="absolute top-0 right-0 p-2 text-[10px] font-doto opacity-30">[ PROBLEM ]</span>
+                            <h4 class="text-3xl font-heading font-bold uppercase tracking-tight mb-4 text-accent">Elder Safety</h4>
+                            <p class="font-medium text-sm leading-relaxed opacity-80">
+                                As the aging population grows, families need reliable, non-intrusive ways to monitor the health and physical safety of elderly relatives. Traditional alert systems often require manual activation, which fails if the user is incapacitated.
+                            </p>
+                        </div>
+                        <div class="p-8 md:p-12 tech-corners relative bg-[var(--hover-bg)]">
+                            <span class="absolute top-0 right-0 p-2 text-[10px] font-doto opacity-30">[ APP GOAL ]</span>
+                            <h4 class="text-3xl font-heading font-bold uppercase tracking-tight mb-4 text-[var(--text-color)]">Automated Guardianship</h4>
+                            <p class="font-medium text-sm leading-relaxed opacity-80">
+                                Design a unified mobile application that leverages AI behavior tracking and smart device integration to automatically detect falls, monitor vitals, and alert family members without relying on the elder's manual input.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="w-full border grid-border overflow-hidden bg-[var(--hover-bg)] p-8 tech-corners flex justify-center">
+                        <img src="${base}1.png" ${fallbackObj} class="max-h-[500px] object-contain shadow-2xl" alt="Welcome Screen">
+                    </div>
+                </div>`;
+            } 
+            else if(tab === "UX Solution") {
+                html = `
+                <div class="space-y-8 animate-fade-in w-full">
+                    <div class="border grid-border bg-[var(--hover-bg)] p-8 md:p-12 tech-corners relative">
+                        <span class="absolute top-0 left-0 p-4 text-[10px] font-doto opacity-50 text-accent">// SOLUTION</span>
+                        <h4 class="text-3xl font-heading font-bold uppercase tracking-tight mb-6 mt-4">Accessible & High-Contrast</h4>
+                        <p class="font-medium text-base leading-relaxed opacity-90 max-w-3xl">
+                            The interface prioritizes high-contrast dark modes with vibrant alert colors (reds and greens) to accommodate vision impairments. Critical actions, like the SOS Emergency override and "I AM OKAY" cancellation buttons, feature massive tap targets to reduce cognitive load during a panic.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border grid-border">
+                        <div class="border-b md:border-b-0 md:border-r grid-border bg-[var(--bg-color)] flex items-center justify-center p-8 tech-corners py-12">
+                            <img src="${base}4.png" ${fallbackObj} class="h-[400px] w-auto object-contain drop-shadow-[0_0_15px_rgba(255,0,60,0.3)]" alt="Fall Detected Screen">
+                        </div>
+                        <div class="bg-[var(--bg-color)] flex items-center justify-center p-8 tech-corners py-12">
+                            <img src="${base}5.png" ${fallbackObj} class="h-[400px] w-auto object-contain drop-shadow-[0_0_15px_rgba(255,0,60,0.3)]" alt="Emergency Alert Countdown">
+                        </div>
+                    </div>
+                </div>`;
+            } 
+            else if(tab === "System Flow") {
+                html = `
+                <div class="flex flex-col items-center animate-fade-in w-full space-y-12">
+                    <div class="w-full border grid-border p-8 bg-[var(--bg-color)] tech-corners relative">
+                        <h4 class="text-[10px] tracking-[0.4em] uppercase opacity-50 font-bold font-doto mb-8 text-center text-accent">[ Automated Response Logic ]</h4>
+                        <div class="flex flex-wrap justify-center items-center gap-6">
+                            ${["AI Monitoring", "Anomaly Detected", "User Verification", "Countdown", "Family & EMS Alert"].map((step, i, arr) => `
+                                <div class="px-6 py-4 border border-[var(--border-color)] bg-[var(--hover-bg)] text-xs font-bold tracking-[0.2em] uppercase font-doto cyber-tag relative shadow-[4px_4px_0px_var(--accent-primary)] transition-all">${step}</div>
+                                ${i < arr.length - 1 ? '<div class="font-bold text-accent text-xl animate-pulse">➔</div>' : ''}
+                            `).join("")}
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border grid-border w-full">
+                        <div class="border-b md:border-b-0 md:border-r grid-border bg-[var(--hover-bg)] flex flex-col items-center justify-center p-8 tech-corners">
+                            <img src="${base}8.png" ${fallbackObj} class="h-[400px] w-auto object-contain mb-6" alt="AI Behavior Panel">
+                            <p class="text-[10px] font-doto uppercase opacity-50">> AI Behavior Analysis</p>
+                        </div>
+                        <div class="bg-[var(--hover-bg)] flex flex-col items-center justify-center p-8 tech-corners">
+                            <img src="${base}3.png" ${fallbackObj} class="h-[400px] w-auto object-contain mb-6" alt="Health Monitoring">
+                            <p class="text-[10px] font-doto uppercase opacity-50">> Active Vitals Tracking</p>
+                        </div>
+                    </div>
+                </div>`;
+            } 
+            else if(tab === "App Gallery") {
+                html = `
+                <div class="space-y-8 animate-fade-in w-full">
+                    <div class="border grid-border bg-[var(--bg-color)] p-8 md:p-12 tech-corners relative">
+                        <span class="absolute top-0 right-0 p-4 text-[10px] font-doto text-accent opacity-80">// PROTOTYPE SCREENS</span>
+                        <h4 class="text-3xl font-heading font-bold uppercase tracking-tight mb-4">Complete UX Flow</h4>
+                        <p class="font-medium text-base leading-relaxed opacity-90 max-w-3xl">
+                            A comprehensive look at the application architecture, from the main dashboard and family connectivity portals to edge-case handling and final impressions.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 border grid-border bg-[var(--hover-bg)] p-8 tech-corners">
+                        ${[1, 2, 3, 6, 7, 9, 10, 11].map(i => `
+                            <div class="aspect-[9/16] bg-[var(--bg-color)] flex items-center justify-center overflow-hidden border border-[var(--border-color)] shadow-md hover:scale-105 transition-transform duration-300">
+                                <img src="${base}${i}.png" ${fallbackObj} class="w-full h-full object-cover" alt="Screen ${i}">
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>`;
+            }
+            else if(tab === "Live Prototype") {
+                html = `
+                <div class="space-y-8 animate-fade-in w-full flex flex-col items-center">
+                    <div class="w-full border grid-border bg-[var(--hover-bg)] p-8 tech-corners mb-4 flex flex-col items-center">
+                        <h4 class="text-xl font-bold font-heading uppercase text-accent mb-4 text-center">Interactive Web Demo</h4>
+                        <p class="text-xs opacity-70 text-center font-doto uppercase max-w-lg mb-8">Experience the fully interactive Smart Guardian prototype directly in your browser.</p>
+                        
+                        <!-- Requested Highly Visible Link Button -->
+                        <a href="https://69eff7255c35f6a00c5068a4--tourmaline-gingersnap-67b9f5.netlify.app/" target="_blank" class="btn-cyber pl-8 pr-0 py-0 h-14 text-sm font-bold tracking-[0.2em] uppercase shadow-[6px_6px_0px_var(--accent-primary)] hover:shadow-[2px_2px_0px_var(--accent-primary)] bg-[var(--bg-color)]">
+                            <span class="mr-4 text-[var(--text-color)]">Smart Guardian AI Elder Safety Check</span>
+                            <div class="w-14 h-14 icon-box flex items-center justify-center border-l-2 border-l-[var(--text-color)] bg-transparent group-hover:bg-[var(--text-color)] group-hover:text-[var(--bg-color)]">
+                                <svg class="w-5 h-5 transform -rotate-45 group-hover:rotate-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="w-full relative border grid-border bg-[var(--text-color)] aspect-video flex items-center justify-center p-2 tech-corners shadow-2xl">
+                        <video autoplay loop muted playsinline class="w-full h-full object-cover">
+                            <source src="${base}Screen Recording 2026-05-04 143739.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>`;
+            }
+            
+            contentContainer.innerHTML = html;
+        }
+
         function renderDarkArrivalContent(tab) {
             const base = "Assets/Dark Arrival/";
             const fallbackObj = "onerror=\"this.onerror=null; this.src='https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop';\"";
@@ -1545,7 +1830,7 @@
                         </div>
                     </div>
                     <div class="w-full aspect-[21/9] border grid-border overflow-hidden bg-[var(--text-color)] relative flex flex-col justify-center items-center p-8 tech-corners">
-                        <img src="${base}Capsul dark arrival steam image 14.png" ${fallbackObj} class="absolute inset-0 w-full h-full object-cover opacity-30 grayscale hover:grayscale-0 transition-all duration-700 blur-sm" alt="Hero Background">
+                        <img src="Assets/Videos/Capsul dark arrival steam image 14.png" ${fallbackObj} class="absolute inset-0 w-full h-full object-cover opacity-30 grayscale hover:grayscale-0 transition-all duration-700 blur-sm" alt="Hero Background">
                         <img src="${base}DARK ARRIVAL TITLE.png" ${fallbackObj} class="relative z-10 w-3/4 max-w-lg object-contain transition-transform hover:scale-105 duration-500" alt="Title">
                     </div>
                 </div>`;
@@ -1614,7 +1899,7 @@
                     </div>
                     <div class="w-full relative border grid-border bg-[var(--text-color)] aspect-video flex items-center justify-center p-2 tech-corners shadow-2xl">
                         <video autoplay loop muted playsinline class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
-                            <source src="${base}DARK ARRIVAL MAIN MENU VIDEO 1.mp4" type="video/mp4">
+                            <source src="Assets/Videos/DARK ARRIVAL MAIN MENU VIDEO 1.mp4" type="video/mp4">
                         </video>
                     </div>
                 </div>`;
@@ -1671,7 +1956,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border grid-border">
                         <div class="border-b md:border-b-0 md:border-r grid-border bg-[var(--bg-color)] flex items-center justify-center p-8 tech-corners aspect-square overflow-hidden relative">
                             <video autoplay loop muted playsinline class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
-                                <source src="${base}OPTIONS VIDEO.mp4" type="video/mp4">
+                                <source src="Assets/Videos/OPTIONS VIDEO.mp4" type="video/mp4">
                             </video>
                         </div>
                         <div class="bg-[var(--bg-color)] flex items-center justify-center p-8 tech-corners aspect-square overflow-hidden">
@@ -1727,7 +2012,7 @@
                     </div>
                     <div class="w-full relative border grid-border bg-[var(--text-color)] aspect-video flex items-center justify-center p-2 tech-corners shadow-2xl">
                         <video autoplay loop muted playsinline class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
-                            <source src="${base}Main menu video.mp4" type="video/mp4">
+                            <source src="Assets/Videos/Main menu video.mp4" type="video/mp4">
                         </video>
                     </div>
                 </div>`;
@@ -1836,7 +2121,7 @@
                 html = `
                 <div class="space-y-8 animate-fade-in w-full flex flex-col items-center">
                     <div class="w-full relative border grid-border bg-[var(--text-color)] aspect-video flex items-center justify-center p-2 tech-corners">
-                        <img src="${base}PsI78P.gif" ${fallbackObj} class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" alt="Gameplay Integration GIF">
+                        <img src="Assets/Videos/PsI78P.gif" ${fallbackObj} class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" alt="Gameplay Integration GIF">
                         <div class="absolute bottom-4 left-4 bg-[var(--bg-color)] text-[var(--text-color)] px-4 py-2 text-[10px] font-bold font-doto cyber-tag shadow-[2px_2px_0px_var(--accent-primary)]">Final Gameplay Integration</div>
                     </div>
                     <div class="w-full border grid-border bg-[var(--hover-bg)] flex items-center justify-center p-12 min-h-[50vh] tech-corners">
@@ -1876,7 +2161,7 @@
                         </div>
                     </div>
                     <div class="w-full aspect-[21/9] border grid-border overflow-hidden bg-[var(--text-color)] relative flex flex-col justify-end p-8 tech-corners">
-                        <img src="Assets/HERO.png" ${fallbackObj} class="absolute inset-0 w-full h-full object-cover opacity-50 grayscale hover:grayscale-0 transition-all duration-700" alt="Hero Background">
+                        <img src="Assets/Videos/HERO.png" ${fallbackObj} class="absolute inset-0 w-full h-full object-cover opacity-50 grayscale hover:grayscale-0 transition-all duration-700" alt="Hero Background">
                     </div>
                 </div>`;
             } 
@@ -1895,7 +2180,7 @@
                             <img src="${base}STYLES.png" ${fallbackObj} class="w-full h-auto max-h-[300px] object-contain grayscale hover:grayscale-0 transition-all duration-500" alt="Style Guide">
                         </div>
                         <div class="bg-[var(--bg-color)] flex items-center justify-center p-8 tech-corners">
-                            <img src="${base}TALE OF RONIN VISUAL MOOD BOARD.png" ${fallbackObj} class="w-full h-auto max-h-[300px] object-contain grayscale hover:grayscale-0 transition-all duration-500" alt="Mood Board">
+                            <img src="Assets/Videos/TALE OF RONIN VISUAL MOOD BOARD.png" ${fallbackObj} class="w-full h-auto max-h-[300px] object-contain grayscale hover:grayscale-0 transition-all duration-500" alt="Mood Board">
                         </div>
                     </div>
                 </div>`;
@@ -1907,7 +2192,7 @@
                         <h4 class="text-[10px] tracking-[0.4em] uppercase opacity-50 font-bold font-doto mb-8 text-center text-accent">[ State Transitions ]</h4>
                         <div class="flex flex-wrap justify-center items-center gap-6">
                             ${roninUX.flow.map((step, i, arr) => `
-                                <button onmouseenter="document.getElementById('ronin-flow-img').src='${base}TALE OF RONIN VISUAL MOOD BOARD.png'" class="px-6 py-4 border border-[var(--border-color)] hover:border-[var(--accent-primary)] bg-[var(--hover-bg)] text-xs font-bold tracking-[0.2em] uppercase font-doto cyber-tag relative transition-all cursor-none">
+                                <button onmouseenter="document.getElementById('ronin-flow-img').src='Assets/Videos/TALE OF RONIN VISUAL MOOD BOARD.png'" class="px-6 py-4 border border-[var(--border-color)] hover:border-[var(--accent-primary)] bg-[var(--hover-bg)] text-xs font-bold tracking-[0.2em] uppercase font-doto cyber-tag relative transition-all cursor-none">
                                     ${step}
                                 </button>
                                 ${i < arr.length - 1 ? '<div class="font-bold text-accent text-xl animate-pulse">➔</div>' : ''}
@@ -1916,7 +2201,7 @@
                     </div>
                     <div class="w-full aspect-[21/9] border grid-border overflow-hidden tech-corners bg-[var(--hover-bg)] p-4 relative">
                         <span class="absolute top-4 left-4 p-2 text-[10px] font-doto text-accent z-20 bg-[var(--bg-color)] shadow-[2px_2px_0px_var(--text-color)] cyber-tag">> Hover flow nodes to preview</span>
-                        <img id="ronin-flow-img" src="${base}TALE OF RONIN VISUAL MOOD BOARD.png" ${fallbackObj} class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 border grid-border" alt="Flow Preview">
+                        <img id="ronin-flow-img" src="Assets/Videos/TALE OF RONIN VISUAL MOOD BOARD.png" ${fallbackObj} class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 border grid-border" alt="Flow Preview">
                     </div>
                 </div>`;
             } 
@@ -2123,7 +2408,10 @@
                 return;
             }
 
-            const tabs = ["The Challenge", "UI Solution", "System Flow", "Implementation", "Result"];
+            // Determine tabs based on project type
+            const tabs = projectId === 'smart-guardian' 
+                ? ["The Problem", "UX Solution", "System Flow", "App Gallery", "Live Prototype"]
+                : ["The Challenge", "UI Solution", "System Flow", "Implementation", "Result"];
 
             let tabsHTML = `<div class="flex flex-wrap gap-0 border-y grid-border mb-12 justify-center">`;
             tabs.forEach(tab => {
@@ -2145,7 +2433,9 @@
             container.innerHTML = tabsHTML + contentHTML;
             
             // Render specific project content
-            if (projectId === 'customized-angel') {
+            if (projectId === 'smart-guardian') {
+                renderGuardianContent(activeUxTab);
+            } else if (projectId === 'customized-angel') {
                 renderAngelContent(activeUxTab); 
             } else if (projectId === 'suite-13') {
                 renderSuite13Content(activeUxTab);
@@ -2173,7 +2463,8 @@
             if (!data) return;
 
             currentCaseStudyId = id;
-            activeUxTab = 'The Challenge'; // Reset to first tab
+            // Set default tab based on project type
+            activeUxTab = id === 'smart-guardian' ? 'The Problem' : 'The Challenge';
 
             const csHeaderContainer = document.getElementById('cs-header');
             
@@ -2240,24 +2531,28 @@
             
             if (id !== 'resume') {
                 if (data.playLink) {
-                    const label = data.playLink.includes('steam') ? 'Visit on Steam' : 'Play Game';
+                    const label = data.customButtonText || (data.playLink.includes('steam') ? 'Visit on Steam' : 'Play Game');
                     buttonsHTML += `
-                        <a href="${data.playLink}" target="_blank" class="w-full max-w-sm group inline-flex items-center justify-between btn-cyber pl-6 pr-0 py-0 h-10 text-[10px] md:text-xs tracking-[0.2em] uppercase font-bold transition-all duration-300 cursor-none shadow-[4px_4px_0px_var(--accent-primary)] hover:shadow-[2px_2px_0px_var(--accent-primary)]">
-                            <span class="mr-4">${label}</span>
-                            <div class="w-10 h-10 icon-box flex items-center justify-center">
+                        <a href="${data.playLink}" target="_blank" class="w-full max-w-md group inline-flex items-center justify-between btn-cyber pl-6 pr-0 py-0 h-10 text-[10px] md:text-xs tracking-[0.2em] uppercase font-bold transition-all duration-300 cursor-none shadow-[4px_4px_0px_var(--accent-primary)] hover:shadow-[2px_2px_0px_var(--accent-primary)]">
+                            <span class="mr-4 text-center w-full">${label}</span>
+                            <div class="w-10 h-10 icon-box flex flex-shrink-0 items-center justify-center">
                                 <svg class="w-3.5 h-3.5 transform -rotate-45 group-hover:rotate-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                             </div>
                         </a>
                     `;
                 }
-                buttonsHTML += `
-                    <a href="${data.pdf}" download target="_blank" class="w-full max-w-sm group inline-flex items-center justify-between btn-cyber pl-6 pr-0 py-0 h-10 text-[10px] md:text-xs tracking-[0.2em] uppercase font-bold transition-all duration-300 cursor-none mt-4 shadow-[4px_4px_0px_var(--text-color)] hover:shadow-[2px_2px_0px_var(--text-color)] border border-[var(--text-color)]">
-                        <span class="mr-4">Download PDF</span>
-                        <div class="w-10 h-10 icon-box flex items-center justify-center">
-                            <svg class="w-3.5 h-3.5 transform -rotate-45 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                        </div>
-                    </a>
-                `;
+                
+                // Hide download PDF if it's #
+                if(data.pdf && data.pdf !== '#') {
+                    buttonsHTML += `
+                        <a href="${data.pdf}" download target="_blank" class="w-full max-w-sm group inline-flex items-center justify-between btn-cyber pl-6 pr-0 py-0 h-10 text-[10px] md:text-xs tracking-[0.2em] uppercase font-bold transition-all duration-300 cursor-none mt-4 shadow-[4px_4px_0px_var(--text-color)] hover:shadow-[2px_2px_0px_var(--text-color)] border border-[var(--text-color)]">
+                            <span class="mr-4 text-center w-full">Download PDF</span>
+                            <div class="w-10 h-10 icon-box flex flex-shrink-0 items-center justify-center">
+                                <svg class="w-3.5 h-3.5 transform -rotate-45 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                            </div>
+                        </a>
+                    `;
+                }
             }
             
             csActionsContainer.innerHTML = buttonsHTML;

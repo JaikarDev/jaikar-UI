@@ -347,7 +347,6 @@
             color: var(--text-color);
         }
 
-
         /* Adaptive & Interactive Custom Cursor */
         #cursor-dot {
             position: fixed;
@@ -457,6 +456,17 @@
             background-color: var(--bg-color);
         }
         #case-study-modal.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #admin-modal {
+            transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+            opacity: 0;
+            visibility: hidden;
+            background-color: var(--bg-color);
+        }
+        #admin-modal.open {
             opacity: 1;
             visibility: visible;
         }
@@ -590,6 +600,42 @@
     <div id="cursor-ring"></div>
 
     <canvas id="mouse-canvas" class="hidden md:block"></canvas>
+
+    <!-- Admin Analytics Modal (Hidden / Secret Easter Egg) -->
+    <div id="admin-modal" class="fixed inset-0 z-[300] overflow-y-auto transition-all duration-400">
+        <!-- Close Button -->
+        <div class="sticky top-0 left-0 w-full z-[310] p-4 md:p-6 flex justify-between items-center bg-[var(--bg-color)] border-b grid-border shadow-lg">
+            <h2 class="text-xl md:text-3xl font-heading font-bold uppercase tracking-tight text-accent flex items-center gap-4">
+                <span class="animate-pulse w-3 h-3 bg-[var(--accent-primary)] rounded-full inline-block shadow-[0_0_10px_var(--accent-primary)]"></span> Live Analytics
+            </h2>
+            <button onclick="closeAdminDashboard()" class="group btn-cyber text-[var(--text-color)] text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 cursor-none pl-6 pr-0 py-0 h-10">
+                <span class="mr-4">Close DB</span>
+                <div class="w-10 h-10 icon-box flex items-center justify-center border-l border-[var(--border-color)] group-hover:bg-[var(--text-color)] group-hover:text-[var(--bg-color)]">
+                    <svg class="w-4 h-4 transform group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </div>
+            </button>
+        </div>
+        
+        <!-- Data Table Container -->
+        <div class="w-full max-w-[1800px] mx-auto p-4 md:p-8 relative z-10 fade-up">
+            <div class="border grid-border bg-[var(--hover-bg)] tech-corners overflow-x-auto shadow-2xl">
+                <table class="w-full text-left border-collapse whitespace-nowrap min-w-[800px]">
+                    <thead>
+                        <tr class="bg-[var(--text-color)] text-[var(--bg-color)] border-b grid-border uppercase text-[10px] tracking-widest font-doto">
+                            <th class="p-4">> Time (Local)</th>
+                            <th class="p-4">> IP Address</th>
+                            <th class="p-4">> Location</th>
+                            <th class="p-4">> Device / OS</th>
+                            <th class="p-4">> Raw User Agent</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-table-body" class="text-sm">
+                        <!-- Data injected via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
     <!-- Case Study Modal -->
     <div id="case-study-modal" class="fixed inset-0 z-[200] overflow-y-auto">
@@ -1526,7 +1572,7 @@
 
         <!-- Footer -->
         <footer class="p-8 md:p-12 flex flex-col md:flex-row justify-between items-center text-[10px] tracking-[0.2em] font-bold uppercase font-doto bg-[var(--hover-bg)]">
-            <p class="mb-6 md:mb-0 text-center opacity-50">© 2026 JAIKAR POTHULA / ALL RIGHTS RESERVED.</p>
+            <p id="footer-copyright" class="mb-6 md:mb-0 text-center opacity-50 hover:text-accent hover:opacity-100 transition-all select-none relative z-50" style="cursor: none;" title="Terminal Access">© 2026 JAIKAR POTHULA / ALL RIGHTS RESERVED.</p>
             <div class="flex flex-wrap justify-center gap-x-6 gap-y-4">
                 <a href="https://www.linkedin.com/in/jaikar-pothula-489b681a5/" target="_blank" rel="noopener noreferrer" class="hover-accent">LINKEDIN</a>
                 <a href="https://jim-jam-play.itch.io/" target="_blank" rel="noopener noreferrer" class="hover-accent">ITCH.IO</a>
@@ -2919,6 +2965,185 @@
                 wrapper.appendChild(sway);
                 container.appendChild(wrapper);
             }
+        }
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global variables provided by environment
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfigStr = typeof __firebase_config !== 'undefined' ? __firebase_config : '{}';
+        let firebaseConfig = {};
+        try { firebaseConfig = JSON.parse(firebaseConfigStr); } catch(e) {}
+
+        let db, auth;
+
+        // Initialize Firebase if config exists
+        if (Object.keys(firebaseConfig).length > 0) {
+            const app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+
+            const initAuthAndTrack = async () => {
+                try {
+                    // Rule 3: Auth Before Queries
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                    
+                    if (auth.currentUser) {
+                        trackVisitor();
+                        setupAdminDashboard();
+                    }
+                } catch(e) {
+                    console.error("Auth error", e);
+                }
+            };
+            initAuthAndTrack();
+        }
+
+        async function trackVisitor() {
+            // Avoid double tracking in the same session
+            if (sessionStorage.getItem('jaikar_tracked')) return;
+
+            try {
+                // Fetch Geolocation & IP Data via ipapi
+                let locationData = { city: 'Unknown', country_name: 'Unknown', ip: 'Unknown', region: '' };
+                try {
+                    const geoRes = await fetch('https://ipapi.co/json/');
+                    if (geoRes.ok) {
+                        locationData = await geoRes.json();
+                    }
+                } catch(e) { console.log('Location fetch failed'); }
+
+                const ua = navigator.userAgent;
+                const browser = getBrowser(ua);
+                const os = getOS(ua);
+                
+                const visitData = {
+                    timestamp: new Date().toISOString(),
+                    ip: locationData.ip || 'Hidden',
+                    city: locationData.city || 'Unknown',
+                    region: locationData.region || '',
+                    country: locationData.country_name || 'Unknown',
+                    browser: browser,
+                    os: os,
+                    screen: `${window.innerWidth}x${window.innerHeight}`,
+                    userAgent: ua
+                };
+
+                // Rule 1: Strict Paths -> artifacts/{appId}/public/data/visitors
+                const visitorsRef = collection(db, 'artifacts', appId, 'public', 'data', 'visitors');
+                await addDoc(visitorsRef, visitData);
+                
+                // Mark session as tracked
+                sessionStorage.setItem('jaikar_tracked', 'true');
+            } catch (err) {
+                console.error("Tracking error", err);
+            }
+        }
+
+        function getBrowser(ua) {
+            if (ua.includes("Firefox")) return "Firefox";
+            if (ua.includes("SamsungBrowser")) return "Samsung Browser";
+            if (ua.includes("Opera") || ua.includes("OPR")) return "Opera";
+            if (ua.includes("Trident") || ua.includes("MSIE")) return "Internet Explorer";
+            if (ua.includes("Edge") || ua.includes("Edg")) return "Edge";
+            if (ua.includes("Chrome")) return "Chrome";
+            if (ua.includes("Safari")) return "Safari";
+            return "Other";
+        }
+
+        function getOS(ua) {
+            if (ua.includes("Win")) return "Windows";
+            if (ua.includes("Mac")) return "macOS";
+            if (ua.includes("Linux")) return "Linux";
+            if (ua.includes("Android")) return "Android";
+            if (ua.includes("like Mac")) return "iOS";
+            return "Other";
+        }
+
+        function setupAdminDashboard() {
+            const footerCopy = document.getElementById('footer-copyright');
+            if(!footerCopy) return;
+
+            let clickCount = 0;
+            
+            // Easter egg to open admin panel (Click 5 times on copyright text)
+            footerCopy.addEventListener('click', () => {
+                clickCount++;
+                if (clickCount >= 5) {
+                    clickCount = 0;
+                    openAdminDashboard();
+                }
+                
+                // Reset click count after 3 seconds
+                setTimeout(() => { clickCount = 0; }, 3000);
+            });
+        }
+
+        async function openAdminDashboard() {
+            const modal = document.getElementById('admin-modal');
+            if(!modal) return;
+            
+            modal.classList.add('open');
+            document.body.classList.add('modal-open');
+            
+            const tableBody = document.getElementById('admin-table-body');
+            tableBody.innerHTML = '<tr><td colspan="5" class="text-center p-8 opacity-70 animate-pulse font-doto tracking-widest text-accent">Accessing Database...</td></tr>';
+            
+            if(!auth || !auth.currentUser) {
+                tableBody.innerHTML = '<tr><td colspan="5" class="text-center p-8 text-red-500 font-bold font-doto">Database Connection Failed (No Auth).</td></tr>';
+                return;
+            }
+            
+            try {
+                const visitorsRef = collection(db, 'artifacts', appId, 'public', 'data', 'visitors');
+                // Rule 2: No Complex Queries -> fetch all, then sort locally
+                const snapshot = await getDocs(visitorsRef);
+                const visitors = [];
+                snapshot.forEach(doc => visitors.push(doc.data()));
+                
+                // Sort by newest first
+                visitors.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                
+                if (visitors.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="5" class="text-center p-8 opacity-50 font-doto">No visitors logged yet.</td></tr>';
+                    return;
+                }
+                
+                tableBody.innerHTML = '';
+                visitors.forEach(v => {
+                    const dateObj = new Date(v.timestamp);
+                    const dateStr = dateObj.toLocaleDateString() + ' ' + dateObj.toLocaleTimeString();
+                    const loc = [v.city, v.region, v.country].filter(Boolean).join(', ');
+                    
+                    const row = `
+                        <tr class="border-b border-[var(--border-color)] hover:bg-[var(--hover-bg)] transition-colors">
+                            <td class="p-4 text-xs font-doto whitespace-nowrap">${dateStr}</td>
+                            <td class="p-4 text-xs font-bold font-doto whitespace-nowrap">${v.ip}</td>
+                            <td class="p-4 text-xs font-bold text-accent whitespace-nowrap">${loc}</td>
+                            <td class="p-4 text-xs font-bold whitespace-nowrap">${v.browser} on ${v.os}</td>
+                            <td class="p-4 text-[10px] opacity-50 truncate max-w-[200px] md:max-w-md cursor-pointer" title="${v.userAgent}">${v.userAgent}</td>
+                        </tr>
+                    `;
+                    tableBody.innerHTML += row;
+                });
+            } catch (err) {
+                console.error("Dashboard fetch error:", err);
+                tableBody.innerHTML = `<tr><td colspan="5" class="text-center p-8 text-red-500">Error Loading Feed: ${err.message}</td></tr>`;
+            }
+        }
+        
+        // Export to global window so the HTML button can trigger it
+        window.closeAdminDashboard = function() {
+            document.getElementById('admin-modal').classList.remove('open');
+            document.body.classList.remove('modal-open');
         }
     </script>
 </body>

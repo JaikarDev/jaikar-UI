@@ -2982,7 +2982,7 @@
         let db, auth;
         let localVisitors = []; // Fallback memory for when Cloud DB is missing
 
-        // 1. Initialize UI triggers immediately (Easter Egg will ALWAYS work now)
+        // 1. Initialize UI triggers immediately
         setupAdminDashboard();
         
         // 2. Track the visitor immediately
@@ -3043,27 +3043,60 @@
             }
 
             try {
-                // Fetch Geolocation & IP Data via a more robust API (ipwho.is)
-                let locationData = { city: 'Unknown', country: 'Unknown', ip: 'Hidden/Blocked', region: '' };
+                // Fetch Advanced Geolocation, IP, and ISP Data (Dual Fallback System)
+                let locationData = { city: 'Unknown', country: 'Unknown', ip: 'Hidden/Sandbox', region: '', isp: 'Unknown Network' };
+                
                 try {
-                    const geoRes = await fetch('https://ipwho.is/');
-                    if (geoRes.ok) {
-                        const data = await geoRes.json();
-                        if(data.success) {
-                            locationData = {
-                                city: data.city,
-                                region: data.region,
-                                country: data.country,
-                                ip: data.ip
-                            };
-                        }
+                    // Primary API (Highly detailed, includes ISP/Company Network)
+                    const res = await fetch('https://ipapi.co/json/');
+                    if (res.ok) {
+                        const data = await res.json();
+                        locationData = {
+                            city: data.city || 'Unknown',
+                            region: data.region || '',
+                            country: data.country_name || 'Unknown',
+                            ip: data.ip || 'Hidden',
+                            isp: data.org || 'Unknown Network'
+                        };
+                    } else {
+                        throw new Error("Primary API Failed");
                     }
-                } catch(e) { console.log('Location fetch blocked by client browser/adblocker.'); }
+                } catch(e) { 
+                    // Fallback API (If Primary is rate-limited or blocked)
+                    try {
+                        const res2 = await fetch('https://ipwho.is/');
+                        if (res2.ok) {
+                            const data2 = await res2.json();
+                            if(data2.success) {
+                                locationData = {
+                                    city: data2.city || 'Unknown',
+                                    region: data2.region || '',
+                                    country: data2.country || 'Unknown',
+                                    ip: data2.ip || 'Hidden',
+                                    isp: data2.connection?.isp || 'Unknown Network'
+                                };
+                            }
+                        }
+                    } catch(err) {
+                        console.log('Location fetch completely blocked by client browser/adblocker.');
+                    }
+                }
 
                 const ua = navigator.userAgent;
                 const browser = getBrowser(ua);
                 const os = getOS(ua);
-                const referrer = document.referrer ? new URL(document.referrer).hostname : 'Direct Traffic';
+                const lang = navigator.language || 'en-US';
+                
+                // Detailed Referrer Tracking
+                let referrerStr = 'Direct Traffic / Bookmark';
+                if (document.referrer) {
+                    try {
+                        const refUrl = new URL(document.referrer);
+                        referrerStr = refUrl.hostname;
+                    } catch(e) {
+                        referrerStr = document.referrer;
+                    }
+                }
                 
                 const visitData = {
                     timestamp: new Date().toISOString(),
@@ -3071,11 +3104,13 @@
                     city: locationData.city,
                     region: locationData.region,
                     country: locationData.country,
+                    isp: locationData.isp, // NEW: Network/Company info
                     browser: browser,
                     os: os,
+                    language: lang,
                     screen: `${window.innerWidth}x${window.innerHeight}`,
                     userAgent: ua,
-                    referrer: referrer,
+                    referrer: referrerStr,
                     isReturning: isReturning,
                     visitorId: visitorId,
                     synced: false
@@ -3108,7 +3143,7 @@
             if (ua.includes("Edge") || ua.includes("Edg")) return "Edge";
             if (ua.includes("Chrome")) return "Chrome";
             if (ua.includes("Safari")) return "Safari";
-            return "Other";
+            return "Other Browser";
         }
 
         function getOS(ua) {
@@ -3117,7 +3152,7 @@
             if (ua.includes("Linux")) return "Linux";
             if (ua.includes("Android")) return "Android";
             if (ua.includes("like Mac")) return "iOS";
-            return "Other";
+            return "Other OS";
         }
 
         function setupAdminDashboard() {
@@ -3170,26 +3205,37 @@
             visitors.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
             
             if (visitors.length === 0) {
-                tableBody.innerHTML = '<tr><td colspan="5" class="text-center p-8 opacity-50 font-doto">No visitors logged yet. Share your link to generate data!</td></tr>';
+                tableBody.innerHTML = '<tr><td colspan="5" class="text-center p-8 opacity-50 font-doto">No visitors logged yet. Ensure AdBlockers are off to test, or deploy to a live host.</td></tr>';
                 return;
             }
             
             tableBody.innerHTML = '';
             visitors.forEach(v => {
+                // Format exact local time
                 const dateObj = new Date(v.timestamp);
-                const dateStr = dateObj.toLocaleDateString() + ' ' + dateObj.toLocaleTimeString();
-                const loc = [v.city, v.region, v.country].filter(l => l && l !== 'Unknown').join(', ') || 'Blocked by User';
+                const dateStr = dateObj.toLocaleDateString() + ' ' + dateObj.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
+                
+                // Format Location Data
+                const loc = [v.city, v.region, v.country].filter(l => l && l !== 'Unknown').join(', ') || 'Hidden';
+                const ispStr = v.isp && v.isp !== 'Unknown Network' ? v.isp : 'Generic ISP';
+                
                 const statusBadge = v.isReturning 
                     ? '<span class="px-2 py-0.5 bg-[var(--text-color)] text-[var(--bg-color)] text-[8px] rounded ml-2">Returning</span>'
-                    : '<span class="px-2 py-0.5 bg-[var(--accent-primary)] text-[var(--bg-color)] text-[8px] rounded ml-2">New</span>';
+                    : '<span class="px-2 py-0.5 bg-[var(--accent-primary)] text-[var(--bg-color)] text-[8px] rounded ml-2 shadow-[0_0_5px_var(--accent-primary)]">New</span>';
                 
                 const row = `
                     <tr class="border-b border-[var(--border-color)] hover:bg-[var(--hover-bg)] transition-colors">
                         <td class="p-4 text-xs font-doto whitespace-nowrap">${dateStr} ${statusBadge}</td>
-                        <td class="p-4 text-xs font-bold font-doto whitespace-nowrap text-accent">${v.referrer || 'Direct'}</td>
-                        <td class="p-4 text-xs font-bold font-doto whitespace-nowrap opacity-70">${v.ip}</td>
+                        <td class="p-4 text-xs font-bold font-doto whitespace-nowrap text-accent flex flex-col">
+                            <span>${v.referrer || 'Direct'}</span>
+                            <span class="text-[9px] opacity-60 font-sans font-medium capitalize">${v.language || 'en-US'} • ${v.screen || 'Unknown'}</span>
+                        </td>
+                        <td class="p-4 text-xs font-bold font-doto whitespace-nowrap opacity-90 flex flex-col">
+                            <span>${v.ip}</span>
+                            <span class="text-[9px] opacity-60 font-sans text-[var(--accent-secondary)] italic truncate max-w-[150px]" title="${ispStr}">${ispStr}</span>
+                        </td>
                         <td class="p-4 text-xs font-bold whitespace-nowrap">${loc}</td>
-                        <td class="p-4 text-xs font-bold whitespace-nowrap">${v.browser} on ${v.os}</td>
+                        <td class="p-4 text-xs font-bold whitespace-nowrap">${v.browser} / ${v.os}</td>
                     </tr>
                 `;
                 tableBody.innerHTML += row;

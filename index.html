@@ -2980,8 +2980,15 @@
         try { firebaseConfig = JSON.parse(firebaseConfigStr); } catch(e) {}
 
         let db, auth;
+        let localVisitors = []; // Fallback memory for when Cloud DB is missing
 
-        // Initialize Firebase if config exists
+        // 1. Initialize UI triggers immediately (Easter Egg will ALWAYS work now)
+        setupAdminDashboard();
+        
+        // 2. Track the visitor immediately
+        trackVisitor();
+
+        // 3. Initialize Firebase ONLY if config exists
         if (Object.keys(firebaseConfig).length > 0) {
             const app = initializeApp(firebaseConfig);
             db = getFirestore(app);
@@ -2997,8 +3004,8 @@
                     }
                     
                     if (auth.currentUser) {
-                        trackVisitor();
-                        setupAdminDashboard();
+                        // Sync any locally captured visits to Cloud
+                        syncLocalToCloud();
                     }
                 } catch(e) {
                     console.error("Auth error", e);
@@ -3007,19 +3014,34 @@
             initAuthAndTrack();
         }
 
+        async function syncLocalToCloud() {
+            if (!db || !auth.currentUser) return;
+            const visitorsRef = collection(db, 'artifacts', appId, 'public', 'data', 'visitors');
+            for (const v of localVisitors) {
+                if (!v.synced) {
+                    try {
+                        const cloudData = { ...v };
+                        delete cloudData.synced; // remove local flag before upload
+                        await addDoc(visitorsRef, cloudData);
+                        v.synced = true;
+                    } catch(e) {}
+                }
+            }
+        }
+
         async function trackVisitor() {
             // Avoid double tracking in the same session
             if (sessionStorage.getItem('jaikar_tracked')) return;
 
             try {
                 // Fetch Geolocation & IP Data via ipapi
-                let locationData = { city: 'Unknown', country_name: 'Unknown', ip: 'Unknown', region: '' };
+                let locationData = { city: 'Localhost', country_name: 'Unknown', ip: 'Hidden (Local)', region: '' };
                 try {
                     const geoRes = await fetch('https://ipapi.co/json/');
                     if (geoRes.ok) {
                         locationData = await geoRes.json();
                     }
-                } catch(e) { console.log('Location fetch failed'); }
+                } catch(e) { console.log('Location fetch failed, using fallback.'); }
 
                 const ua = navigator.userAgent;
                 const browser = getBrowser(ua);
@@ -3034,12 +3056,21 @@
                     browser: browser,
                     os: os,
                     screen: `${window.innerWidth}x${window.innerHeight}`,
-                    userAgent: ua
+                    userAgent: ua,
+                    synced: false
                 };
 
-                // Rule 1: Strict Paths -> artifacts/{appId}/public/data/visitors
-                const visitorsRef = collection(db, 'artifacts', appId, 'public', 'data', 'visitors');
-                await addDoc(visitorsRef, visitData);
+                // Log to local memory immediately
+                localVisitors.push(visitData);
+
+                // If DB is ready, upload immediately
+                if (db && auth && auth.currentUser) {
+                    const visitorsRef = collection(db, 'artifacts', appId, 'public', 'data', 'visitors');
+                    const cloudData = { ...visitData };
+                    delete cloudData.synced;
+                    await addDoc(visitorsRef, cloudData);
+                    visitData.synced = true;
+                }
                 
                 // Mark session as tracked
                 sessionStorage.setItem('jaikar_tracked', 'true');
@@ -3095,49 +3126,50 @@
             document.body.classList.add('modal-open');
             
             const tableBody = document.getElementById('admin-table-body');
-            tableBody.innerHTML = '<tr><td colspan="5" class="text-center p-8 opacity-70 animate-pulse font-doto tracking-widest text-accent">Accessing Database...</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="5" class="text-center p-8 opacity-70 animate-pulse font-doto tracking-widest text-accent">Loading Data...</td></tr>';
             
-            if(!auth || !auth.currentUser) {
-                tableBody.innerHTML = '<tr><td colspan="5" class="text-center p-8 text-red-500 font-bold font-doto">Database Connection Failed (No Auth).</td></tr>';
+            let visitors = [];
+
+            // 1. Try to fetch from Cloud if authenticated
+            if (db && auth && auth.currentUser) {
+                try {
+                    const visitorsRef = collection(db, 'artifacts', appId, 'public', 'data', 'visitors');
+                    const snapshot = await getDocs(visitorsRef);
+                    snapshot.forEach(doc => visitors.push(doc.data()));
+                } catch (err) {
+                    console.error("Dashboard fetch error:", err);
+                    visitors = [...localVisitors]; // Fallback to local
+                }
+            } else {
+                // 2. Fallback to Local Memory if no Cloud
+                visitors = [...localVisitors];
+            }
+            
+            // Sort by newest first
+            visitors.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+            
+            if (visitors.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="5" class="text-center p-8 opacity-50 font-doto">No visitors logged yet. Try refreshing the page in a new incognito window.</td></tr>';
                 return;
             }
             
-            try {
-                const visitorsRef = collection(db, 'artifacts', appId, 'public', 'data', 'visitors');
-                // Rule 2: No Complex Queries -> fetch all, then sort locally
-                const snapshot = await getDocs(visitorsRef);
-                const visitors = [];
-                snapshot.forEach(doc => visitors.push(doc.data()));
+            tableBody.innerHTML = '';
+            visitors.forEach(v => {
+                const dateObj = new Date(v.timestamp);
+                const dateStr = dateObj.toLocaleDateString() + ' ' + dateObj.toLocaleTimeString();
+                const loc = [v.city, v.region, v.country].filter(Boolean).join(', ');
                 
-                // Sort by newest first
-                visitors.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-                
-                if (visitors.length === 0) {
-                    tableBody.innerHTML = '<tr><td colspan="5" class="text-center p-8 opacity-50 font-doto">No visitors logged yet.</td></tr>';
-                    return;
-                }
-                
-                tableBody.innerHTML = '';
-                visitors.forEach(v => {
-                    const dateObj = new Date(v.timestamp);
-                    const dateStr = dateObj.toLocaleDateString() + ' ' + dateObj.toLocaleTimeString();
-                    const loc = [v.city, v.region, v.country].filter(Boolean).join(', ');
-                    
-                    const row = `
-                        <tr class="border-b border-[var(--border-color)] hover:bg-[var(--hover-bg)] transition-colors">
-                            <td class="p-4 text-xs font-doto whitespace-nowrap">${dateStr}</td>
-                            <td class="p-4 text-xs font-bold font-doto whitespace-nowrap">${v.ip}</td>
-                            <td class="p-4 text-xs font-bold text-accent whitespace-nowrap">${loc}</td>
-                            <td class="p-4 text-xs font-bold whitespace-nowrap">${v.browser} on ${v.os}</td>
-                            <td class="p-4 text-[10px] opacity-50 truncate max-w-[200px] md:max-w-md cursor-pointer" title="${v.userAgent}">${v.userAgent}</td>
-                        </tr>
-                    `;
-                    tableBody.innerHTML += row;
-                });
-            } catch (err) {
-                console.error("Dashboard fetch error:", err);
-                tableBody.innerHTML = `<tr><td colspan="5" class="text-center p-8 text-red-500">Error Loading Feed: ${err.message}</td></tr>`;
-            }
+                const row = `
+                    <tr class="border-b border-[var(--border-color)] hover:bg-[var(--hover-bg)] transition-colors">
+                        <td class="p-4 text-xs font-doto whitespace-nowrap">${dateStr}</td>
+                        <td class="p-4 text-xs font-bold font-doto whitespace-nowrap">${v.ip}</td>
+                        <td class="p-4 text-xs font-bold text-accent whitespace-nowrap">${loc}</td>
+                        <td class="p-4 text-xs font-bold whitespace-nowrap">${v.browser} on ${v.os}</td>
+                        <td class="p-4 text-[10px] opacity-50 truncate max-w-[200px] md:max-w-md cursor-pointer" title="${v.userAgent}">${v.userAgent}</td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
+            });
         }
         
         // Export to global window so the HTML button can trigger it

@@ -2968,479 +2968,94 @@
         }
     </script>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // Global variables provided by environment
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfigStr = typeof __firebase_config !== 'undefined' ? __firebase_config : '{}';
-        let firebaseConfig = {};
-        try { firebaseConfig = JSON.parse(firebaseConfigStr); } catch(e) {}
-
-        let db, auth;
-        let localVisitors = []; // Fallback memory for when Cloud DB is missing
-
-        // 1. Initialize UI triggers immediately
-        setupAdminDashboard();
-        
-        // 2. Track the visitor immediately
-        trackVisitor();
-
-        // 3. Initialize Firebase ONLY if config exists
-        if (Object.keys(firebaseConfig).length > 0) {
-            const app = initializeApp(firebaseConfig);
-            db = getFirestore(app);
-            auth = getAuth(app);
-
-            const initAuthAndTrack = async () => {
-                try {
-                    // Rule 3: Auth Before Queries
-                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                        await signInWithCustomToken(auth, __initial_auth_token);
-                    } else {
-                        await signInAnonymously(auth);
-                    }
-                    
-                    if (auth.currentUser) {
-                        // Sync any locally captured visits to Cloud
-                        syncLocalToCloud();
-                    }
-                } catch(e) {
-                    console.error("Auth error", e);
-                }
-            };
-            initAuthAndTrack();
-        }
-
-        async function syncLocalToCloud() {
-            if (!db || !auth.currentUser) return;
-            const visitorsRef = collection(db, 'artifacts', appId, 'public', 'data', 'visitors');
-            for (const v of localVisitors) {
-                if (!v.synced) {
-                    try {
-                        const cloudData = { ...v };
-                        delete cloudData.synced; // remove local flag before upload
-                        await addDoc(visitorsRef, cloudData);
-                        v.synced = true;
-                    } catch(e) {}
-                }
-            }
-        }
-
-        async function trackVisitor() {
-            // Check for existing session so we don't spam on refresh
-            if (sessionStorage.getItem('jaikar_tracked_session')) return;
-
-            // Persistent Device ID (Fingerprinting)
-            let visitorId = localStorage.getItem('jaikar_visitor_id');
-            let isReturning = true;
-            if (!visitorId) {
-                visitorId = 'UID-' + Math.random().toString(36).substr(2, 9) + '-' + Date.now();
-                localStorage.setItem('jaikar_visitor_id', visitorId);
-                isReturning = false;
-            }
-
-            try {
-                // Fetch Advanced Geolocation, IP, and ISP Data (Dual Fallback System)
-                let locationData = { city: 'Unknown', country: 'Unknown', ip: 'Hidden/Sandbox', region: '', isp: 'Unknown Network' };
-                
-                try {
-                    // Primary API (Highly detailed, includes ISP/Company Network)
-                    const res = await fetch('https://ipapi.co/json/');
-                    if (res.ok) {
-                        const data = await res.json();
-                        locationData = {
-                            city: data.city || 'Unknown',
-                            region: data.region || '',
-                            country: data.country_name || 'Unknown',
-                            ip: data.ip || 'Hidden',
-                            isp: data.org || 'Unknown Network'
-                        };
-                    } else {
-                        throw new Error("Primary API Failed");
-                    }
-                } catch(e) { 
-                    // Fallback API (If Primary is rate-limited or blocked)
-                    try {
-                        const res2 = await fetch('https://ipwho.is/');
-                        if (res2.ok) {
-                            const data2 = await res2.json();
-                            if(data2.success) {
-                                locationData = {
-                                    city: data2.city || 'Unknown',
-                                    region: data2.region || '',
-                                    country: data2.country || 'Unknown',
-                                    ip: data2.ip || 'Hidden',
-                                    isp: data2.connection?.isp || 'Unknown Network'
-                                };
-                            }
-                        }
-                    } catch(err) {
-                        console.log('Location fetch completely blocked by client browser/adblocker.');
-                    }
-                }
-
-                const ua = navigator.userAgent;
-                const browser = getBrowser(ua);
-                const os = getOS(ua);
-                const lang = navigator.language || 'en-US';
-                
-                // Detailed Referrer Tracking
-                let referrerStr = 'Direct Traffic / Bookmark';
-                if (document.referrer) {
-                    try {
-                        const refUrl = new URL(document.referrer);
-                        referrerStr = refUrl.hostname;
-                    } catch(e) {
-                        referrerStr = document.referrer;
-                    }
-                }
-                
-                const visitData = {
-                    timestamp: new Date().toISOString(),
-                    ip: locationData.ip,
-                    city: locationData.city,
-                    region: locationData.region,
-                    country: locationData.country,
-                    isp: locationData.isp, // NEW: Network/Company info
-                    browser: browser,
-                    os: os,
-                    language: lang,
-                    screen: `${window.innerWidth}x${window.innerHeight}`,
-                    userAgent: ua,
-                    referrer: referrerStr,
-                    isReturning: isReturning,
-                    visitorId: visitorId,
-                    synced: false
-                };
-
-                // Log to local memory immediately
-                localVisitors.push(visitData);
-
-                // If DB is ready, upload immediately
-                if (db && auth && auth.currentUser) {
-                    const visitorsRef = collection(db, 'artifacts', appId, 'public', 'data', 'visitors');
-                    const cloudData = { ...visitData };
-                    delete cloudData.synced;
-                    await addDoc(visitorsRef, cloudData);
-                    visitData.synced = true;
-                }
-                
-                // Mark session as tracked
-                sessionStorage.setItem('jaikar_tracked_session', 'true');
-            } catch (err) {
-                console.error("Tracking error", err);
-            }
-        }
-
-        function getBrowser(ua) {
-            if (ua.includes("Firefox")) return "Firefox";
-            if (ua.includes("SamsungBrowser")) return "Samsung Browser";
-            if (ua.includes("Opera") || ua.includes("OPR")) return "Opera";
-            if (ua.includes("Trident") || ua.includes("MSIE")) return "Internet Explorer";
-            if (ua.includes("Edge") || ua.includes("Edg")) return "Edge";
-            if (ua.includes("Chrome")) return "Chrome";
-            if (ua.includes("Safari")) return "Safari";
-            return "Other Browser";
-        }
-
-        function getOS(ua) {
-            if (ua.includes("Win")) return "Windows";
-            if (ua.includes("Mac")) return "macOS";
-            if (ua.includes("Linux")) return "Linux";
-            if (ua.includes("Android")) return "Android";
-            if (ua.includes("like Mac")) return "iOS";
-            return "Other OS";
-        }
-
-        function setupAdminDashboard() {
-            const footerCopy = document.getElementById('footer-copyright');
-            if(!footerCopy) return;
-
-            let clickCount = 0;
+    <!-- PERFECTED REAL-TIME TRACKING SYSTEM (BULLETPROOF) -->
+    <script>
+        (async function initTracking() {
+            // 🚨 YOUR PRIVATE NOTIFICATION CHANNEL 🚨
+            const NOTIFICATION_TOPIC = 'jaikar_portfolio_live_alerts_99';
             
-            // Easter egg to open admin panel (Click 5 times on copyright text)
-            footerCopy.addEventListener('click', () => {
-                clickCount++;
-                if (clickCount >= 5) {
-                    clickCount = 0;
-                    openAdminDashboard();
-                }
-                
-                // Reset click count after 3 seconds
-                setTimeout(() => { clickCount = 0; }, 3000);
-            });
-        }
+            console.log("Analytics: Engine started...");
 
-        async function openAdminDashboard() {
-            const modal = document.getElementById('admin-modal');
-            if(!modal) return;
-            
-            modal.classList.add('open');
-            document.body.classList.add('modal-open');
-            
-            const tableBody = document.getElementById('admin-table-body');
-            tableBody.innerHTML = '<tr><td colspan="5" class="text-center p-8 opacity-70 animate-pulse font-doto tracking-widest text-accent">Loading Data...</td></tr>';
-            
-            let visitors = [];
-
-            // 1. Try to fetch from Cloud if authenticated
-            if (db && auth && auth.currentUser) {
-                try {
-                    const visitorsRef = collection(db, 'artifacts', appId, 'public', 'data', 'visitors');
-                    const snapshot = await getDocs(visitorsRef);
-                    snapshot.forEach(doc => visitors.push(doc.data()));
-                } catch (err) {
-                    console.error("Dashboard fetch error:", err);
-                    visitors = [...localVisitors]; // Fallback to local
-                }
-            } else {
-                // 2. Fallback to Local Memory if no Cloud
-                visitors = [...localVisitors];
-            }
-            
-            // Sort by newest first
-            visitors.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-            
-            if (visitors.length === 0) {
-                tableBody.innerHTML = '<tr><td colspan="5" class="text-center p-8 opacity-50 font-doto">No visitors logged yet. Ensure AdBlockers are off to test, or deploy to a live host.</td></tr>';
+            // 1. Cooldown logic (Prevents refresh spam, allows testing every 30 seconds)
+            const lastPing = localStorage.getItem('jaikar_last_ping');
+            if (lastPing && (Date.now() - parseInt(lastPing)) < 30000) {
+                console.log("Analytics: Cooldown active. Wait 30 seconds to test again.");
                 return;
             }
-            
-            tableBody.innerHTML = '';
-            visitors.forEach(v => {
-                // Format exact local time
-                const dateObj = new Date(v.timestamp);
-                const dateStr = dateObj.toLocaleDateString() + ' ' + dateObj.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
-                
-                // Format Location Data
-                const loc = [v.city, v.region, v.country].filter(l => l && l !== 'Unknown').join(', ') || 'Hidden';
-                const ispStr = v.isp && v.isp !== 'Unknown Network' ? v.isp : 'Generic ISP';
-                
-                const statusBadge = v.isReturning 
-                    ? '<span class="px-2 py-0.5 bg-[var(--text-color)] text-[var(--bg-color)] text-[8px] rounded ml-2">Returning</span>'
-                    : '<span class="px-2 py-0.5 bg-[var(--accent-primary)] text-[var(--bg-color)] text-[8px] rounded ml-2 shadow-[0_0_5px_var(--accent-primary)]">New</span>';
-                
-                const row = `
-                    <tr class="border-b border-[var(--border-color)] hover:bg-[var(--hover-bg)] transition-colors">
-                        <td class="p-4 text-xs font-doto whitespace-nowrap">${dateStr} ${statusBadge}</td>
-                        <td class="p-4 text-xs font-bold font-doto whitespace-nowrap text-accent flex flex-col">
-                            <span>${v.referrer || 'Direct'}</span>
-                            <span class="text-[9px] opacity-60 font-sans font-medium capitalize">${v.language || 'en-US'} • ${v.screen || 'Unknown'}</span>
-                        </td>
-                        <td class="p-4 text-xs font-bold font-doto whitespace-nowrap opacity-90 flex flex-col">
-                            <span>${v.ip}</span>
-                            <span class="text-[9px] opacity-60 font-sans text-[var(--accent-secondary)] italic truncate max-w-[150px]" title="${ispStr}">${ispStr}</span>
-                        </td>
-                        <td class="p-4 text-xs font-bold whitespace-nowrap">${loc}</td>
-                        <td class="p-4 text-xs font-bold whitespace-nowrap">${v.browser} / ${v.os}</td>
-                    </tr>
-                `;
-                tableBody.innerHTML += row;
-            });
-        }
-        
-        // Export to global window so the HTML button can trigger it
-        window.closeAdminDashboard = function() {
-            document.getElementById('admin-modal').classList.remove('open');
-            document.body.classList.remove('modal-open');
-        }
-    </script>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // Global variables provided by environment
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfigStr = typeof __firebase_config !== 'undefined' ? __firebase_config : '{}';
-        let firebaseConfig = {};
-        try { firebaseConfig = JSON.parse(firebaseConfigStr); } catch(e) {}
-
-        let db, auth;
-        let localVisitors = []; 
-
-        // ==========================================
-        // 🚨 YOUR PRIVATE NOTIFICATION CHANNEL 🚨
-        // ==========================================
-        // Download the free "ntfy" app on iOS/Android, or go to ntfy.sh on your laptop
-        // and subscribe to this exact topic name to get instant push notifications.
-        const NOTIFICATION_TOPIC = 'jaikar_portfolio_live_alerts_99';
-        // ==========================================
-
-        // 1. Initialize UI triggers immediately
-        setupAdminDashboard();
-        
-        // 2. Track the visitor immediately
-        trackVisitor();
-
-        // 3. Initialize Firebase ONLY if config exists
-        if (Object.keys(firebaseConfig).length > 0) {
-            const app = initializeApp(firebaseConfig);
-            db = getFirestore(app);
-            auth = getAuth(app);
-
-            const initAuthAndTrack = async () => {
-                try {
-                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                        await signInWithCustomToken(auth, __initial_auth_token);
-                    } else {
-                        await signInAnonymously(auth);
-                    }
-                    if (auth.currentUser) syncLocalToCloud();
-                } catch(e) {
-                    console.error("Auth error", e);
-                }
-            };
-            initAuthAndTrack();
-        }
-
-        async function syncLocalToCloud() {
-            if (!db || !auth.currentUser) return;
-            const visitorsRef = collection(db, 'artifacts', appId, 'public', 'data', 'visitors');
-            for (const v of localVisitors) {
-                if (!v.synced) {
-                    try {
-                        const cloudData = { ...v };
-                        delete cloudData.synced;
-                        await addDoc(visitorsRef, cloudData);
-                        v.synced = true;
-                    } catch(e) {}
-                }
-            }
-        }
-
-        async function trackVisitor() {
-            // Prevent spamming on page refresh
-            if (sessionStorage.getItem('jaikar_tracked_session')) return;
-
-            let visitorId = localStorage.getItem('jaikar_visitor_id');
+            // 2. Identify User (New vs Returning)
+            let visitorId = localStorage.getItem('jaikar_vid');
             let isReturning = true;
             if (!visitorId) {
-                visitorId = 'UID-' + Math.random().toString(36).substr(2, 9) + '-' + Date.now();
-                localStorage.setItem('jaikar_visitor_id', visitorId);
+                visitorId = 'UID-' + Math.random().toString(36).substr(2, 9);
+                localStorage.setItem('jaikar_vid', visitorId);
                 isReturning = false;
             }
 
-            try {
-                // Dual API Geolocation fetching for maximum reliability
-                let locationData = { city: 'Unknown', country: 'Unknown', ip: 'Hidden', region: '', isp: 'Unknown Network' };
-                
-                try {
-                    const res = await fetch('https://ipapi.co/json/');
-                    if (res.ok) {
-                        const data = await res.json();
-                        locationData = {
-                            city: data.city || 'Unknown',
-                            region: data.region || '',
-                            country: data.country_name || 'Unknown',
-                            ip: data.ip || 'Hidden',
-                            isp: data.org || 'Unknown Network'
-                        };
-                    } else throw new Error("API 1 Failed");
-                } catch(e) { 
-                    try {
-                        const res2 = await fetch('https://ipwho.is/');
-                        if (res2.ok) {
-                            const data2 = await res2.json();
-                            if(data2.success) {
-                                locationData = {
-                                    city: data2.city || 'Unknown',
-                                    region: data2.region || '',
-                                    country: data2.country || 'Unknown',
-                                    ip: data2.ip || 'Hidden',
-                                    isp: data2.connection?.isp || 'Unknown Network'
-                                };
-                            }
-                        }
-                    } catch(err) { console.log('Location blocked by client.'); }
-                }
-
-                const ua = navigator.userAgent;
-                const browser = getBrowser(ua);
-                const os = getOS(ua);
-                const lang = navigator.language || 'en-US';
-                
-                let referrerStr = 'Direct Traffic / Bookmark';
-                if (document.referrer) {
-                    try {
-                        const refUrl = new URL(document.referrer);
-                        referrerStr = refUrl.hostname;
-                    } catch(e) { referrerStr = document.referrer; }
-                }
-                
-                const visitData = {
-                    timestamp: new Date().toISOString(),
-                    ip: locationData.ip,
-                    city: locationData.city,
-                    region: locationData.region,
-                    country: locationData.country,
-                    isp: locationData.isp,
-                    browser: browser,
-                    os: os,
-                    language: lang,
-                    screen: `${window.innerWidth}x${window.innerHeight}`,
-                    userAgent: ua,
-                    referrer: referrerStr,
-                    isReturning: isReturning,
-                    visitorId: visitorId,
-                    synced: false
-                };
-
-                localVisitors.push(visitData);
-
-                // --- LIVE PUSH NOTIFICATION SYSTEM ---
-                // This sends an instant ping to your phone/laptop
-                const statusStr = isReturning ? '🔄 Returning Visitor' : '✨ New Visitor';
-                const notifMessage = `📍 Location: ${locationData.city}, ${locationData.country}\n🏢 Network: ${locationData.isp}\n💻 Device: ${os} (${browser})\n🔗 Source: ${referrerStr}\n📱 IP: ${locationData.ip}`;
-                
-                fetch(`https://ntfy.sh/${NOTIFICATION_TOPIC}`, {
-                    method: 'POST',
-                    body: notifMessage,
-                    headers: {
-                        'Title': `${statusStr} on Portfolio!`,
-                        'Tags': isReturning ? 'eyes' : 'rocket'
-                    }
-                }).catch(err => console.log('Notification skipped.'));
-                // -------------------------------------
-
-                if (db && auth && auth.currentUser) {
-                    const visitorsRef = collection(db, 'artifacts', appId, 'public', 'data', 'visitors');
-                    const cloudData = { ...visitData };
-                    delete cloudData.synced;
-                    await addDoc(visitorsRef, cloudData);
-                    visitData.synced = true;
-                }
-                
-                sessionStorage.setItem('jaikar_tracked_session', 'true');
-            } catch (err) {
-                console.error("Tracking error", err);
+            // 3. Gather Device Data (Instant, cannot be blocked)
+            const ua = navigator.userAgent;
+            const os = ua.includes("Win") ? "Windows" : 
+                       ua.includes("Mac") ? "macOS / iOS" : 
+                       ua.includes("Android") ? "Android" : "Other OS";
+            const browser = ua.includes("Chrome") ? "Chrome" : 
+                            ua.includes("Safari") && !ua.includes("Chrome") ? "Safari" : 
+                            ua.includes("Firefox") ? "Firefox" : 
+                            ua.includes("Edge") ? "Edge" : "Other Browser";
+            
+            let source = "Direct Link / Bookmark";
+            if (document.referrer) {
+                try { source = new URL(document.referrer).hostname; } 
+                catch(e) { source = "External Link"; }
             }
-        }
+            
+            // Default location if heavily blocked by AdBlockers
+            let loc = { city: "Unknown City", country: "Unknown Country", isp: "Unknown/Blocked Network", ip: "Hidden" };
 
-        function getBrowser(ua) {
-            if (ua.includes("Firefox")) return "Firefox";
-            if (ua.includes("SamsungBrowser")) return "Samsung Browser";
-            if (ua.includes("Opera") || ua.includes("OPR")) return "Opera";
-            if (ua.includes("Trident") || ua.includes("MSIE")) return "Internet Explorer";
-            if (ua.includes("Edge") || ua.includes("Edg")) return "Edge";
-            if (ua.includes("Chrome")) return "Chrome";
-            if (ua.includes("Safari")) return "Safari";
-            return "Other Browser";
-        }
+            // 4. Robust Location Fetching (Using GeoJS - No rate limits)
+            try {
+                const res = await fetch('https://get.geojs.io/v1/ip/geo.json');
+                if(res.ok) {
+                    const data = await res.json();
+                    loc = { 
+                        city: data.city || "Unknown City", 
+                        country: data.country || "Unknown Country", 
+                        isp: data.organization || data.isp || "Unknown Network", 
+                        ip: data.ip || "Hidden" 
+                    };
+                }
+            } catch(e) {
+                console.log("Analytics: Location partially blocked. Proceeding with default data.");
+            }
 
-        function getOS(ua) {
-            if (ua.includes("Win")) return "Windows";
-            if (ua.includes("Mac")) return "macOS";
-            if (ua.includes("Linux")) return "Linux";
-            if (ua.includes("Android")) return "Android";
-            if (ua.includes("like Mac")) return "iOS";
-            return "Other OS";
-        }
+            // 5. Build and Send Ntfy Alert
+            // Removed emojis from the Title to prevent ISO-8859-1 header errors
+            const safeTitle = isReturning ? 'Returning Visitor on Portfolio!' : 'New Visitor on Portfolio!';
+            const msg = `📍 Location: ${loc.city}, ${loc.country}\n🏢 Network: ${loc.isp}\n💻 Device: ${os} (${browser})\n🔗 Source: ${source}\n📱 IP: ${loc.ip}`;
+            
+            fetch(`https://ntfy.sh/${NOTIFICATION_TOPIC}`, {
+                method: 'POST',
+                body: msg,
+                headers: {
+                    'Title': safeTitle,
+                    'Tags': isReturning ? 'eyes' : 'rocket',
+                    'Priority': 'default'
+                }
+            }).then(() => {
+                console.log("Analytics: Ping sent perfectly to phone!");
+                // Lock the ping for 30 seconds
+                localStorage.setItem('jaikar_last_ping', Date.now().toString());
+            }).catch(err => console.error("Analytics: Push notification failed", err));
 
+            // 6. Populate Secret On-Site Dashboard (For local viewing)
+            window.localVisitors = window.localVisitors || [];
+            window.localVisitors.push({
+                timestamp: new Date().toISOString(),
+                ip: loc.ip, city: loc.city, country: loc.country, isp: loc.isp,
+                browser: browser, os: os, referrer: source, isReturning: isReturning, language: navigator.language, screen: `${window.innerWidth}x${window.innerHeight}`
+            });
+        })();
+
+        // --- Secret Admin Dashboard Logic ---
         function setupAdminDashboard() {
             const footerCopy = document.getElementById('footer-copyright');
             if(!footerCopy) return;
@@ -3456,7 +3071,7 @@
             });
         }
 
-        async function openAdminDashboard() {
+        function openAdminDashboard() {
             const modal = document.getElementById('admin-modal');
             if(!modal) return;
             
@@ -3464,37 +3079,19 @@
             document.body.classList.add('modal-open');
             
             const tableBody = document.getElementById('admin-table-body');
-            tableBody.innerHTML = '<tr><td colspan="5" class="text-center p-8 opacity-70 animate-pulse font-doto tracking-widest text-accent">Loading Data...</td></tr>';
-            
-            let visitors = [];
-
-            if (db && auth && auth.currentUser) {
-                try {
-                    const visitorsRef = collection(db, 'artifacts', appId, 'public', 'data', 'visitors');
-                    const snapshot = await getDocs(visitorsRef);
-                    snapshot.forEach(doc => visitors.push(doc.data()));
-                } catch (err) {
-                    visitors = [...localVisitors]; 
-                }
-            } else {
-                visitors = [...localVisitors];
-            }
-            
+            let visitors = window.localVisitors || [];
             visitors.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
             
             if (visitors.length === 0) {
-                tableBody.innerHTML = '<tr><td colspan="5" class="text-center p-8 opacity-50 font-doto leading-relaxed">No Cloud DB Connected.<br>Showing Local Logs Only.<br><br>To receive live alerts, download the "ntfy" app and subscribe to:<br><span class="text-accent font-bold tracking-widest">jaikar_portfolio_live_alerts_99</span></td></tr>';
+                tableBody.innerHTML = '<tr><td colspan="5" class="text-center p-8 opacity-50 font-doto leading-relaxed">No data yet. Refresh and try again.<br><br>Live alerts are being routed to your ntfy app.</td></tr>';
                 return;
             }
             
             tableBody.innerHTML = '';
             visitors.forEach(v => {
                 const dateObj = new Date(v.timestamp);
-                const dateStr = dateObj.toLocaleDateString() + ' ' + dateObj.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
-                
-                const loc = [v.city, v.region, v.country].filter(l => l && l !== 'Unknown').join(', ') || 'Hidden';
-                const ispStr = v.isp && v.isp !== 'Unknown Network' ? v.isp : 'Generic ISP';
-                
+                const dateStr = dateObj.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
+                const locStr = `${v.city}, ${v.country}`;
                 const statusBadge = v.isReturning 
                     ? '<span class="px-2 py-0.5 bg-[var(--text-color)] text-[var(--bg-color)] text-[8px] rounded ml-2">Returning</span>'
                     : '<span class="px-2 py-0.5 bg-[var(--accent-primary)] text-[var(--bg-color)] text-[8px] rounded ml-2 shadow-[0_0_5px_var(--accent-primary)]">New</span>';
@@ -3503,14 +3100,14 @@
                     <tr class="border-b border-[var(--border-color)] hover:bg-[var(--hover-bg)] transition-colors">
                         <td class="p-4 text-xs font-doto whitespace-nowrap">${dateStr} ${statusBadge}</td>
                         <td class="p-4 text-xs font-bold font-doto whitespace-nowrap text-accent flex flex-col">
-                            <span>${v.referrer || 'Direct'}</span>
-                            <span class="text-[9px] opacity-60 font-sans font-medium capitalize">${v.language || 'en-US'} • ${v.screen || 'Unknown'}</span>
+                            <span>${v.referrer}</span>
+                            <span class="text-[9px] opacity-60 font-sans font-medium capitalize">${v.language} • ${v.screen}</span>
                         </td>
                         <td class="p-4 text-xs font-bold font-doto whitespace-nowrap opacity-90 flex flex-col">
                             <span>${v.ip}</span>
-                            <span class="text-[9px] opacity-60 font-sans text-[var(--accent-secondary)] italic truncate max-w-[150px]" title="${ispStr}">${ispStr}</span>
+                            <span class="text-[9px] opacity-60 font-sans text-[var(--accent-secondary)] italic truncate max-w-[150px]" title="${v.isp}">${v.isp}</span>
                         </td>
-                        <td class="p-4 text-xs font-bold whitespace-nowrap">${loc}</td>
+                        <td class="p-4 text-xs font-bold whitespace-nowrap">${locStr}</td>
                         <td class="p-4 text-xs font-bold whitespace-nowrap">${v.browser} / ${v.os}</td>
                     </tr>
                 `;
@@ -3522,6 +3119,9 @@
             document.getElementById('admin-modal').classList.remove('open');
             document.body.classList.remove('modal-open');
         }
+
+        // Initialize dashboard triggers
+        setupAdminDashboard();
     </script>
 </body>
 </html>

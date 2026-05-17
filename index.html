@@ -622,11 +622,11 @@
                 <table class="w-full text-left border-collapse whitespace-nowrap min-w-[800px]">
                     <thead>
                         <tr class="bg-[var(--text-color)] text-[var(--bg-color)] border-b grid-border uppercase text-[10px] tracking-widest font-doto">
-                            <th class="p-4">> Time (Local)</th>
+                            <th class="p-4">> Time & Status</th>
+                            <th class="p-4">> Source / Referrer</th>
                             <th class="p-4">> IP Address</th>
                             <th class="p-4">> Location</th>
                             <th class="p-4">> Device / OS</th>
-                            <th class="p-4">> Raw User Agent</th>
                         </tr>
                     </thead>
                     <tbody id="admin-table-body" class="text-sm">
@@ -3030,33 +3030,54 @@
         }
 
         async function trackVisitor() {
-            // Avoid double tracking in the same session
-            if (sessionStorage.getItem('jaikar_tracked')) return;
+            // Check for existing session so we don't spam on refresh
+            if (sessionStorage.getItem('jaikar_tracked_session')) return;
+
+            // Persistent Device ID (Fingerprinting)
+            let visitorId = localStorage.getItem('jaikar_visitor_id');
+            let isReturning = true;
+            if (!visitorId) {
+                visitorId = 'UID-' + Math.random().toString(36).substr(2, 9) + '-' + Date.now();
+                localStorage.setItem('jaikar_visitor_id', visitorId);
+                isReturning = false;
+            }
 
             try {
-                // Fetch Geolocation & IP Data via ipapi
-                let locationData = { city: 'Localhost', country_name: 'Unknown', ip: 'Hidden (Local)', region: '' };
+                // Fetch Geolocation & IP Data via a more robust API (ipwho.is)
+                let locationData = { city: 'Unknown', country: 'Unknown', ip: 'Hidden/Blocked', region: '' };
                 try {
-                    const geoRes = await fetch('https://ipapi.co/json/');
+                    const geoRes = await fetch('https://ipwho.is/');
                     if (geoRes.ok) {
-                        locationData = await geoRes.json();
+                        const data = await geoRes.json();
+                        if(data.success) {
+                            locationData = {
+                                city: data.city,
+                                region: data.region,
+                                country: data.country,
+                                ip: data.ip
+                            };
+                        }
                     }
-                } catch(e) { console.log('Location fetch failed, using fallback.'); }
+                } catch(e) { console.log('Location fetch blocked by client browser/adblocker.'); }
 
                 const ua = navigator.userAgent;
                 const browser = getBrowser(ua);
                 const os = getOS(ua);
+                const referrer = document.referrer ? new URL(document.referrer).hostname : 'Direct Traffic';
                 
                 const visitData = {
                     timestamp: new Date().toISOString(),
-                    ip: locationData.ip || 'Hidden',
-                    city: locationData.city || 'Unknown',
-                    region: locationData.region || '',
-                    country: locationData.country_name || 'Unknown',
+                    ip: locationData.ip,
+                    city: locationData.city,
+                    region: locationData.region,
+                    country: locationData.country,
                     browser: browser,
                     os: os,
                     screen: `${window.innerWidth}x${window.innerHeight}`,
                     userAgent: ua,
+                    referrer: referrer,
+                    isReturning: isReturning,
+                    visitorId: visitorId,
                     synced: false
                 };
 
@@ -3073,7 +3094,7 @@
                 }
                 
                 // Mark session as tracked
-                sessionStorage.setItem('jaikar_tracked', 'true');
+                sessionStorage.setItem('jaikar_tracked_session', 'true');
             } catch (err) {
                 console.error("Tracking error", err);
             }
@@ -3149,7 +3170,7 @@
             visitors.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
             
             if (visitors.length === 0) {
-                tableBody.innerHTML = '<tr><td colspan="5" class="text-center p-8 opacity-50 font-doto">No visitors logged yet. Try refreshing the page in a new incognito window.</td></tr>';
+                tableBody.innerHTML = '<tr><td colspan="5" class="text-center p-8 opacity-50 font-doto">No visitors logged yet. Share your link to generate data!</td></tr>';
                 return;
             }
             
@@ -3157,15 +3178,18 @@
             visitors.forEach(v => {
                 const dateObj = new Date(v.timestamp);
                 const dateStr = dateObj.toLocaleDateString() + ' ' + dateObj.toLocaleTimeString();
-                const loc = [v.city, v.region, v.country].filter(Boolean).join(', ');
+                const loc = [v.city, v.region, v.country].filter(l => l && l !== 'Unknown').join(', ') || 'Blocked by User';
+                const statusBadge = v.isReturning 
+                    ? '<span class="px-2 py-0.5 bg-[var(--text-color)] text-[var(--bg-color)] text-[8px] rounded ml-2">Returning</span>'
+                    : '<span class="px-2 py-0.5 bg-[var(--accent-primary)] text-[var(--bg-color)] text-[8px] rounded ml-2">New</span>';
                 
                 const row = `
                     <tr class="border-b border-[var(--border-color)] hover:bg-[var(--hover-bg)] transition-colors">
-                        <td class="p-4 text-xs font-doto whitespace-nowrap">${dateStr}</td>
-                        <td class="p-4 text-xs font-bold font-doto whitespace-nowrap">${v.ip}</td>
-                        <td class="p-4 text-xs font-bold text-accent whitespace-nowrap">${loc}</td>
+                        <td class="p-4 text-xs font-doto whitespace-nowrap">${dateStr} ${statusBadge}</td>
+                        <td class="p-4 text-xs font-bold font-doto whitespace-nowrap text-accent">${v.referrer || 'Direct'}</td>
+                        <td class="p-4 text-xs font-bold font-doto whitespace-nowrap opacity-70">${v.ip}</td>
+                        <td class="p-4 text-xs font-bold whitespace-nowrap">${loc}</td>
                         <td class="p-4 text-xs font-bold whitespace-nowrap">${v.browser} on ${v.os}</td>
-                        <td class="p-4 text-[10px] opacity-50 truncate max-w-[200px] md:max-w-md cursor-pointer" title="${v.userAgent}">${v.userAgent}</td>
                     </tr>
                 `;
                 tableBody.innerHTML += row;

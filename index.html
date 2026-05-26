@@ -589,6 +589,212 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* ========================================================= */
+        /* GRAVITY DAZE INTERACTIVE COMIC THEME OVERRIDE             */
+        /* ========================================================= */
+
+        /* 1. Global Section Overrides */
+        main > section, #marquee-section, footer {
+            border-bottom: none !important;
+            position: relative;
+            overflow: visible !important; /* Allow panel popouts */
+        }
+
+        /* 2. Alternating Zig-Zag Diagonals */
+        /* Pattern A: Bottom right is cut higher */
+        #home, #works, #experience, #resume, #blog {
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 8vw), 0 100%);
+            padding-bottom: 12vw !important;
+        }
+        
+        /* Pattern B: Bottom left is cut higher */
+        #about, #approach, #skills, #showcase, #marquee-section {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 8vw));
+            padding-bottom: 12vw !important;
+        }
+
+        /* Overlap & Z-Index */
+        #home { z-index: 20; }
+        #about { z-index: 19; margin-top: -8vw; padding-top: 14vw !important; background-color: var(--accent-primary) !important; color: var(--bg-color) !important; }
+        #works { z-index: 18; margin-top: -8vw; padding-top: 14vw !important; background-color: var(--bg-color) !important; }
+        #approach { z-index: 17; margin-top: -8vw; padding-top: 14vw !important; background-color: var(--text-color) !important; color: var(--bg-color) !important; }
+        #experience { z-index: 16; margin-top: -8vw; padding-top: 14vw !important; background-color: var(--accent-secondary) !important; color: var(--text-color) !important; }
+        #skills { z-index: 15; margin-top: -8vw; padding-top: 14vw !important; background-color: var(--bg-color) !important; }
+        #resume { z-index: 14; margin-top: -8vw; padding-top: 14vw !important; background-color: var(--accent-primary) !important; color: var(--bg-color) !important; }
+        #showcase { z-index: 13; margin-top: -8vw; padding-top: 14vw !important; background-color: var(--text-color) !important; color: var(--bg-color) !important; }
+        #blog { z-index: 12; margin-top: -8vw; padding-top: 14vw !important; background-color: var(--bg-color) !important; }
+        #marquee-section { z-index: 11; margin-top: -8vw; padding-top: 14vw !important; background-color: var(--accent-secondary) !important; color: var(--text-color) !important; }
+        footer { z-index: 10; margin-top: -8vw; padding-top: 12vw !important; }
+
+        /* 3. Color & Contrast Fixing inside inverted sections */
+        #about * { border-color: var(--bg-color) !important; }
+        #about p, #about h2 { color: var(--bg-color) !important; }
+        #about .text-accent { color: var(--text-color) !important; }
+
+        #approach * { border-color: rgba(255,255,255,0.15) !important; }
+        #approach p, #approach h2, #approach h3, #approach h4, #approach span, #approach li { color: var(--bg-color) !important; }
+        #approach .text-accent { color: var(--accent-secondary) !important; }
+        #approach .bg-\\[var\\(--text-color\\] { background-color: var(--bg-color) !important; color: var(--text-color) !important; }
+
+        #experience * { border-color: var(--text-color) !important; }
+        #experience p, #experience span, #experience h4, #experience li { color: var(--text-color) !important; }
+        #experience .bg-\\[var\\(--bg-color\\] { background-color: transparent !important; }
+        #experience .grid { border-bottom: 2px solid var(--text-color) !important; }
+        #experience .grid:hover { background: var(--bg-color) !important; color: var(--text-color) !important; transform: scale(1.02); box-shadow: 8px 8px 0px var(--text-color); z-index: 10; position: relative;}
+
+        #resume p, #resume h2, #resume h3 { color: var(--bg-color) !important; }
+        #resume .btn-cyber { border-color: var(--bg-color) !important; color: var(--bg-color) !important; background: transparent !important; }
+        #resume .btn-cyber:hover { background: var(--bg-color) !important; color: var(--accent-primary) !important; }
+
+        #showcase * { border-color: rgba(255,255,255,0.15) !important; }
+        #showcase p, #showcase span, #showcase h2, #showcase h3 { color: var(--bg-color) !important; }
+        #showcase .bg-\\[var\\(--bg-color\\] { background-color: transparent !important; }
+
+        /* 4. Comic Book Typography (Massive Slanted Titles) */
+        section h3 {
+            font-family: 'Playfair Display', serif !important;
+            font-size: clamp(4rem, 15vw, 12rem) !important;
+            line-height: 0.75 !important;
+            text-transform: uppercase !important;
+            font-weight: 900 !important;
+            color: transparent !important;
+            -webkit-text-stroke: 3px currentColor;
+            text-shadow: 8px 8px 0px var(--accent-primary);
+            transform: rotate(-3deg) scaleY(1.2);
+            display: inline-block;
+            margin-bottom: 4rem !important;
+            position: relative;
+            z-index: 10;
+            white-space: wrap;
+            letter-spacing: -0.05em;
+        }
+        /* Solid first line */
+        section h3 span:first-child {
+            color: currentColor !important;
+            -webkit-text-stroke: 0;
+        }
+        /* Dynamic shadow colors based on background */
+        #about h3, #approach h3, #resume h3, #showcase h3 {
+            -webkit-text-stroke: 3px var(--bg-color);
+            text-shadow: 8px 8px 0px var(--text-color);
+        }
+        #about h3 span:first-child, #approach h3 span:first-child, #resume h3 span:first-child, #showcase h3 span:first-child {
+            color: var(--bg-color) !important;
+        }
+
+        /* 5. Comic Panels (Game Cards) */
+        .game-card {
+            border: 4px solid var(--text-color) !important;
+            background: var(--bg-color) !important;
+            box-shadow: 15px 15px 0px var(--accent-primary) !important;
+            transform: rotate(-1.5deg) !important;
+            margin: 4rem 1rem !important;
+            border-radius: 0 !important;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease !important;
+            color: var(--text-color) !important;
+        }
+        .game-card:nth-child(even) {
+            transform: rotate(1.5deg) !important;
+            box-shadow: -15px 15px 0px var(--accent-secondary) !important;
+        }
+        .game-card:hover {
+            transform: rotate(0deg) scale(1.02) !important;
+            box-shadow: 25px 25px 0px var(--text-color) !important;
+            z-index: 50;
+        }
+        .game-card * { border-color: var(--border-color) !important; }
+        .game-card p, .game-card h4, .game-card span, .game-card .text-accent { color: var(--text-color) !important; }
+        .game-card img, .game-card video { border: 3px solid var(--text-color); }
+
+        /* 6. Tags and Speech Bubbles */
+        .cyber-tag {
+            background: var(--bg-color) !important;
+            color: var(--text-color) !important;
+            border: 2px solid var(--text-color) !important;
+            box-shadow: 4px 4px 0px var(--accent-primary) !important;
+            clip-path: none !important;
+            border-radius: 12px !important;
+            border-bottom-left-radius: 0 !important;
+            transform: rotate(-4deg);
+            padding: 0.5rem 1rem !important;
+            font-weight: 900 !important;
+            display: inline-block;
+        }
+
+        /* 7. Section Headers (Category Dividers) */
+        #works .text-center.font-bold {
+            background: var(--text-color) !important;
+            color: var(--bg-color) !important;
+            transform: rotate(-1deg) scale(1.02);
+            box-shadow: 6px 6px 0px var(--accent-secondary);
+            border: 3px solid var(--bg-color) !important;
+            padding: 1.5rem !important;
+            margin: 3rem 0;
+            z-index: 20;
+            position: relative;
+            font-size: 1.2rem;
+        }
+
+        /* 8. Halftone Overlay globally to sections */
+        main > section::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(currentColor 1.5px, transparent 1.5px);
+            background-size: 12px 12px;
+            opacity: 0.04;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* 9. Hero Overrides */
+        .editorial-title {
+            font-size: clamp(5rem, 16vw, 16rem) !important;
+            transform: scaleY(1.15) rotate(-2deg);
+            text-shadow: 10px 10px 0px var(--accent-primary);
+            -webkit-text-stroke: 3px var(--text-color);
+            color: var(--bg-color) !important;
+            line-height: 0.8 !important;
+            margin-bottom: 1rem;
+        }
+        .text-outline {
+            -webkit-text-stroke: 3px var(--accent-secondary) !important;
+            text-shadow: none !important;
+            color: transparent !important;
+        }
+
+        /* 10. Showcase Grid Pop */
+        #showcase .tech-corners {
+            border: 4px solid var(--bg-color) !important;
+            transform: rotate(calc(var(--rand, 0) * 1.5deg));
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: var(--text-color) !important;
+        }
+        #showcase .tech-corners:hover {
+            transform: scale(1.1) rotate(0deg);
+            z-index: 30;
+            box-shadow: 15px 15px 0px var(--accent-primary);
+        }
+        #showcase .tech-corners:nth-child(3n) { --rand: -2; }
+        #showcase .tech-corners:nth-child(3n+1) { --rand: 2; }
+        #showcase .tech-corners:nth-child(3n+2) { --rand: 1; }
+
+        /* 11. Skills Grid */
+        #skills .border {
+            border: 4px solid var(--text-color) !important;
+            box-shadow: 10px 10px 0px var(--accent-primary);
+            transform: rotate(-1.5deg);
+            transition: transform 0.3s ease;
+        }
+        #skills .border:nth-child(even) {
+            transform: rotate(1.5deg);
+            box-shadow: -10px 10px 0px var(--accent-secondary);
+        }
+        #skills .border:hover {
+            transform: scale(1.05) rotate(0deg);
+            z-index: 10;
+        }
     </style>
 </head>
 <body class="relative font-sans antialiased">
@@ -681,6 +887,103 @@
             <a href="#skills" class="mobile-nav-item text-4xl font-doto font-bold uppercase tracking-tight hover:text-accent transition-opacity">SKILLS</a>
             <a href="#resume" class="mobile-nav-item text-4xl font-doto font-bold uppercase tracking-tight hover:text-accent transition-opacity">RESUME</a>
             <a href="#blog" class="mobile-nav-item text-4xl font-doto font-bold uppercase tracking-tight hover:text-accent transition-opacity">BLOG</a>
+        </div>
+    </div>
+
+    <!-- Retro OS Trigger Button -->
+    <button onclick="openOsSearch()" class="fixed bottom-6 left-6 z-[160] group flex flex-col items-center gap-1 cursor-none hover:scale-110 transition-transform">
+        <div class="w-12 h-12 bg-[#FFF0F5] dark:bg-[#0A0A0A] rounded border-2 border-[#FF4D85] dark:border-[#CCFF00] flex items-center justify-center shadow-[4px_4px_0px_#FF4D85] dark:shadow-[4px_4px_0px_#CCFF00] transition-colors">
+            <span class="text-[#FF4D85] dark:text-[#CCFF00] font-doto font-bold text-xl uppercase tracking-tighter">OS</span>
+        </div>
+        <span class="text-[10px] font-doto font-bold uppercase bg-[var(--bg-color)] text-[var(--text-color)] px-1 border grid-border opacity-0 group-hover:opacity-100 transition-opacity">Jaikar.UI</span>
+    </button>
+
+    <!-- Jaikar.UI OS Search Modal -->
+    <div id="os-modal" class="fixed inset-0 z-[400] hidden items-center justify-center transition-opacity duration-300 opacity-0 bg-[#FFF0F5] dark:bg-[#0A0A0A]" style="font-family: 'Doto', sans-serif;">
+        
+        <!-- Desktop Background Elements (Fake Icons) -->
+        <div class="absolute left-6 top-12 flex flex-col gap-8">
+            <div onclick="showOsSocials()" class="flex flex-col items-center gap-1 cursor-none group hover:scale-110 transition-transform">
+                <div class="w-10 h-10 bg-white dark:bg-[#1A1A1A] border-2 border-[#FF4D85] dark:border-[#CCFF00] shadow-[2px_2px_0px_#FF4D85] dark:shadow-[2px_2px_0px_#CCFF00] rounded-full overflow-hidden flex items-center justify-center">
+                    <span class="text-[#FF4D85] dark:text-[#CCFF00] font-bold text-lg">@</span>
+                </div>
+                <span class="text-xs font-bold text-[#FF4D85] dark:text-[#CCFF00]">socials</span>
+            </div>
+        </div>
+        <div class="absolute right-8 top-12 flex flex-col gap-8">
+            <div onclick="closeOsSearch(); window.location.href='mailto:Jaikardevgame@gmail.com'" class="flex flex-col items-center gap-1 cursor-none group hover:scale-110 transition-transform">
+                <div class="w-12 h-10 bg-white dark:bg-[#1A1A1A] border-2 border-[#FF4D85] dark:border-[#CCFF00] shadow-[2px_2px_0px_#FF4D85] dark:shadow-[2px_2px_0px_#CCFF00] rounded-lg flex items-center justify-center relative">
+                    <span class="text-[#FF4D85] dark:text-[#CCFF00] font-black text-xl tracking-widest">!!!</span>
+                    <div class="absolute -bottom-2 right-4 w-2 h-2 border-b-2 border-r-2 border-[#FF4D85] dark:border-[#CCFF00] bg-white dark:bg-[#1A1A1A] transform rotate-45"></div>
+                </div>
+                <span class="text-xs font-bold text-[#FF4D85] dark:text-[#CCFF00]">inbox</span>
+            </div>
+        </div>
+
+        <!-- Fake Taskbar -->
+        <div class="absolute bottom-0 left-0 w-full h-10 bg-[#FFE4EC] dark:bg-[#1A1A1A] border-t-[3px] border-[#FF4D85] dark:border-[#CCFF00] flex items-center justify-between px-2 md:px-4 z-10 transition-colors">
+            <div class="flex gap-2 md:gap-4 h-full py-1">
+               <!-- Removed ICONS and OPTS buttons as requested -->
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="bg-white dark:bg-[#0A0A0A] rounded-full px-4 py-1 border-2 border-[#FF4D85] dark:border-[#CCFF00] shadow-[2px_2px_0px_#FF4D85] dark:shadow-[2px_2px_0px_#CCFF00] text-[#FF4D85] dark:text-[#CCFF00] font-black text-xs uppercase flex items-center gap-2">
+                    <div class="w-3 h-3 bg-[#FF4D85] dark:bg-[#CCFF00] rounded-full overflow-hidden flex opacity-60"></div> GAMES
+                </div>
+                <!-- Dynamic Time Display -->
+                <div id="os-clock" class="text-[#FF4D85] dark:text-[#CCFF00] font-bold text-[10px] uppercase text-right leading-tight tracking-widest hidden md:block">
+                    --:-- P:M<br>--/--/--
+                </div>
+                <div class="w-6 h-6 bg-[#FF4D85] dark:bg-[#CCFF00] rounded-full border-2 border-[#FF4D85] dark:border-[#CCFF00] flex items-center justify-center text-white dark:text-black text-[10px] shadow-[1px_1px_0px_#FF4D85] dark:shadow-[1px_1px_0px_#CCFF00]">❤</div>
+            </div>
+        </div>
+
+        <!-- Main Search Window -->
+        <div class="relative w-[95%] max-w-2xl bg-white dark:bg-[#111111] rounded-2xl border-[4px] border-[#FF4D85] dark:border-[#CCFF00] shadow-[10px_10px_0px_rgba(255,77,133,0.3)] dark:shadow-[10px_10px_0px_rgba(204,255,0,0.2)] flex flex-col overflow-visible z-20 transition-colors">
+            <!-- Window Background Decorators -->
+            <div class="absolute -bottom-4 -right-4 w-[105%] h-full bg-black/5 dark:bg-white/5 rounded-2xl -z-10 pointer-events-none"></div>
+
+            <!-- Window Titlebar -->
+            <div class="h-10 bg-[#FFE4EC] dark:bg-[#1A1A1A] border-b-[4px] border-[#FF4D85] dark:border-[#CCFF00] flex items-center justify-between px-4 rounded-t-xl transition-colors">
+                <div class="flex gap-4 text-[#FF4D85] dark:text-[#CCFF00] font-bold text-lg items-center">
+                    <span class="cursor-none hover:scale-110">←</span>
+                    <span class="cursor-none hover:scale-110">→</span>
+                    <span class="cursor-none hover:scale-110 hover:text-red-500" onclick="closeOsSearch()">x</span>
+                    <span class="ml-2 bg-[#FF4D85] dark:bg-[#CCFF00] text-white dark:text-black px-4 py-0.5 text-xs font-black tracking-widest shadow-inner cursor-none">TOOLS</span>
+                </div>
+                <div class="flex gap-4 text-[#FF4D85] dark:text-[#CCFF00] font-bold text-lg items-center">
+                    <span class="cursor-none hover:scale-110">=</span>
+                    <span class="cursor-none hover:scale-110">★</span>
+                </div>
+            </div>
+
+            <!-- Window Content -->
+            <div class="p-6 md:p-10 flex flex-col md:flex-row items-center gap-6 md:gap-10 relative">
+                <!-- Profile Image Profile Box -->
+                <div class="w-32 h-32 md:w-48 md:h-48 flex-shrink-0 border-[4px] border-[#FF4D85] dark:border-[#CCFF00] rounded-2xl overflow-hidden bg-[#FFF0F5] dark:bg-[#0A0A0A] shadow-[4px_4px_0px_#FF4D85] dark:shadow-[4px_4px_0px_#CCFF00] transition-colors flex items-center justify-center p-4 md:p-6">
+                    <!-- Light Mode Logo -->
+                    <img src="Assets/LOGO/ON WHITE.png" class="w-full h-full object-contain dark:hidden transition-transform duration-500 hover:scale-110" alt="Jaikar.UI Logo" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=JP&background=FFF0F5&color=FF4D85&size=256';">
+                    <!-- Dark Mode Logo -->
+                    <img src="Assets/LOGO/ON BLACK.png" class="w-full h-full object-contain hidden dark:block transition-transform duration-500 hover:scale-110" alt="Jaikar.UI Logo" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=JP&background=0A0A0A&color=CCFF00&size=256';">
+                </div>
+
+                <!-- Search Area -->
+                <div class="flex-grow w-full flex flex-col items-center md:items-stretch relative z-30">
+                    <h2 class="text-4xl md:text-6xl font-serif font-black text-[#FF4D85] dark:text-[#CCFF00] tracking-tighter mb-4 text-center md:text-center transition-colors">Jaikar</h2>
+                    
+                    <div class="relative w-full mb-6 group">
+                        <input type="text" id="os-search-input" onkeyup="executeOsSearch()" placeholder="" class="w-full h-10 border-[3px] border-[#FF4D85] dark:border-[#CCFF00] rounded-full px-4 text-[#FF4D85] dark:text-[#CCFF00] bg-[#FFF0F5] dark:bg-[#1A1A1A] font-bold outline-none cursor-none focus:border-[#FF4D85] dark:focus:border-[#CCFF00] shadow-inner transition-all uppercase tracking-widest">
+                        
+                        <!-- Search Results Dropdown -->
+                        <div id="os-search-results" class="absolute top-[calc(100%+8px)] left-0 w-full bg-white dark:bg-[#1A1A1A] border-[3px] border-[#FF4D85] dark:border-[#CCFF00] rounded-xl shadow-[4px_4px_0px_#FF4D85] dark:shadow-[4px_4px_0px_#CCFF00] max-h-48 overflow-y-auto hidden flex-col z-[500] transition-colors">
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4 justify-center">
+                        <button onclick="executeOsSearch()" class="bg-[#FFE4EC] dark:bg-[#0A0A0A] text-[#FF4D85] dark:text-[#CCFF00] font-black uppercase tracking-widest px-6 py-1 rounded-full border-[3px] border-[#FF4D85] dark:border-[#CCFF00] hover:bg-white dark:hover:bg-[#CCFF00] dark:hover:text-black transition-colors cursor-none shadow-[2px_2px_0px_#FF4D85] dark:shadow-[2px_2px_0px_#CCFF00]">SEARCH</button>
+                        <button onclick="closeOsSearch()" class="bg-[#FFE4EC] dark:bg-[#0A0A0A] text-[#FF4D85] dark:text-[#CCFF00] font-black uppercase tracking-widest px-6 py-1 rounded-full border-[3px] border-[#FF4D85] dark:border-[#CCFF00] hover:bg-white dark:hover:bg-[#CCFF00] dark:hover:text-black transition-colors cursor-none shadow-[2px_2px_0px_#FF4D85] dark:shadow-[2px_2px_0px_#CCFF00]">SKIP</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -1583,7 +1886,7 @@
         </footer>
     </main>
 
-    <script>
+        <script>
         function toggleTheme() {
             document.documentElement.classList.toggle('dark');
             localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
@@ -1674,6 +1977,100 @@
                 pdf: 'Assets/Jaikar_Pothula_UI_Systems_Designer_Resume.pdf'
             }
         };
+
+        // --- Retro OS Search Logic ---
+        function openOsSearch() {
+            const modal = document.getElementById('os-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.getElementById('os-search-input').value = '';
+            document.getElementById('os-search-results').classList.add('hidden');
+            setTimeout(() => modal.classList.add('opacity-100'), 10);
+            document.body.classList.add('modal-open');
+        }
+
+        function closeOsSearch() {
+            const modal = document.getElementById('os-modal');
+            modal.classList.remove('opacity-100');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                if (!document.getElementById('case-study-modal').classList.contains('open') && 
+                    !document.getElementById('admin-modal').classList.contains('open') && 
+                    !document.getElementById('mobile-menu').classList.contains('opacity-100')) {
+                    document.body.classList.remove('modal-open');
+                }
+            }, 300);
+        }
+
+        function executeOsSearch() {
+            const query = document.getElementById('os-search-input').value.toLowerCase().trim();
+            const resultsDiv = document.getElementById('os-search-results');
+            
+            if(!query) {
+                resultsDiv.classList.add('hidden');
+                return;
+            }
+
+            resultsDiv.classList.remove('hidden');
+            resultsDiv.classList.add('flex');
+            resultsDiv.innerHTML = '';
+
+            // Search purely within case studies
+            const matches = Object.entries(caseStudyData).filter(([id, data]) => {
+                if (id === 'resume') return false; // Hide resume from direct search to focus on works
+                return data.title.toLowerCase().includes(query) || 
+                       (data.role && data.role.toLowerCase().includes(query)) ||
+                       (data.engine && data.engine.toLowerCase().includes(query));
+            });
+
+            const itemClass = "block w-full text-left px-4 py-3 hover:bg-[#FFE4EC] dark:hover:bg-[#0A0A0A] text-[#FF4D85] dark:text-[#CCFF00] font-bold border-b border-[#FFE4EC] dark:border-[#CCFF00] last:border-0 cursor-none transition-colors";
+
+            if (matches.length > 0) {
+                matches.forEach(([id, data]) => {
+                    resultsDiv.innerHTML += `
+                        <button onclick="closeOsSearch(); openCaseStudy('${id}')" class="${itemClass}">
+                            ${data.title} <span class="text-[10px] opacity-60 ml-2 uppercase tracking-widest hidden md:inline-block">${data.role || 'System Design'}</span>
+                        </button>`;
+                });
+            } else {
+                resultsDiv.innerHTML = '<div class="px-4 py-3 text-[#FF003C] dark:text-[#FF007B] font-black uppercase tracking-widest text-sm text-center">0 RESULTS FOUND.</div>';
+            }
+        }
+
+        function showOsSocials() {
+            const resultsDiv = document.getElementById('os-search-results');
+            resultsDiv.classList.remove('hidden');
+            resultsDiv.classList.add('flex');
+            
+            const itemClass = "block w-full text-left px-4 py-3 hover:bg-[#FFE4EC] dark:hover:bg-[#0A0A0A] text-[#FF4D85] dark:text-[#CCFF00] font-bold border-b border-[#FFE4EC] dark:border-[#CCFF00] last:border-0 cursor-none transition-colors";
+            
+            resultsDiv.innerHTML = `
+                <div class="px-4 py-2 bg-[#FF4D85] dark:bg-[#CCFF00] text-white dark:text-black text-[10px] font-black tracking-widest uppercase sticky top-0">My Network</div>
+                <a href="mailto:Jaikardevgame@gmail.com" onclick="closeOsSearch()" target="_blank" class="${itemClass}">EMAIL <span class="text-[10px] opacity-60 ml-2 uppercase tracking-widest hidden md:inline-block">Jaikardevgame@gmail.com</span></a>
+                <a href="https://www.linkedin.com/in/jaikar-pothula-489b681a5/" onclick="closeOsSearch()" target="_blank" class="${itemClass}">LINKEDIN</a>
+                <a href="https://www.behance.net/jaikarpothula" onclick="closeOsSearch()" target="_blank" class="${itemClass}">BEHANCE</a>
+                <a href="https://www.artstation.com/jaikarpothula007" onclick="closeOsSearch()" target="_blank" class="${itemClass}">ARTSTATION</a>
+                <a href="https://jim-jam-play.itch.io/" onclick="closeOsSearch()" target="_blank" class="${itemClass}">ITCH.IO</a>
+            `;
+        }
+
+        function updateOsTime() {
+            const clockEl = document.getElementById('os-clock');
+            if(!clockEl) return;
+            const now = new Date();
+            const hours24 = now.getHours();
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const ampm = hours24 >= 12 ? 'P:M' : 'A:M';
+            const displayHours = String(hours24 % 12 || 12).padStart(2, '0');
+            
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = String(now.getFullYear()).slice(-2);
+            clockEl.innerHTML = `${displayHours}:${minutes} ${ampm}<br>${day}/${month}/${year}`;
+        }
+        setInterval(updateOsTime, 1000);
+        updateOsTime();
 
         const caseStudyUX = {
             "dark-arrival": {

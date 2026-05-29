@@ -1164,6 +1164,34 @@
             </div>
 
             <div class="flex items-center ml-auto gap-4 relative z-10">
+                <!-- Music Toggle Button -->
+                <button onclick="toggleMusic()" id="music-btn" class="theme-toggle-btn btn-cyber icon-btn z-[160]" title="Toggle Music">
+                    <!-- Music On Icon -->
+                    <svg id="music-on-icon" class="hidden w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <!-- Top Right Bracket -->
+                        <path d="M 16 4 H 20 V 8" />
+                        <!-- Bottom Left Bracket -->
+                        <path d="M 8 20 H 4 V 16" />
+                        <!-- Music Note -->
+                        <path d="M 10 16 V 6 L 16 4 V 14" />
+                        <rect x="6" y="14" width="4" height="4" rx="1" />
+                        <rect x="12" y="12" width="4" height="4" rx="1" />
+                    </svg>
+                    <!-- Music Off Icon -->
+                    <svg id="music-off-icon" class="block w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <!-- Top Right Bracket -->
+                        <path d="M 16 4 H 20 V 8" />
+                        <!-- Bottom Left Bracket -->
+                        <path d="M 8 20 H 4 V 16" />
+                        <!-- Music Note -->
+                        <path d="M 10 16 V 6 L 16 4 V 14" />
+                        <rect x="6" y="14" width="4" height="4" rx="1" />
+                        <rect x="12" y="12" width="4" height="4" rx="1" />
+                        <!-- Mute Slash -->
+                        <line x1="3" y1="3" x2="21" y2="21" />
+                    </svg>
+                </button>
+
                 <button onclick="toggleTheme()" class="theme-toggle-btn btn-cyber icon-btn z-[160]">
                     <svg id="sun-icon" class="hidden dark:block w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" /></svg>
                     <svg id="moon-icon" class="block dark:hidden w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
@@ -1839,14 +1867,15 @@
             </div>
         </section>
 
+
         <!-- Resume CTA Section -->
         <section id="resume" class="py-32 px-5 md:px-8 border-b grid-border relative bg-[var(--text-color)] text-[var(--bg-color)] flex flex-col items-center justify-center text-center">
             <div class="absolute inset-0 cyber-stripes opacity-10 pointer-events-none"></div>
-            <div class="reveal w-full max-w-5xl relative z-10">
+            <div class="reveal max-w-3xl relative z-10">
                 <h2 class="text-[10px] tracking-[0.5em] uppercase opacity-50 mb-8 font-bold font-doto">// DOCUMENTATION</h2>
                 <!-- CHANGED TO DOTO -->
                 <h3 class="text-5xl md:text-7xl font-doto text-accent font-bold tracking-tighter uppercase mb-10">Beyond Design</h3>
-                <p class="text-base md:text-xl font-medium leading-relaxed opacity-80 mb-12 max-w-3xl mx-auto">
+                <p class="text-base md:text-xl font-medium leading-relaxed opacity-80 mb-12">
                     A deeper look into my work designing and implementing gameplay-driven UI systems across Unreal Engine 5. Focused on in-engine UI, system architecture, and building scalable interfaces that support real-time gameplay.
                 </p>
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full mb-16">
@@ -1854,7 +1883,7 @@
                         <span class="mr-4">View Resume</span>
                         <div class="w-12 h-12 icon-box flex items-center justify-center border-l-2 border-l-[var(--text-color)] bg-transparent group-hover:bg-[var(--text-color)] group-hover:text-[var(--bg-color)]">
                             <svg class="w-5 h-5 transform -rotate-45 group-hover:rotate-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                        </div>
+                         </div>
                     </button>
                     <a href="https://store.steampowered.com/app/3295930/THE_DARK_ARRIVAL__SHADOWS_OF_THE_PAST/" target="_blank" rel="noopener noreferrer" class="group w-full sm:w-auto inline-flex items-center justify-between sm:justify-center btn-cyber text-[var(--text-color)] pl-6 pr-0 py-0 h-12 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 cursor-none" style="background: var(--bg-color); border-color: var(--bg-color);">
                         <span class="mr-4">View Steam Page</span>
@@ -2099,6 +2128,11 @@
                 <a href="https://www.artstation.com/jaikarpothula007" target="_blank" rel="noopener noreferrer" class="hover-accent">ARTSTATION</a>
             </div>
         </footer>
+
+        <!-- Background Music Player -->
+        <audio id="bg-music" loop preload="auto">
+            <source src="sun-bleached_spokes.mp3.mp3" type="audio/mpeg">
+        </audio>
     </main>
 
         <script>
@@ -2110,6 +2144,63 @@
         if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
         }
+
+        // --- Background Music Logic ---
+        function toggleMusic() {
+            const music = document.getElementById('bg-music');
+            const onIcon = document.getElementById('music-on-icon');
+            const offIcon = document.getElementById('music-off-icon');
+
+            if (music.paused) {
+                music.play().then(() => {
+                    onIcon.classList.remove('hidden');
+                    onIcon.classList.add('block');
+                    offIcon.classList.remove('block');
+                    offIcon.classList.add('hidden');
+                }).catch(err => {
+                    console.log("Audio play blocked:", err);
+                });
+            } else {
+                music.pause();
+                onIcon.classList.remove('block');
+                onIcon.classList.add('hidden');
+                offIcon.classList.remove('hidden');
+                offIcon.classList.add('block');
+            }
+        }
+        
+        // Modern Autoplay Handling
+        window.addEventListener('DOMContentLoaded', () => {
+            const music = document.getElementById('bg-music');
+            const onIcon = document.getElementById('music-on-icon');
+            const offIcon = document.getElementById('music-off-icon');
+            
+            // Force volume to 60% just in case it was muted by default
+            music.volume = 0.6;
+            
+            // Function to handle first interaction
+            const startMusicOnInteraction = (e) => {
+                // If the user directly clicked the music button, let toggleMusic() handle it to prevent fighting
+                if (e && e.target && e.target.closest('#music-btn')) return;
+
+                if (music.paused) {
+                    music.play().then(() => {
+                        onIcon.classList.remove('hidden');
+                        onIcon.classList.add('block');
+                        offIcon.classList.remove('block');
+                        offIcon.classList.add('hidden');
+                    }).catch(err => console.log("Waiting for user interaction:", err));
+                }
+                
+                // Remove listeners once it tries to play
+                document.body.removeEventListener('click', startMusicOnInteraction);
+                document.body.removeEventListener('keydown', startMusicOnInteraction);
+            };
+
+            // Wait for first click or key press to start ambient music
+            document.body.addEventListener('click', startMusicOnInteraction);
+            document.body.addEventListener('keydown', startMusicOnInteraction);
+        });
 
         // --- Mobile Menu Logic ---
         const mobileBtn = document.getElementById('mobile-menu-btn');

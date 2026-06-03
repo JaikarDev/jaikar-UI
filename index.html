@@ -7,22 +7,23 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Integrated Doto font alongside your existing fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Figma Bunny Studio theme fonts: rounded display + monospace body -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;0,800;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {      
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        heading: ['Space Grotesk', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                        doto: ['Doto', 'sans-serif'],
+                        sans: ['JetBrains Mono', 'ui-monospace', 'monospace'],
+                        heading: ['Fredoka', 'sans-serif'],
+                        serif: ['Fredoka', 'sans-serif'],
+                        doto: ['JetBrains Mono', 'ui-monospace', 'monospace'],
+                        mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
                     },
                     colors: {
                         brand: {
-                            light: '#F4F4F0',
+                            light: '#F8F8F8',
                             dark: '#0A0A0A',
                         }
                     },
@@ -36,19 +37,30 @@
         }
     </script>
     <style>
-        /* NTE Inspired Base Theme */
+        /* Gravity Daze palette (applied to the bunny/Figma structure) */
         :root {
             --bg-color: #F8F8F8;
             --text-color: #0A0A0A;
             --border-color: rgba(0, 0, 0, 0.2);
             --hover-bg: rgba(0, 0, 0, 0.05);
             --pattern-color: rgba(0, 0, 0, 0.1);
-            
+
             /* Light Mode Accents (Red & Cyber Yellow) */
             --accent-primary: #FF003C;
             --accent-secondary: #FFCC00;
             --nav-edge-color: #FF9EBB; /* Cherry Blossom */
             --nav-edge-style: solid;
+
+            /* Design-token palette repointed to the Gravity Daze colors */
+            --c-green: #FF003C;   /* primary action */
+            --c-blue: #FF9EBB;
+            --c-yellow: #FFCC00;
+            --c-purple: #FF9EBB;
+            --c-pink: #FF9EBB;
+            --c-orange: #FF003C;
+            --canvas: #0A0A0A;        /* dark canvas (fixed in both modes) */
+            --canvas-ink: #F8F8F8;
+            --surface-card: #FFFFFF;
         }
         .dark {
             --bg-color: #0A0A0A;
@@ -56,12 +68,22 @@
             --border-color: rgba(255, 255, 255, 0.15);
             --hover-bg: rgba(255, 255, 255, 0.05);
             --pattern-color: rgba(255, 255, 255, 0.1);
-            
+
             /* Dark Mode Accents (Neon Mint & Hot Pink) */
             --accent-primary: #CCFF00;
             --accent-secondary: #FF007B;
             --nav-edge-color: #CCFF00; /* Neon Mint */
             --nav-edge-style: dashed;
+
+            --c-green: #CCFF00;   /* primary action */
+            --c-blue: #FF007B;
+            --c-yellow: #FFCC00;
+            --c-purple: #FF007B;
+            --c-pink: #FF007B;
+            --c-orange: #CCFF00;
+            --canvas: #0A0A0A;
+            --canvas-ink: #F8F8F8;
+            --surface-card: #1A1A1A;
         }
 
         body {
@@ -70,6 +92,7 @@
             background-size: 32px 32px;
             background-attachment: fixed;
             color: var(--text-color);
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
             transition: background-color 0.5s ease, color 0.5s ease;
             cursor: none; 
             overflow-x: hidden;
@@ -97,17 +120,17 @@
         /* Modern Custom Scrollbar (NTE/ZZZ Style) */
         :root {
             --sb-track: var(--bg-color);
-            --sb-thumb-color: #FF9EBB; /* Cherry Blossom / Sakura */
-            --sb-thumb-hover: #FF7AA2;
-            --sb-arrow-up: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF9EBB' stroke-width='3' stroke-linecap='square' stroke-linejoin='miter'><path d='M6 14l6-6 6 6'/><path d='M6 5h12'/></svg>");
-            --sb-arrow-down: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF9EBB' stroke-width='3' stroke-linecap='square' stroke-linejoin='miter'><path d='M6 10l6 6 6-6'/><path d='M6 19h12'/></svg>");
+            --sb-thumb-color: #FF003C; /* Red */
+            --sb-thumb-hover: #D60032;
+            --sb-arrow-up: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF003C' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M6 14l6-6 6 6'/></svg>");
+            --sb-arrow-down: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF003C' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M6 10l6 6 6-6'/></svg>");
         }
         .dark {
-            --sb-track: #0A0A0F;
-            --sb-thumb-color: #CCFF00; /* Exact Neon Mint/Yellow from Video */
-            --sb-thumb-hover: #DFFF33;
-            --sb-arrow-up: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23CCFF00' stroke-width='3' stroke-linecap='square' stroke-linejoin='miter'><path d='M6 14l6-6 6 6'/><path d='M6 5h12'/></svg>");
-            --sb-arrow-down: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23CCFF00' stroke-width='3' stroke-linecap='square' stroke-linejoin='miter'><path d='M6 10l6 6 6-6'/><path d='M6 19h12'/></svg>");
+            --sb-track: #1A1A1A;
+            --sb-thumb-color: #CCFF00; /* Neon mint */
+            --sb-thumb-hover: #B8E600;
+            --sb-arrow-up: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23CCFF00' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M6 14l6-6 6 6'/></svg>");
+            --sb-arrow-down: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23CCFF00' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M6 10l6 6 6-6'/></svg>");
         }
 
         ::-webkit-scrollbar {
@@ -130,9 +153,9 @@
 
         ::-webkit-scrollbar-thumb {
             background-color: var(--sb-thumb-color);
-            border: 5px solid var(--sb-track); /* Creates the floating block effect */
+            border: 6px solid var(--sb-track); /* Creates the floating pill effect */
             background-clip: padding-box;
-            border-radius: 0px;
+            border-radius: 999px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
@@ -180,58 +203,64 @@
             z-index: 10;
         }
         
-        /* Cyber Cut-Corner Buttons */
+        /* Clean rounded buttons */
         .btn-cyber {
             --cut: 12px;
             position: relative;
             background: var(--bg-color);
             color: var(--text-color);
-            border: 1px solid var(--border-color);
-            clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
-            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            border: 1.5px solid var(--border-color);
+            border-radius: 10px;
+            transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
             overflow: hidden;
             display: inline-flex;
             align-items: center;
+            isolation: isolate;
         }
-        
+
         .btn-cyber.icon-btn {
             --cut: 8px;
+            border-radius: 12px;
         }
-        
+
+        /* Accent sweeps in on hover (red in light, neon-mint in dark) */
         .btn-cyber::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: var(--text-color);
+            background: var(--accent-primary);
             z-index: -1;
             transform: translateX(-101%);
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: transform 0.42s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* Glitch Effect Additions */
-        .btn-cyber::after {
+        /* Yellow hazard-stripe leading tab — signature creative detail (text buttons only) */
+        .btn-cyber:not(.icon-btn)::after {
             content: '';
             position: absolute;
-            inset: 0;
-            background: var(--accent-primary);
-            z-index: 10;
-            opacity: 0;
+            top: 0; left: 0; bottom: 0;
+            width: 9px;
+            background: repeating-linear-gradient(45deg, var(--c-yellow) 0 4px, #15140b 4px 8px);
+            z-index: 6;
             pointer-events: none;
-            mix-blend-mode: difference;
+            opacity: 0.92;
+            transition: width 0.3s ease, opacity 0.3s ease;
+        }
+
+        .btn-cyber:not(.icon-btn):hover::after {
+            width: 13px;
+            opacity: 1;
         }
 
         .btn-cyber:hover {
             color: var(--bg-color);
-            border-color: var(--text-color);
-            animation: btn-shake 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 9px 22px rgba(0, 0, 0, 0.22);
         }
 
         .btn-cyber:hover::before {
             transform: translateX(0);
-        }
-
-        .btn-cyber:hover::after {
-            animation: btn-glitch-layer 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
         }
 
         @keyframes btn-shake {
@@ -263,37 +292,38 @@
             border-left-color: var(--bg-color);
         }
 
-        /* Tech HUD Corners for Images */
+        /* Figma selection box for framed images */
         .tech-corners {
             position: relative;
-            padding: 8px; /* Creates the thick border frame from the screenshot */
+            padding: 8px;
             background: var(--bg-color);
+            outline: 1.5px solid var(--accent-secondary);
+            outline-offset: 0px;
+            border-radius: 4px;
         }
         .tech-corners::before, .tech-corners::after {
             content: '';
             position: absolute;
-            width: 16px; height: 16px;
-            border: 2px solid var(--accent-primary);
+            width: 9px; height: 9px;
+            background: #ffffff;
+            border: 1.5px solid var(--accent-secondary);
+            border-radius: 2px;
             pointer-events: none;
             z-index: 20;
             transition: all 0.3s ease;
         }
-        /* Offset to perfectly bracket the outer edge of the frame */
         .tech-corners::before {
-            top: 0px; left: 0px;
-            border-right: none; border-bottom: none;
+            top: -5px; left: -5px;
         }
         .tech-corners::after {
-            bottom: 0px; right: 0px;
-            border-left: none; border-top: none;
+            bottom: -5px; right: -5px;
         }
-        .group:hover .tech-corners::before {
-            width: 24px; height: 24px;
-            top: -2px; left: -2px;
+        .group:hover .tech-corners {
+            outline-color: var(--accent-primary);
         }
-        .group:hover .tech-corners::after {
-            width: 24px; height: 24px;
-            bottom: -2px; right: -2px;
+        .group:hover .tech-corners::before, .group:hover .tech-corners::after {
+            border-color: var(--accent-primary);
+            transform: scale(1.3);
         }
 
         /* Diagonal Stripe Background */
@@ -317,7 +347,7 @@
             transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
             background: var(--text-color);
             border: 1.5px var(--nav-edge-style) var(--nav-edge-color);
-            clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+            border-radius: 999px;
             z-index: -1;
         }
         
@@ -331,8 +361,8 @@
 
         /* Tags Update */
         .cyber-tag {
-            clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
-            font-family: 'Doto', sans-serif;
+            border-radius: 999px;
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
         }
         /* Style for tags with text-color background */
         .cyber-tag.tag-primary {
@@ -347,47 +377,57 @@
             color: var(--text-color);
         }
 
-        /* Adaptive & Interactive Custom Cursor */
+        /* Glossy soft-3D purple cursor */
         #cursor-dot {
             position: fixed;
             top: 0; left: 0;
-            width: 8px; height: 8px;
-            background-color: var(--accent-primary);
+            width: 38px; height: 38px;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='38' height='38' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='22' y1='14' x2='68' y2='86' gradientUnits='userSpaceOnUse'><stop offset='0' stop-color='%23D8C4FF'/><stop offset='0.55' stop-color='%239A6CFF'/><stop offset='1' stop-color='%23662CDA'/></linearGradient><radialGradient id='h' cx='40' cy='31' r='30' gradientUnits='userSpaceOnUse'><stop offset='0' stop-color='white' stop-opacity='0.75'/><stop offset='1' stop-color='white' stop-opacity='0'/></radialGradient></defs><path d='M30.5 21.9 L73.5 46.1 Q84 52 74.5 59.3 L49.5 78.7 Q40 86 36.7 74.5 L23.3 27.5 Q20 16 30.5 21.9 Z' fill='url(%23g)' stroke='%23ffffff' stroke-opacity='0.35' stroke-width='1.4' stroke-linejoin='round'/><path d='M30.5 21.9 L73.5 46.1 Q84 52 74.5 59.3 L49.5 78.7 Q40 86 36.7 74.5 L23.3 27.5 Q20 16 30.5 21.9 Z' fill='url(%23h)'/></svg>");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-color: transparent;
             border-radius: 0;
             pointer-events: none;
             z-index: 9999;
-            transform: translate(calc(var(--x, -100px) - 50%), calc(var(--y, -100px) - 50%)) scale(var(--dot-scale, 1)) rotate(45deg);
-            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+            transform: translate(calc(var(--x, -100px) - 8px), calc(var(--y, -100px) - 6px)) scale(var(--dot-scale, 1));
+            transition: transform 0.12s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, filter 0.3s ease;
+            filter: drop-shadow(0 0 6px rgba(150, 90, 255, 0.85)) drop-shadow(0 2px 5px rgba(0,0,0,0.35));
             will-change: transform;
         }
+        .dark #cursor-dot {
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='38' height='38' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='22' y1='14' x2='68' y2='86' gradientUnits='userSpaceOnUse'><stop offset='0' stop-color='%23D8C4FF'/><stop offset='0.55' stop-color='%239A6CFF'/><stop offset='1' stop-color='%23662CDA'/></linearGradient><radialGradient id='h' cx='40' cy='31' r='30' gradientUnits='userSpaceOnUse'><stop offset='0' stop-color='white' stop-opacity='0.75'/><stop offset='1' stop-color='white' stop-opacity='0'/></radialGradient></defs><path d='M30.5 21.9 L73.5 46.1 Q84 52 74.5 59.3 L49.5 78.7 Q40 86 36.7 74.5 L23.3 27.5 Q20 16 30.5 21.9 Z' fill='url(%23g)' stroke='%23ffffff' stroke-opacity='0.35' stroke-width='1.4' stroke-linejoin='round'/><path d='M30.5 21.9 L73.5 46.1 Q84 52 74.5 59.3 L49.5 78.7 Q40 86 36.7 74.5 L23.3 27.5 Q20 16 30.5 21.9 Z' fill='url(%23h)'/></svg>");
+        }
 
+        /* Soft presence ring that lerps behind the arrow (Figma cursor tail) */
         #cursor-ring {
             position: fixed;
             top: 0; left: 0;
-            width: 40px; height: 40px;
-            border: 1px dashed var(--text-color);
-            border-radius: 0;
+            width: 34px; height: 34px;
+            border: 2px solid rgba(150, 90, 255, 0.55);
+            background: transparent;
+            border-radius: 999px;
+            opacity: 0.30;
             pointer-events: none;
             z-index: 9998;
             transform: translate(calc(var(--rx, -100px) - 50%), calc(var(--ry, -100px) - 50%)) scale(var(--ring-scale, 1));
-            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, opacity 0.3s ease;
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
             will-change: transform;
         }
 
-        /* Cursor Interaction States */
+        /* Cursor Interaction States — arrow stays, ring blooms (Figma hover) */
         body.cursor-hover #cursor-dot {
-            --dot-scale: 0;
-            opacity: 0;
+            --dot-scale: 1.05;
+            opacity: 1;
         }
         body.cursor-hover #cursor-ring {
             --ring-scale: 1.5;
-            background-color: transparent;
-            border: 1px solid var(--accent-primary);
-            border-radius: 50%;
+            opacity: 0.18;
+            background-color: rgba(150, 90, 255, 1);
+            border-radius: 999px;
         }
         body.cursor-clicking #cursor-ring {
-            --ring-scale: 0.8;
-            border-style: solid;
+            --ring-scale: 0.75;
+            opacity: 0.4;
         }
 
         /* Touch Device Overrides */
@@ -427,7 +467,7 @@
             align-items: center;
             justify-content: center;
             transition: background-color 0.3s;
-            clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+            border-radius: 12px;
         }
 
         /* Marquee Animation */
@@ -549,34 +589,34 @@
             pointer-events: none;
         }
 
-        /* Sakura Cherry Blossom Effect for Light Mode */
+        /* Floating Bunny Mascots (replaces sakura) */
         #sakura-container {
             position: fixed;
             inset: 0;
             pointer-events: none;
-            z-index: 5;
+            z-index: 40;
             overflow: hidden;
-            display: block; /* Active in Light Mode */
+            display: block;
         }
         .dark #sakura-container {
-            display: none; /* Hidden in Dark Mode */
+            display: block;
         }
         .sakura-wrapper {
             position: absolute;
-            top: -10%;
-            animation: sakura-fall linear infinite;
+            /* static scattered mascots — no continuous falling animation */
         }
         .sakura-sway {
-            animation: sakura-sway ease-in-out infinite alternate;
+            /* no animation: bunnies rest in place like the reference */
         }
         .sakura-petal {
-            width: 14px;
-            height: 18px;
-            background: linear-gradient(135deg, rgba(255, 183, 197, 0.95) 0%, rgba(255, 209, 220, 0.7) 100%);
-            border-radius: 15px 2px 15px 2px;
-            box-shadow: 0 0 6px rgba(255, 183, 197, 0.5);
-            animation: sakura-spin linear infinite;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 3px 5px rgba(0,0,0,0.14));
         }
+        .sakura-petal svg { width: 100%; height: 100%; display: block; }
         @keyframes sakura-fall {
             0% { top: -10%; }
             100% { top: 110%; }
@@ -586,277 +626,333 @@
             100% { transform: translateX(40px); }
         }
         @keyframes sakura-spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% { transform: rotate(-14deg); }
+            50% { transform: rotate(14deg); }
+            100% { transform: rotate(-14deg); }
         }
 
         /* ========================================================= */
-        /* GRAVITY DAZE INTERACTIVE COMIC THEME OVERRIDE             */
+        /* FIGMA BUNNY STUDIO — THEME OVERRIDE                        */
         /* ========================================================= */
 
-        /* 1. Global Section Overrides */
+        /* 1. Clean stacked sections (comic clip / overlap removed) */
         main > section, #marquee-section, footer {
-            border-bottom: none !important;
+            border-bottom: 1px solid var(--border-color);
             position: relative;
-            overflow: visible !important; /* Allow panel popouts */
+            overflow: hidden;
+            clip-path: none !important;
+            transform: none !important;
+            margin-top: 0 !important;
+        }
+        main > section:not(#home), footer {
+            padding-top: clamp(3.5rem, 7vw, 7rem) !important;
+            padding-bottom: clamp(3.5rem, 7vw, 7rem) !important;
         }
 
-        /* 2. Alternating Zig-Zag Diagonals */
-        /* Pattern A: Bottom right is cut higher */
-        #home, #works, #experience, #resume, #blog {
-            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 8vw), 0 100%);
-            padding-bottom: 12vw !important;
+        /* 2. Surface scheme — light panels + dark Figma canvases */
+        #home { background-color: var(--canvas) !important; }
+        #about { background-color: var(--bg-color) !important; color: var(--text-color) !important; }
+        #works { background-color: var(--bg-color) !important; }
+        #experience { background-color: var(--bg-color) !important; color: var(--text-color) !important; }
+        #skills { background-color: var(--hover-bg) !important; }
+        #blog { background-color: var(--bg-color) !important; }
+        #marquee-section { background-color: var(--bg-color) !important; color: var(--text-color) !important; }
+
+        /* Dark Figma canvas sections (fixed dark in both modes) */
+        #home {
+            background-color: var(--canvas) !important;
         }
-        
-        /* Pattern B: Bottom left is cut higher */
-        #about, #approach, #skills, #showcase, #marquee-section {
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 8vw));
-            padding-bottom: 12vw !important;
+        #approach, #resume, #showcase {
+            background-color: var(--canvas) !important;
+            color: var(--canvas-ink) !important;
         }
-
-        /* Overlap & Z-Index */
-        #home { z-index: 20; }
-        #about { z-index: 19; margin-top: -8vw; padding-top: 14vw !important; background-color: var(--accent-primary) !important; color: var(--bg-color) !important; }
-        #works { z-index: 18; margin-top: -8vw; padding-top: 14vw !important; background-color: var(--bg-color) !important; }
-        #approach { z-index: 17; margin-top: -8vw; padding-top: 14vw !important; background-color: var(--text-color) !important; color: var(--bg-color) !important; }
-        #experience { z-index: 16; margin-top: -8vw; padding-top: 14vw !important; background-color: var(--accent-secondary) !important; color: var(--text-color) !important; }
-        #skills { z-index: 15; margin-top: -8vw; padding-top: 14vw !important; background-color: var(--bg-color) !important; }
-        #resume { z-index: 14; margin-top: -8vw; padding-top: 14vw !important; background-color: var(--accent-primary) !important; color: var(--bg-color) !important; }
-        #showcase { z-index: 13; margin-top: -8vw; padding-top: 14vw !important; background-color: var(--text-color) !important; color: var(--bg-color) !important; }
-        #blog { z-index: 12; margin-top: -8vw; padding-top: 14vw !important; background-color: var(--bg-color) !important; }
-        #marquee-section { z-index: 11; margin-top: -8vw; padding-top: 14vw !important; background-color: var(--accent-secondary) !important; color: var(--text-color) !important; }
-        footer { z-index: 10; margin-top: -8vw; padding-top: 12vw !important; }
-
-        /* 3. Color & Contrast Fixing inside inverted sections */
-        #about * { border-color: var(--bg-color) !important; }
-        #about p, #about h2 { color: var(--bg-color) !important; }
-        #about .text-accent { color: var(--text-color) !important; }
-
-        #approach * { border-color: rgba(255,255,255,0.15) !important; }
-        #approach p, #approach h2, #approach h3, #approach h4, #approach span, #approach li { color: var(--bg-color) !important; }
-        #approach .text-accent { color: var(--accent-secondary) !important; }
-        #approach .bg-\\[var\\(--text-color\\] { background-color: var(--bg-color) !important; color: var(--text-color) !important; }
-
-        #experience * { border-color: var(--text-color) !important; }
-        #experience p, #experience span, #experience h4, #experience li { color: var(--text-color) !important; }
-        #experience .bg-\\[var\\(--bg-color\\] { background-color: transparent !important; }
-        #experience .grid { border-bottom: 2px solid var(--text-color) !important; }
-        #experience .grid:hover { background: var(--bg-color) !important; color: var(--text-color) !important; transform: scale(1.02); box-shadow: 8px 8px 0px var(--text-color); z-index: 10; position: relative;}
-
-        #resume p, #resume h2, #resume h3 { color: var(--bg-color) !important; }
-        #resume .btn-cyber { border-color: var(--bg-color) !important; color: var(--bg-color) !important; background: transparent !important; }
-        #resume .btn-cyber:hover { background: var(--bg-color) !important; color: var(--accent-primary) !important; }
-
-        #showcase * { border-color: rgba(255,255,255,0.15) !important; }
-        #showcase p, #showcase span, #showcase h2, #showcase h3 { color: var(--bg-color) !important; }
-        #showcase .bg-\\[var\\(--bg-color\\] { background-color: transparent !important; }
-
-        /* 4. Comic Book Typography (Massive Slanted Titles) */
-        section h3 {
-            font-family: 'Playfair Display', serif !important;
-            font-size: clamp(4rem, 15vw, 12rem) !important;
-            line-height: 0.75 !important;
-            text-transform: uppercase !important;
-            font-weight: 900 !important;
-            color: transparent !important;
-            -webkit-text-stroke: 3px currentColor;
-            text-shadow: 8px 8px 0px var(--accent-primary);
-            transform: rotate(-3deg) scaleY(1.2);
-            display: inline-block;
-            margin-bottom: 4rem !important;
-            position: relative;
-            z-index: 10;
-            white-space: wrap;
-            letter-spacing: -0.05em;
+        #approach *, #resume *, #showcase * { border-color: rgba(255,255,255,0.14) !important; }
+        #approach p, #approach h2, #approach h3, #approach h4, #approach span, #approach li, #approach a,
+        #resume p, #resume h2, #resume h3, #resume h4, #resume span, #resume li,
+        #showcase p, #showcase h2, #showcase h3, #showcase h4, #showcase span, #showcase li {
+            color: var(--canvas-ink) !important;
         }
-        /* Solid first line */
-        section h3 span:first-child {
-            color: currentColor !important;
-            -webkit-text-stroke: 0;
-        }
-        /* Dynamic shadow colors based on background */
-        #about h3, #approach h3, #resume h3, #showcase h3 {
-            -webkit-text-stroke: 3px var(--bg-color);
-            text-shadow: 8px 8px 0px var(--text-color);
-        }
-        #about h3 span:first-child, #approach h3 span:first-child, #resume h3 span:first-child, #showcase h3 span:first-child {
-            color: var(--bg-color) !important;
-        }
-
-        /* 5. Comic Panels (Game Cards) */
-        .game-card {
-            border: 4px solid var(--text-color) !important;
-            background: var(--bg-color) !important;
-            box-shadow: 15px 15px 0px var(--accent-primary) !important;
-            transform: rotate(-1.5deg) !important;
-            margin: 4rem 1rem !important;
+        #approach .text-accent, #resume .text-accent, #showcase .text-accent { color: var(--c-green) !important; }
+        /* Resume CTA — hand-drawn doodle-circle button (white scribble on the dark canvas) */
+        #resume .btn-cyber {
+            background: transparent !important;
+            color: var(--canvas-ink) !important;
+            border: none !important;
             border-radius: 0 !important;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease !important;
+            clip-path: none !important;
+            font-weight: 700 !important;
+            overflow: visible !important;
+            padding-left: 1.7rem !important;
+            padding-right: 1.7rem !important;
+            transition: transform 0.3s cubic-bezier(0.16,1,0.3,1) !important;
+        }
+        #resume .btn-cyber::after { display: none !important; }   /* no hazard tab on this style */
+        #resume .btn-cyber::before {
+            content: '' !important;
+            position: absolute !important;
+            left: -5% !important; right: -5% !important;
+            top: -16% !important; bottom: -16% !important;
+            background: currentColor !important;
+            -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 120' preserveAspectRatio='none'><path d='M48 52 C58 24 120 14 165 16 C222 18 282 28 272 60 C264 92 198 106 150 106 C78 106 16 90 30 58 C37 42 72 33 122 34 C178 35 252 40 290 74' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'/></svg>") center / 100% 100% no-repeat !important;
+                    mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 120' preserveAspectRatio='none'><path d='M48 52 C58 24 120 14 165 16 C222 18 282 28 272 60 C264 92 198 106 150 106 C78 106 16 90 30 58 C37 42 72 33 122 34 C178 35 252 40 290 74' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'/></svg>") center / 100% 100% no-repeat !important;
+            transform: none !important;
+            z-index: -1 !important;
+            opacity: 0.95 !important;
+            pointer-events: none !important;
+        }
+        #resume .btn-cyber:hover {
+            color: var(--canvas-ink) !important;
+            background: transparent !important;
+            transform: translateY(-2px) !important;
+            box-shadow: none !important;
+        }
+        #resume .btn-cyber:hover::before { transform: rotate(-1.2deg) scale(1.02) !important; }
+        #resume .btn-cyber .icon-box { background: transparent !important; border-left: none !important; }
+
+        /* Tools & Flow strip lived as an inverted light-on-dark panel; on the fixed dark
+           Approach canvas its background flipped light in dark mode and the text vanished.
+           Pin it to a readable elevated dark panel in BOTH themes. */
+        #approach [class*="bg-[var(--text-color)]"] {
+            background-color: rgba(255,255,255,0.05) !important;
+            border-top: 1px solid rgba(255,255,255,0.16) !important;
+            color: var(--canvas-ink) !important;
+        }
+        #approach [class*="bg-[var(--text-color)]"] span,
+        #approach [class*="bg-[var(--text-color)]"] h4 { color: var(--canvas-ink) !important; }
+        #approach [class*="bg-[var(--text-color)]"] .text-accent { color: var(--c-green) !important; }
+
+        /* 3. Light-section inner contrast */
+        #about *, #experience * { border-color: var(--border-color) !important; }
+        #about p, #about h2, #about h3, #about h4, #about span, #about li,
+        #experience p, #experience span, #experience h4, #experience li, #experience h3 { color: var(--text-color) !important; }
+        #about .text-accent, #experience .text-accent { color: var(--accent-primary) !important; }
+        #experience .grid:hover {
+            background: var(--surface-card) !important;
+            box-shadow: 0 14px 30px -12px rgba(0,0,0,0.25) !important;
+            border-radius: 16px;
+            z-index: 10; position: relative;
+        }
+        .dark #experience .grid:hover { background: var(--hover-bg) !important; }
+
+        /* 4. Figma-canvas dot grid only on dark sections */
+        main > section::after { content: none; }
+        #home::after, #approach::after, #resume::after, #showcase::after {
+            content: '';
+            position: absolute; inset: 0;
+            background-image: radial-gradient(rgba(255,255,255,0.06) 1.4px, transparent 1.4px);
+            background-size: 26px 26px;
+            pointer-events: none; z-index: 0;
+        }
+
+        /* 5. Section titles — bold rounded Fredoka (no slant / stroke) */
+        section h3 {
+            font-family: 'Fredoka', sans-serif !important;
+            font-size: clamp(2.6rem, 7vw, 5.5rem) !important;
+            line-height: 0.95 !important;
+            font-weight: 700 !important;
+            text-transform: none !important;
+            color: currentColor !important;
+            -webkit-text-stroke: 0 !important;
+            text-shadow: none !important;
+            transform: none !important;
+            letter-spacing: -0.02em !important;
+            margin-bottom: 2.5rem !important;
+            display: inline-block;
+            position: relative; z-index: 10;
+        }
+        section h3 span:first-child { color: var(--accent-primary) !important; -webkit-text-stroke: 0 !important; }
+        #approach h3 span:first-child, #resume h3 span:first-child, #showcase h3 span:first-child { color: var(--c-green) !important; }
+
+        /* 6. Project / content cards — clean Figma panels */
+        .game-card {
+            border: 1.5px solid var(--border-color) !important;
+            background: var(--surface-card) !important;
+            box-shadow: 0 10px 30px -16px rgba(0,0,0,0.35) !important;
+            transform: none !important;
+            margin: 1.5rem 0 !important;
+            border-radius: 20px !important;
+            transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease, border-color 0.3s ease !important;
             color: var(--text-color) !important;
+            position: relative;
+            overflow: hidden;
         }
-        .game-card:nth-child(even) {
-            transform: rotate(1.5deg) !important;
-            box-shadow: -15px 15px 0px var(--accent-secondary) !important;
-        }
+        .dark .game-card { background: var(--surface-card) !important; }
+        .game-card:nth-child(even) { transform: none !important; }
         .game-card:hover {
-            transform: rotate(0deg) scale(1.02) !important;
-            box-shadow: 25px 25px 0px var(--text-color) !important;
+            transform: translateY(-6px) !important;
+            box-shadow: 0 26px 50px -20px rgba(0,0,0,0.45) !important;
+            border-color: var(--accent-primary) !important;
             z-index: 50;
         }
         .game-card * { border-color: var(--border-color) !important; }
-        .game-card p, .game-card h4, .game-card span, .game-card .text-accent { color: var(--text-color) !important; }
-        .game-card img, .game-card video { border: 3px solid var(--text-color); }
+        .game-card p, .game-card h4, .game-card span { color: var(--text-color) !important; }
+        .game-card .text-accent { color: var(--accent-primary) !important; }
+        .game-card img, .game-card video { border: none; border-radius: 12px; }
 
-        /* 6. Tags and Speech Bubbles */
+        /* 7. Tags & pills — rounded Figma chips */
         .cyber-tag {
-            background: var(--bg-color) !important;
+            background: var(--hover-bg) !important;
             color: var(--text-color) !important;
-            border: 2px solid var(--text-color) !important;
-            box-shadow: 4px 4px 0px var(--accent-primary) !important;
-            clip-path: none !important;
-            border-radius: 12px !important;
-            border-bottom-left-radius: 0 !important;
-            transform: rotate(-4deg);
-            padding: 0.5rem 1rem !important;
-            font-weight: 900 !important;
+            border: 1.5px solid var(--border-color) !important;
+            box-shadow: none !important;
+            border-radius: 999px !important;
+            transform: none !important;
+            padding: 0.35rem 0.9rem !important;
+            font-weight: 500 !important;
+            font-family: 'JetBrains Mono', monospace !important;
             display: inline-block;
         }
+        .cyber-tag.tag-primary { background: var(--accent-primary) !important; color: #0c0c0c !important; border-color: var(--accent-primary) !important; }
 
-        /* 7. Section Headers (Category Dividers) */
+        /* 8. Works category dividers — Figma layer pills */
         #works .text-center.font-bold {
             background: var(--text-color) !important;
             color: var(--bg-color) !important;
-            transform: rotate(-1deg) scale(1.02);
-            box-shadow: 6px 6px 0px var(--accent-secondary);
-            border: 3px solid var(--bg-color) !important;
-            padding: 1.5rem !important;
-            margin: 3rem 0;
-            z-index: 20;
-            position: relative;
-            font-size: 1.2rem;
+            transform: none;
+            box-shadow: none;
+            border: none !important;
+            border-radius: 999px;
+            padding: 0.75rem 1.5rem !important;
+            margin: 2.5rem auto;
+            display: inline-block;
+            z-index: 20; position: relative;
+            font-size: 0.95rem;
+            letter-spacing: 0.04em;
         }
 
-        /* 8. Halftone Overlay globally to sections */
-        main > section::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image: radial-gradient(currentColor 1.5px, transparent 1.5px);
-            background-size: 12px 12px;
-            opacity: 0.04;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* 9. Hero Overrides */
+        /* 9. Hero title — heavy rounded, readable on dark canvas */
         .editorial-title {
-            font-size: clamp(5rem, 16vw, 16rem) !important;
-            transform: scaleY(1.15) rotate(-2deg);
-            text-shadow: 10px 10px 0px var(--accent-primary);
-            -webkit-text-stroke: 3px var(--text-color);
-            color: var(--bg-color) !important;
-            line-height: 0.8 !important;
+            font-family: 'Fredoka', sans-serif !important;
+            font-size: clamp(4rem, 14vw, 13rem) !important;
+            font-weight: 700 !important;
+            transform: none;
+            text-shadow: 0 6px 30px rgba(0,0,0,0.45);
+            -webkit-text-stroke: 0 !important;
+            color: var(--canvas-ink) !important;
+            line-height: 0.9 !important;
+            letter-spacing: -0.03em;
             margin-bottom: 1rem;
         }
         .text-outline {
-            -webkit-text-stroke: 3px var(--accent-secondary) !important;
+            -webkit-text-stroke: 2.5px var(--c-green) !important;
             text-shadow: none !important;
             color: transparent !important;
         }
 
-        /* 10. Showcase Grid Pop */
+        /* 10. Showcase grid — Figma selection frames, gentle pop */
         #showcase .tech-corners {
-            border: 4px solid var(--bg-color) !important;
-            transform: rotate(calc(var(--rand, 0) * 1.5deg));
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            background: var(--text-color) !important;
+            border: none !important;
+            transform: none;
+            transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s ease, outline-color 0.3s ease;
+            background: #111 !important;
+            outline: 1.5px solid rgba(255,255,255,0.2);
         }
         #showcase .tech-corners:hover {
-            transform: scale(1.1) rotate(0deg);
+            transform: translateY(-6px) scale(1.02);
             z-index: 30;
-            box-shadow: 15px 15px 0px var(--accent-primary);
+            box-shadow: 0 24px 44px -18px rgba(0,0,0,0.6);
+            outline-color: var(--c-green);
         }
-        #showcase .tech-corners:nth-child(3n) { --rand: -2; }
-        #showcase .tech-corners:nth-child(3n+1) { --rand: 2; }
-        #showcase .tech-corners:nth-child(3n+2) { --rand: 1; }
 
-        /* 11. Skills Grid */
+        /* 11. Skills grid — clean cards */
         #skills .border {
-            border: 4px solid var(--text-color) !important;
-            box-shadow: 10px 10px 0px var(--accent-primary);
-            transform: rotate(-1.5deg);
-            transition: transform 0.3s ease;
+            border: 1.5px solid var(--border-color) !important;
+            box-shadow: 0 10px 26px -16px rgba(0,0,0,0.3);
+            transform: none;
+            border-radius: 18px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
         }
-        #skills .border:nth-child(even) {
-            transform: rotate(1.5deg);
-            box-shadow: -10px 10px 0px var(--accent-secondary);
-        }
+        #skills .border:nth-child(even) { transform: none; }
         #skills .border:hover {
-            transform: scale(1.05) rotate(0deg);
+            transform: translateY(-5px);
+            border-color: var(--accent-primary) !important;
             z-index: 10;
         }
 
-        /* 12. CityWalk Map Timeline for Experience */
+        /* 12. Experience CityWalk timeline — rounded pins + chat bubbles */
         .map-marker {
-            width: 44px;
-            height: 44px;
+            width: 44px; height: 44px;
             border-radius: 50% 50% 50% 0;
             transform: rotate(-45deg);
-            border: 4px solid var(--text-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 4px 4px 0px var(--text-color);
+            border: 3px solid var(--text-color);
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 6px 14px -4px rgba(0,0,0,0.3);
             z-index: 20;
             background-color: var(--bg-color);
         }
         .map-marker-inner {
             transform: rotate(45deg);
-            font-weight: 900;
-            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-family: 'Fredoka', sans-serif;
             color: var(--text-color);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
-        
         .ticket-box {
-            background: var(--bg-color);
-            border: 4px solid var(--text-color);
-            box-shadow: 8px 8px 0px var(--text-color);
+            background: var(--surface-card);
+            border: 1.5px solid var(--border-color);
+            box-shadow: 0 12px 28px -16px rgba(0,0,0,0.3);
             color: var(--text-color);
-            position: relative;
-            z-index: 10;
+            border-radius: 18px;
+            position: relative; z-index: 10;
         }
-        
-        /* The little speech bubble arrow */
+        .dark .ticket-box { background: var(--hover-bg); }
         .ticket-box::before {
             content: '';
             position: absolute;
-            top: 20px; 
+            top: 24px;
             width: 0; height: 0;
-            border-top: 12px solid transparent;
-            border-bottom: 12px solid transparent;
+            border-top: 11px solid transparent;
+            border-bottom: 11px solid transparent;
         }
-        
-        /* Left side nodes (arrow points right) */
         .left-node .ticket-box::before {
-            right: -20px;
-            border-left: 16px solid var(--text-color);
+            right: -15px;
+            border-left: 15px solid var(--surface-card);
         }
-        /* Right side nodes (arrow points left) */
         .right-node .ticket-box::before {
-            left: -20px;
-            border-right: 16px solid var(--text-color);
+            left: -15px;
+            border-right: 15px solid var(--surface-card);
         }
+        .dark .left-node .ticket-box::before { border-left-color: var(--hover-bg); }
+        .dark .right-node .ticket-box::before { border-right-color: var(--hover-bg); }
 
-        /* Mobile overrides for timeline */
         @media (max-width: 768px) {
             .left-node .ticket-box::before, .right-node .ticket-box::before {
-                left: -20px !important;
+                left: -15px !important;
                 right: auto !important;
-                border-right: 16px solid var(--text-color) !important;
+                border-right: 15px solid var(--surface-card) !important;
                 border-left: none !important;
             }
+            .dark .left-node .ticket-box::before, .dark .right-node .ticket-box::before {
+                border-right-color: var(--hover-bg) !important;
+            }
         }
+
+        /* ===== Playful multicolour game titles (Messenger-style) ===== */
+        #works h4[class*="text-6xl"] { overflow: visible; }
+        #works h4[class*="text-6xl"] .play-letter {
+            display: inline-block;
+            line-height: 0.9;
+            transition: transform 0.25s cubic-bezier(0.16,1,0.3,1);
+        }
+        /* first letter is the bold theme-ink anchor (black in light, white in dark) */
+        #works h4[class*="text-6xl"] .play-letter.is-first {
+            position: relative;
+            color: var(--text-color) !important;
+        }
+        /* gentle lift only on hover — no continuous animation */
+        #works .game-card:hover h4[class*="text-6xl"] .play-letter:nth-child(odd) { transform: translateY(-4px); }
+        #works .game-card:hover h4[class*="text-6xl"] .play-letter:nth-child(even) { transform: translateY(4px); }
+        /* bunny perched on top of the first letter */
+        #works h4[class*="text-6xl"] .title-bunny {
+            position: absolute;
+            left: 50%;
+            top: -0.62em;
+            width: 0.5em;
+            height: 0.5em;
+            transform: translateX(-50%);
+            pointer-events: none;
+        }
+        #works h4[class*="text-6xl"] .title-bunny svg { width: 100%; height: 100%; display: block; }
     </style>
 </head>
 <body class="relative font-sans antialiased">
@@ -1042,7 +1138,7 @@
     </button>
 
     <!-- Jaikar.UI OS Search Modal -->
-    <div id="os-modal" class="fixed inset-0 z-[400] hidden items-center justify-center transition-opacity duration-300 opacity-0 bg-[#FFF0F5] dark:bg-[#0A0A0A]" style="font-family: 'Doto', sans-serif;">
+    <div id="os-modal" class="fixed inset-0 z-[400] hidden items-center justify-center transition-opacity duration-300 opacity-0 bg-[#FFF0F5] dark:bg-[#0A0A0A]" style="font-family: 'JetBrains Mono', monospace;">
         
         <!-- Desktop Background Elements (Fake Icons) -->
         <div class="absolute left-6 top-12 flex flex-col gap-8">
@@ -1255,7 +1351,7 @@
                         <div class="mt-8 md:mt-12 flex items-center gap-6">
                             <div class="w-12 h-[2px] bg-[var(--accent-primary)]"></div>
                             <!-- Updated Roles Tag -->
-                            <p class="text-[10px] md:text-xs tracking-[0.2em] md:tracking-[0.4em] uppercase font-bold font-doto text-accent text-glow-bg">Technical UI Designer | UE5 | Unity | Systems Design</p>
+                            <p class="text-[10px] md:text-xs tracking-[0.2em] md:tracking-[0.4em] uppercase font-bold font-doto text-accent text-glow-bg">Technical UI Designer | Product Design | UE5 | Unity</p>
                         </div>
                     </div>
 
@@ -1284,8 +1380,8 @@
                             </div>
                         </div>
                         <div class="text-sm md:text-base leading-relaxed space-y-6 font-medium relative z-20">
-                            <p>I am a <span class="font-bold text-accent">Game UI Artist</span> focused on crafting clear, responsive, and visually polished interfaces for gameplay-driven experiences.</p>
-                            <p>I design HUDs, menus, and in-game UI systems that support fast decision making and maintain clarity under pressure.</p>
+                            <p>I am a <span class="font-bold text-accent">Game UI Artist</span> and <span class="font-bold text-accent">Product Designer</span> focused on crafting clear, responsive, and visually polished interfaces for gameplay-driven and functional experiences.</p>
+                            <p>I design HUDs, menus, and in-game UI systems that maintain clarity under pressure, as well as <a href="https://69eff7255c35f6a00c5068a4--tourmaline-gingersnap-67b9f5.netlify.app/" target="_blank" class="font-bold text-[var(--text-color)] hover:text-accent transition-colors underline decoration-2 underline-offset-4">interactive mobile & web applications</a> that solve real-world problems.</p>
                             <p>Experienced in <span class="font-bold text-accent">Unreal Engine 5</span> and <span class="font-bold text-accent">Unity</span>, I build UI directly in engine and collaborate across disciplines to deliver production-ready results.</p>
                         </div>
                         <div class="mt-12 pt-8 border-t grid-border space-y-3 relative z-20">
@@ -1383,6 +1479,45 @@
                             <div class="w-full h-full relative overflow-hidden bg-[var(--text-color)]">
                                 <div class="absolute inset-0 flex items-center justify-center opacity-5 text-4xl font-heading font-bold uppercase tracking-tighter z-0">Find the Dog</div>
                                 <img src="Assets/Find the Dog/jaikar-pothula-main-title-1.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=2000&auto=format&fit=crop';" alt="Find the Dog" class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-700 relative z-10 group-hover:scale-105">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Project: Find the Octopus -->
+                <div class="flex flex-col lg:flex-row-reverse h-auto lg:h-[80vh] items-center border-b grid-border last:border-b-0 cyber-stripes game-card relative" onclick="openCaseStudy('find-the-octopus')">
+                    <div class="w-full lg:w-1/2 h-full p-8 md:p-16 flex flex-col justify-center border-b lg:border-b-0 lg:border-l grid-border bg-[var(--bg-color)] transition-colors relative z-10 fade-up">
+                        <div class="mb-auto">
+                            <span class="inline-block px-3 py-1 text-[9px] tracking-[0.2em] uppercase mb-6 cyber-tag tag-primary">MOBILE UI &middot; 2D ART</span>
+                        </div>
+                        <h4 class="text-4xl md:text-6xl font-heading font-bold uppercase tracking-tight mb-4">Find the Octopus</h4>
+                        <p class="text-sm md:text-base font-medium leading-relaxed opacity-80 mb-6">A cute, vibrant hidden-object puzzle built around a baby-octopus mascot. Designed the full casual live-service UI &mdash; level progression, timed power-ups, mission rewards and VIP monetization &mdash; keeping every screen readable and friendly on small displays.</p>
+
+                        <!-- Role / Tech Stack Breakdown -->
+                        <div class="flex flex-col gap-3 mb-10">
+                            <div class="flex items-center gap-3">
+                                <span class="w-2 h-2 bg-[var(--accent-primary)]"></span>
+                                <span class="text-[10px] md:text-xs font-doto uppercase font-bold opacity-80">Role: Mobile UI/UX &amp; 2D Art</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="w-2 h-2 bg-[var(--accent-secondary)]"></span>
+                                <span class="text-[10px] md:text-xs font-doto uppercase font-bold opacity-80 text-accent">Engine: Unity (uGUI)</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-auto pt-6">
+                            <span class="btn-cyber pl-6 pr-0 py-0 h-10 text-[10px] font-bold tracking-[0.2em]">
+                                <span class="mr-4">View Deep Breakdown</span>
+                                <div class="w-10 h-10 icon-box flex items-center justify-center">
+                                    <svg class="w-3.5 h-3.5 transform -rotate-45 group-hover:rotate-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-1/2 h-full p-8 md:p-16 overflow-hidden bg-[var(--hover-bg)] fade-up flex items-center justify-center">
+                        <div class="relative w-full aspect-[4/3] flex items-center justify-center tech-corners shadow-2xl">
+                            <div class="w-full h-full relative overflow-hidden bg-[var(--text-color)]">
+                                <div class="absolute inset-0 flex items-center justify-center opacity-5 text-4xl font-heading font-bold uppercase tracking-tighter z-0">Find the Octopus</div>
+                                <img src="Assets/FIND THE OCTOPUS/jaikar-pothula-show-case-2.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1546026423-cc4642628d2b?q=80&w=2000&auto=format&fit=crop';" alt="Find the Octopus" class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-700 relative z-10 group-hover:scale-105">
                             </div>
                         </div>
                     </div>
@@ -1867,15 +2002,14 @@
             </div>
         </section>
 
-
         <!-- Resume CTA Section -->
         <section id="resume" class="py-32 px-5 md:px-8 border-b grid-border relative bg-[var(--text-color)] text-[var(--bg-color)] flex flex-col items-center justify-center text-center">
             <div class="absolute inset-0 cyber-stripes opacity-10 pointer-events-none"></div>
-            <div class="reveal max-w-3xl relative z-10">
+            <div class="reveal w-full max-w-5xl relative z-10">
                 <h2 class="text-[10px] tracking-[0.5em] uppercase opacity-50 mb-8 font-bold font-doto">// DOCUMENTATION</h2>
                 <!-- CHANGED TO DOTO -->
                 <h3 class="text-5xl md:text-7xl font-doto text-accent font-bold tracking-tighter uppercase mb-10">Beyond Design</h3>
-                <p class="text-base md:text-xl font-medium leading-relaxed opacity-80 mb-12">
+                <p class="text-base md:text-xl font-medium leading-relaxed opacity-80 mb-12 max-w-3xl mx-auto">
                     A deeper look into my work designing and implementing gameplay-driven UI systems across Unreal Engine 5. Focused on in-engine UI, system architecture, and building scalable interfaces that support real-time gameplay.
                 </p>
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full mb-16">
@@ -1883,7 +2017,7 @@
                         <span class="mr-4">View Resume</span>
                         <div class="w-12 h-12 icon-box flex items-center justify-center border-l-2 border-l-[var(--text-color)] bg-transparent group-hover:bg-[var(--text-color)] group-hover:text-[var(--bg-color)]">
                             <svg class="w-5 h-5 transform -rotate-45 group-hover:rotate-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                         </div>
+                        </div>
                     </button>
                     <a href="https://store.steampowered.com/app/3295930/THE_DARK_ARRIVAL__SHADOWS_OF_THE_PAST/" target="_blank" rel="noopener noreferrer" class="group w-full sm:w-auto inline-flex items-center justify-between sm:justify-center btn-cyber text-[var(--text-color)] pl-6 pr-0 py-0 h-12 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 cursor-none" style="background: var(--bg-color); border-color: var(--bg-color);">
                         <span class="mr-4">View Steam Page</span>
@@ -2247,6 +2381,16 @@
                 role: 'Mobile UI/UX Design',
                 engine: 'Unity (uGUI)',
                 tools: 'Figma, Illustrator, Unity'
+            },
+            'find-the-octopus': {
+                title: 'Find the Octopus',
+                pdf: 'Assets/FIND THE OCTOPUS/Find_the_Hidden_Octopus_UIUX_Case_Study.pdf',
+                // PLAY STORE: replace '#' below with the Google Play URL once the game releases
+                playLink: '#',
+                customButtonText: 'Get on Google Play (Coming Soon)',
+                role: 'Mobile UI/UX & 2D Art',
+                engine: 'Unity (uGUI)',
+                tools: 'Figma, Photoshop, Unity'
             },
             'customized-angel': {
                 title: 'Customized Angel',
@@ -3144,6 +3288,163 @@
             contentContainer.innerHTML = html;
         }
 
+        function renderOctopusContent(tab) {
+            const base = "Assets/FIND THE OCTOPUS/";
+            const fb = "onerror=\"this.onerror=null; this.src='https://images.unsplash.com/photo-1546026423-cc4642628d2b?q=80&w=1200&auto=format&fit=crop';\"";
+            const contentContainer = document.getElementById("cs-content");
+            if (!contentContainer) return;
+
+            let html = "";
+
+            if (tab === "The Challenge") {
+                html = `
+                <div class="space-y-8 animate-fade-in w-full">
+                    <div class="border grid-border bg-[var(--text-color)] p-2 md:p-3 tech-corners relative overflow-hidden">
+                        <span class="absolute top-0 left-0 z-20 p-3 text-[10px] font-doto uppercase tracking-widest text-accent">// Gameplay Walkthrough</span>
+                        <video src="${base}i_need_the_video_for_this_imag.mp4" autoplay muted loop playsinline preload="metadata" controls poster="${base}jaikar-pothula-show-case-2.png" class="w-full h-auto max-h-[70vh] object-contain bg-black rounded-sm" onerror="this.style.display='none';"></video>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 border grid-border bg-[var(--bg-color)]">
+                        <div class="p-8 md:p-12 border-b md:border-b-0 md:border-r grid-border tech-corners relative">
+                            <span class="absolute top-0 right-0 p-2 text-[10px] font-doto opacity-30">[ PROBLEM ]</span>
+                            <h4 class="text-3xl font-heading font-bold uppercase tracking-tight mb-4 text-accent">Readable, Friendly, Profitable</h4>
+                            <p class="font-medium text-sm leading-relaxed opacity-80">
+                                A hidden-object puzzle lives or dies on clarity. The octopus has to hide convincingly inside dense, painterly reef scenes, yet every menu, reward and monetization prompt must stay instantly legible for a casual, all-ages audience.
+                            </p>
+                        </div>
+                        <div class="p-8 md:p-12 tech-corners relative bg-[var(--hover-bg)]">
+                            <span class="absolute top-0 right-0 p-2 text-[10px] font-doto opacity-30">[ SCOPE ]</span>
+                            <h4 class="text-3xl font-heading font-bold uppercase tracking-tight mb-4 text-[var(--text-color)]">Full Live-Service Loop</h4>
+                            <p class="font-medium text-sm leading-relaxed opacity-80">
+                                Title, level select, settings, pause, timed power-ups, win and lose states, daily tasks, mission rewards and a VIP subscription &mdash; a complete casual systems set, plus the character art and icon atlas that holds it together.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="border grid-border bg-[var(--text-color)] p-6 md:p-10 tech-corners flex items-center justify-center">
+                        <img src="${base}treseure 2.png" ${fb} alt="Octopus mascot" class="h-48 md:h-60 w-auto object-contain drop-shadow-2xl">
+                    </div>
+                </div>`;
+            }
+            else if (tab === "UI Solution") {
+                html = `
+                <div class="space-y-8 animate-fade-in w-full">
+                    <div class="border grid-border bg-[var(--bg-color)] p-8 md:p-12 tech-corners relative">
+                        <span class="absolute top-0 right-0 p-4 text-[10px] font-doto text-accent opacity-80">// Cute &middot; Vibrant &middot; Casual</span>
+                        <h4 class="text-3xl font-heading font-bold uppercase tracking-tight mb-6">One Mascot, Every State</h4>
+                        <p class="font-medium text-base leading-relaxed opacity-90 mb-8 max-w-3xl">
+                            The baby octopus carries the emotional through-line of the whole app &mdash; idle, happy, surprised, shy, waving, laughing and crying. Consistent rounded panels, chunky tappable buttons and a warm underwater palette keep the casual tone while clearly separating play, reward and store flows.
+                        </p>
+                        <div class="flex flex-wrap gap-4">
+                            <span class="px-3 py-1 border border-[var(--text-color)] text-[10px] font-doto uppercase font-bold">Expression Sheet</span>
+                            <span class="px-3 py-1 border border-[var(--text-color)] text-[10px] font-doto uppercase font-bold">9-Slice Panels</span>
+                            <span class="px-3 py-1 border border-[var(--text-color)] text-[10px] font-doto uppercase font-bold">Big-Touch CTAs</span>
+                        </div>
+                    </div>
+                    <div class="w-full border grid-border bg-[var(--hover-bg)] p-4 md:p-6 tech-corners">
+                        <img src="${base}jaikar-pothula-sprite-sheet.png" ${fb} alt="Octopus sprite sheet" class="w-full h-auto object-contain border grid-border">
+                    </div>
+                    <div class="w-full border grid-border bg-[var(--text-color)] p-6 md:p-10 tech-corners">
+                        <p class="text-center text-[10px] font-doto uppercase tracking-widest text-accent mb-8">// Button Language &mdash; Chunky, Tappable CTAs</p>
+                        <div class="flex flex-col items-center gap-5">
+                            ${["Play button.png","resume button.png","Shop button.png","QUIT BUTTON.png"].map(img=>`
+                            <img src="${base}${img}" ${fb} alt="UI button" class="h-12 md:h-14 w-auto object-contain drop-shadow-lg">
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>`;
+            }
+            else if (tab === "System Flow") {
+                html = `
+                <div class="space-y-8 animate-fade-in w-full">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-0 border grid-border bg-[var(--bg-color)]">
+                        ${[
+                            {t:'Title &rarr; Play', s:'Character unlock'},
+                            {t:'Level Select', s:'Locked grid'},
+                            {t:'In-Game', s:'Timer + power-ups'},
+                            {t:'Win / Lose', s:'Rewards or retry'}
+                        ].map((step, i) => `
+                        <div class="p-6 flex flex-col gap-2 ${i < 3 ? 'border-r' : ''} grid-border tech-corners relative">
+                            <div class="text-xl font-serif italic opacity-50 text-accent">0${i+1}</div>
+                            <div class="text-sm font-bold tracking-widest uppercase font-doto">${step.t}</div>
+                            <div class="text-[10px] font-doto uppercase opacity-50">&gt; ${step.s}</div>
+                        </div>
+                        `).join('')}
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-0 border grid-border">
+                        ${["Magnifing glass.png","Octopus_clock.png","gem 2.png","heart.png"].map((img,i)=>`
+                        <div class="aspect-square bg-[var(--text-color)] flex items-center justify-center relative overflow-hidden ${i<3?'border-r grid-border':''} p-6">
+                            <img src="${base}${img}" ${fb} class="w-full h-full object-contain drop-shadow-lg">
+                        </div>
+                        `).join('')}
+                    </div>
+                    <p class="text-center text-[10px] font-doto uppercase opacity-50">&gt; In-game tools: magnifier, +30 min timer, gems &amp; lives</p>
+                </div>`;
+            }
+            else if (tab === "Implementation") {
+                html = `
+                <div class="space-y-8 animate-fade-in w-full">
+                    <div class="border grid-border bg-[var(--bg-color)] p-8 md:p-12 tech-corners relative">
+                        <span class="absolute top-0 right-0 p-4 text-[10px] font-doto text-accent opacity-80">// Unity (uGUI)</span>
+                        <h4 class="text-3xl font-heading font-bold uppercase tracking-tight mb-6">Atlas-Driven &amp; Responsive</h4>
+                        <p class="font-medium text-base leading-relaxed opacity-90 mb-8 max-w-3xl">
+                            Built a single in-game icon atlas (share, shop, freeze, bulb, magnifier, timer, pause and more) and a reusable button/panel set so screens assemble fast and stay consistent. Layouts were verified in the Unity Device Simulator on Samsung Galaxy Note10 to hold up across aspect ratios.
+                        </p>
+                        <div class="flex flex-wrap gap-4">
+                            <span class="px-3 py-1 border border-[var(--text-color)] text-[10px] font-doto uppercase font-bold">Icon Atlas</span>
+                            <span class="px-3 py-1 border border-[var(--text-color)] text-[10px] font-doto uppercase font-bold">Device Simulator</span>
+                            <span class="px-3 py-1 border border-[var(--text-color)] text-[10px] font-doto uppercase font-bold">uGUI Scaling</span>
+                        </div>
+                    </div>
+                    <div class="w-full border grid-border bg-[var(--text-color)] p-6 md:p-10 tech-corners">
+                        <p class="text-center text-[10px] font-doto uppercase tracking-widest text-accent mb-8">// In-Game Icon Atlas</p>
+                        <div class="grid grid-cols-4 md:grid-cols-6 gap-4 md:gap-6">
+                            ${[
+                                {f:'Shop Icon.png',l:'Shop'},
+                                {f:'Settings.png',l:'Settings'},
+                                {f:'Share Icon.png',l:'Share'},
+                                {f:'Volume on.png',l:'Sound On'},
+                                {f:'Volume off.png',l:'Sound Off'},
+                                {f:'shuffle icon.png',l:'Shuffle'},
+                                {f:'bulb.png',l:'Hint'},
+                                {f:'freeze.png',l:'Freeze'},
+                                {f:'Rotate icom.png',l:'Restart'},
+                                {f:'Diamond icon.png',l:'Gems'},
+                                {f:'Star 1.png',l:'Stars'},
+                                {f:'close.png',l:'Close'}
+                            ].map(ic=>`
+                            <div class="flex flex-col items-center gap-2 group/icon">
+                                <div class="w-full aspect-square flex items-center justify-center p-1.5 transition-transform duration-300 group-hover/icon:-translate-y-1">
+                                    <img src="${base}${ic.f}" ${fb} alt="${ic.l}" class="w-full h-full object-contain drop-shadow-lg">
+                                </div>
+                                <span class="text-[8px] md:text-[9px] font-doto uppercase tracking-wider opacity-50">${ic.l}</span>
+                            </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="w-full border grid-border bg-[var(--hover-bg)] p-4 md:p-6 tech-corners">
+                        <img src="${base}jaikar-pothula-showcase-sheet-1.png" ${fb} alt="UI and 2D art showcase" class="w-full h-auto object-contain border grid-border">
+                    </div>
+                </div>`;
+            }
+            else if (tab === "Result") {
+                html = `
+                <div class="space-y-8 animate-fade-in w-full">
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        ${["treseure 2.png","WRONG TAP.png","Octopus_clock.png"].map(img=>`
+                        <div class="border grid-border p-4 bg-[var(--text-color)] aspect-square flex items-center justify-center overflow-hidden shadow-sm hover:shadow-[4px_4px_0px_var(--accent-primary)] transition-all">
+                            <img src="${base}${img}" ${fb} class="w-full h-full object-contain drop-shadow-lg">
+                        </div>
+                        `).join('')}
+                    </div>
+                    <div class="w-full border grid-border bg-[var(--text-color)] p-6 md:p-10 flex items-center justify-center tech-corners">
+                        <img src="${base}jaikar-pothula-show-case-2.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1546026423-cc4642628d2b?q=80&w=2000&auto=format&fit=crop';" alt="Find the Octopus showcase" class="w-full max-w-2xl h-auto object-contain">
+                    </div>
+                    <p class="text-center text-sm font-medium opacity-80 max-w-2xl mx-auto">A complete, cohesive casual game UI &mdash; cute, vibrant and ready for iOS &amp; Android.</p>
+                </div>`;
+            }
+
+            contentContainer.innerHTML = html;
+        }
+
         // UX Sections Variables
         let activeUxTab = 'The Challenge';
         let currentCaseStudyId = null;
@@ -3194,6 +3495,8 @@
                 renderRoninContent(activeUxTab);
             } else if (projectId === 'find-the-dog') {
                 renderDogContent(activeUxTab);
+            } else if (projectId === 'find-the-octopus') {
+                renderOctopusContent(activeUxTab);
             }
         }
 
@@ -3281,8 +3584,12 @@
             if (id !== 'resume') {
                 if (data.playLink) {
                     const label = data.customButtonText || (data.playLink.includes('steam') ? 'Visit on Steam' : 'Play Game');
+                    const comingSoon = data.playLink === '#';
+                    const linkAttrs = comingSoon
+                        ? 'href="#" onclick="return false;" aria-disabled="true" title="Coming soon"'
+                        : `href="${data.playLink}" target="_blank"`;
                     buttonsHTML += `
-                        <a href="${data.playLink}" target="_blank" class="w-full max-w-md group inline-flex items-center justify-between btn-cyber pl-6 pr-0 py-0 h-10 text-[10px] md:text-xs tracking-[0.2em] uppercase font-bold transition-all duration-300 cursor-none shadow-[4px_4px_0px_var(--accent-primary)] hover:shadow-[2px_2px_0px_var(--accent-primary)]">
+                        <a ${linkAttrs} class="w-full max-w-md group inline-flex items-center justify-between btn-cyber pl-6 pr-0 py-0 h-10 text-[10px] md:text-xs tracking-[0.2em] uppercase font-bold transition-all duration-300 cursor-none shadow-[4px_4px_0px_var(--accent-primary)] hover:shadow-[2px_2px_0px_var(--accent-primary)] ${comingSoon ? 'opacity-70' : ''}">
                             <span class="mr-4 text-center w-full">${label}</span>
                             <div class="w-10 h-10 icon-box flex flex-shrink-0 items-center justify-center">
                                 <svg class="w-3.5 h-3.5 transform -rotate-45 group-hover:rotate-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
@@ -3470,8 +3777,8 @@
             document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
             setTimeout(triggerCinematic, 800); // Wait just a moment for the page to settle before starting the intro flash
             
-            // --- Init Sakura Effect ---
-            createSakura();
+            // --- Playful multicolour game titles ---
+            enhanceGameTitles();
         });
         
         // --- Intersection Observer for Fade-Up Animations ---
@@ -3627,47 +3934,82 @@
             isCinematicPlaying = false;
         }
 
-        // --- Sakura Blossom Effect ---
+        // --- Scattered Bunny Mascots (static, like the reference — no continuous animation) ---
         function createSakura() {
             const container = document.createElement('div');
             container.id = 'sakura-container';
             document.body.appendChild(container);
 
-            const petalCount = 35; // Adjust this number for more or fewer petals
+            const petalCount = 7; // a few resting mascots, not a falling stream
+            const bunnyColors = ['#FF003C', '#FFCC00', '#CCFF00', '#FF007B', '#FF9EBB'];
 
             for (let i = 0; i < petalCount; i++) {
                 const wrapper = document.createElement('div');
                 wrapper.className = 'sakura-wrapper';
-                
-                // Randomize starting positions and timings
-                const left = Math.random() * 100; // 0 to 100vw
-                const fallDuration = 8 + Math.random() * 7; // 8s to 15s fall duration
-                const fallDelay = Math.random() * -15; // Negative delay to start mid-animation
-                
+
+                // Keep them near the left/right edges so they never sit on top of text or buttons
+                const onLeft = i % 2 === 0;
+                const left = onLeft ? (1 + Math.random() * 6) : (90 + Math.random() * 7);
+                const top = 16 + Math.random() * 70; // avoid the very top (nav) and very bottom
                 wrapper.style.left = `${left}%`;
-                wrapper.style.animationDuration = `${fallDuration}s`;
-                wrapper.style.animationDelay = `${fallDelay}s`;
+                wrapper.style.top = `${top}%`;
 
                 const sway = document.createElement('div');
                 sway.className = 'sakura-sway';
-                const swayDuration = 2 + Math.random() * 3;
-                sway.style.animationDuration = `${swayDuration}s`;
-                sway.style.animationDelay = `${Math.random() * -5}s`;
 
                 const petal = document.createElement('div');
                 petal.className = 'sakura-petal';
-                const spinDuration = 3 + Math.random() * 5;
-                const scale = 0.5 + Math.random() * 0.8;
-                const opacity = 0.5 + Math.random() * 0.5;
-                
-                petal.style.animationDuration = `${spinDuration}s`;
-                petal.style.transform = `scale(${scale})`;
+                const bunnyColor = bunnyColors[Math.floor(Math.random() * bunnyColors.length)];
+                petal.innerHTML = `
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <rect x="22" y="6" width="20" height="44" rx="10" fill="${bunnyColor}"/>
+                        <rect x="58" y="6" width="20" height="44" rx="10" fill="${bunnyColor}"/>
+                        <rect x="14" y="30" width="72" height="62" rx="26" fill="${bunnyColor}"/>
+                        <ellipse cx="38" cy="58" rx="6.5" ry="11" fill="#FFFFFF"/>
+                        <ellipse cx="62" cy="58" rx="6.5" ry="11" fill="#FFFFFF"/>
+                    </svg>`;
+                const scale = 0.7 + Math.random() * 0.5;
+                const tilt = -12 + Math.random() * 24; // gentle resting tilt, fixed (not animated)
+                const opacity = 0.55 + Math.random() * 0.35;
+
+                petal.style.transform = `scale(${scale}) rotate(${tilt}deg)`;
                 petal.style.opacity = opacity;
 
                 sway.appendChild(petal);
                 wrapper.appendChild(sway);
                 container.appendChild(wrapper);
             }
+        }
+
+        // --- Messenger-style multicolour titles for every game ---
+        function enhanceGameTitles() {
+            const titles = document.querySelectorAll('#works h4[class*="text-6xl"]');
+            const palette = ['#FF003C', '#FF007B', '#FF9EBB', '#FF003C', '#FF007B', '#FF9EBB'];
+            const bunnyColors = ['#FF003C', '#FFCC00', '#CCFF00', '#FF007B', '#FF9EBB'];
+            titles.forEach((h4, ti) => {
+                const text = h4.textContent;
+                h4.textContent = '';
+                let colorIdx = 0;
+                let firstDone = false;
+                [...text].forEach((ch) => {
+                    if (ch === ' ') {
+                        h4.appendChild(document.createTextNode(' '));
+                        return;
+                    }
+                    const span = document.createElement('span');
+                    span.className = 'play-letter';
+                    span.textContent = ch;
+                    if (!firstDone) {
+                        // first visible letter = bold theme-ink anchor
+                        firstDone = true;
+                        span.classList.add('is-first');
+                    } else {
+                        span.style.color = palette[colorIdx % palette.length];
+                        colorIdx++;
+                    }
+                    h4.appendChild(span);
+                });
+            });
         }
     </script>
 

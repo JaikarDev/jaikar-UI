@@ -3553,7 +3553,7 @@
                 const sectionsContainer = document.getElementById('cs-sections');
                 sectionsContainer.innerHTML = `
                     <div class="flex flex-col items-center w-full animate-fade-in py-12 px-4 md:px-0">
-                        <a href="${data.pdf}" download target="_blank" class="mb-16 w-full max-w-sm sm:w-auto group inline-flex items-center justify-between sm:justify-center btn-cyber text-[var(--text-color)] pl-6 pr-0 py-0 h-10 text-[10px] md:text-xs tracking-[0.2em] uppercase font-bold transition-all duration-300 cursor-none">
+                        <a href="${data.pdf}" target="_blank" rel="noopener" class="mb-16 w-full max-w-sm sm:w-auto group inline-flex items-center justify-between sm:justify-center btn-cyber text-[var(--text-color)] pl-6 pr-0 py-0 h-10 text-[10px] md:text-xs tracking-[0.2em] uppercase font-bold transition-all duration-300 cursor-none">
                             <span class="mr-4">Download PDF</span>
                             <div class="w-10 h-10 icon-box flex items-center justify-center">
                                 <svg class="w-4 h-4 transform -rotate-45 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
@@ -3622,7 +3622,7 @@
                 // Hide download PDF if it's #
                 if(data.pdf && data.pdf !== '#') {
                     buttonsHTML += `
-                        <a href="${data.pdf}" download target="_blank" class="w-full max-w-sm group inline-flex items-center justify-between btn-cyber pl-6 pr-0 py-0 h-10 text-[10px] md:text-xs tracking-[0.2em] uppercase font-bold transition-all duration-300 cursor-none mt-4 shadow-[4px_4px_0px_var(--text-color)] hover:shadow-[2px_2px_0px_var(--text-color)] border border-[var(--text-color)]">
+                        <a href="${data.pdf}" target="_blank" rel="noopener" class="w-full max-w-sm group inline-flex items-center justify-between btn-cyber pl-6 pr-0 py-0 h-10 text-[10px] md:text-xs tracking-[0.2em] uppercase font-bold transition-all duration-300 cursor-none mt-4 shadow-[4px_4px_0px_var(--text-color)] hover:shadow-[2px_2px_0px_var(--text-color)] border border-[var(--text-color)]">
                             <span class="mr-4 text-center w-full">Download PDF</span>
                             <div class="w-10 h-10 icon-box flex flex-shrink-0 items-center justify-center">
                                 <svg class="w-3.5 h-3.5 transform -rotate-45 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>

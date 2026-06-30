@@ -37,58 +37,56 @@
         }
     </script>
     <style>
-        /* Gravity Daze palette (applied to the bunny/Figma structure) */
+        /* === Light theme (default) + Dark Fantasy Game-UI theme (.dark) === */
         :root {
-            --bg-color: #F8F8F8;
-            --text-color: #0A0A0A;
-            --border-color: rgba(0, 0, 0, 0.2);
-            --hover-bg: rgba(0, 0, 0, 0.05);
-            --pattern-color: rgba(0, 0, 0, 0.1);
+            --bg-color: #FBF8F2;
+            --text-color: #18140F;
+            --border-color: rgba(20, 16, 10, 0.14);
+            --hover-bg: rgba(20, 16, 10, 0.05);
+            --pattern-color: rgba(20, 16, 10, 0.07);
 
-            /* Light Mode Accents (Red & Cyber Yellow) */
-            --accent-primary: #FF003C;
-            --accent-secondary: #FFCC00;
-            --nav-edge-color: #FF9EBB; /* Cherry Blossom */
+            --accent-primary: #E8821A;
+            --accent-secondary: #1F9D5C;
+            --nav-edge-color: #E8821A;
             --nav-edge-style: solid;
 
-            /* Design-token palette repointed to the Gravity Daze colors */
-            --c-green: #FF003C;   /* primary action */
-            --c-blue: #FF9EBB;
-            --c-yellow: #FFCC00;
-            --c-purple: #FF9EBB;
-            --c-pink: #FF9EBB;
-            --c-orange: #FF003C;
-            --canvas: #0A0A0A;        /* dark canvas (fixed in both modes) */
-            --canvas-ink: #F8F8F8;
+            --c-green: #1F9D5C;
+            --c-blue: #1C8FA8;
+            --c-yellow: #E8821A;
+            --c-purple: #8A5CD6;
+            --c-pink: #D9558C;
+            --c-orange: #E05A1F;
+            --canvas: #18140F;
+            --canvas-ink: #FBF8F2;
             --surface-card: #FFFFFF;
         }
         .dark {
-            --bg-color: #0A0A0A;
-            --text-color: #F8F8F8;
-            --border-color: rgba(255, 255, 255, 0.15);
-            --hover-bg: rgba(255, 255, 255, 0.05);
-            --pattern-color: rgba(255, 255, 255, 0.1);
+            --bg-color: #0A0810;
+            --text-color: #F3EFE9;
+            --border-color: rgba(255, 255, 255, 0.16);
+            --hover-bg: rgba(255, 255, 255, 0.06);
+            --pattern-color: rgba(255, 255, 255, 0.06);
 
-            /* Dark Mode Accents (Neon Mint & Hot Pink) */
-            --accent-primary: #CCFF00;
-            --accent-secondary: #FF007B;
-            --nav-edge-color: #CCFF00; /* Neon Mint */
-            --nav-edge-style: dashed;
+            --accent-primary: #FFB23E;
+            --accent-secondary: #7CF29C;
+            --nav-edge-color: #FFB23E;
+            --nav-edge-style: solid;
 
-            --c-green: #CCFF00;   /* primary action */
-            --c-blue: #FF007B;
-            --c-yellow: #FFCC00;
-            --c-purple: #FF007B;
-            --c-pink: #FF007B;
-            --c-orange: #CCFF00;
-            --canvas: #0A0A0A;
-            --canvas-ink: #F8F8F8;
-            --surface-card: #1A1A1A;
+            --c-green: #7CF29C;
+            --c-blue: #6FD8E8;
+            --c-yellow: #FFB23E;
+            --c-purple: #B98CFF;
+            --c-pink: #FF8FB8;
+            --c-orange: #FF7A3D;
+            --canvas: #0A0810;
+            --canvas-ink: #F3EFE9;
+            --surface-card: #181421;
         }
 
         body {
             background-color: var(--bg-color);
-            background-image: radial-gradient(circle at center, var(--pattern-color) 1.5px, transparent 1.5px);
+            background-image:
+                radial-gradient(circle at center, var(--pattern-color) 1.5px, transparent 1.5px);
             background-size: 32px 32px;
             background-attachment: fixed;
             color: var(--text-color);
@@ -97,6 +95,29 @@
             cursor: none; 
             overflow-x: hidden;
         }
+        .dark body {
+            background-image:
+                radial-gradient(ellipse 80% 50% at 15% 0%, rgba(185,140,255,0.16), transparent 60%),
+                radial-gradient(ellipse 70% 50% at 100% 30%, rgba(111,216,232,0.10), transparent 60%),
+                radial-gradient(circle at center, var(--pattern-color) 1.5px, transparent 1.5px);
+            background-size: auto, auto, 32px 32px;
+        }
+
+        /* Light theme: soft warm paper tones per section */
+        #home { background: radial-gradient(ellipse 90% 60% at 25% 0%, rgba(232,130,26,0.08), transparent 55%), #FBF8F2 !important; }
+        #about { background: radial-gradient(ellipse 80% 60% at 80% 30%, rgba(232,130,26,0.07), transparent 60%), #FFFDF8 !important; }
+        #works { background: radial-gradient(ellipse 90% 60% at 30% 20%, rgba(31,157,92,0.07), transparent 60%), #F8FAF5 !important; }
+        #approach, #experience { background: radial-gradient(ellipse 80% 60% at 70% 10%, rgba(224,90,31,0.06), transparent 60%), #FFFAF5 !important; }
+        #skills, #resume { background: radial-gradient(ellipse 80% 60% at 25% 20%, rgba(28,143,168,0.06), transparent 60%), #F7FAFB !important; }
+        #showcase, #blog { background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(138,92,214,0.06), transparent 60%), #FAF8FC !important; }
+
+        /* Dark theme: atmospheric per-section glows matching the creature/cave reference art */
+        .dark #home { background: radial-gradient(ellipse 90% 60% at 25% 10%, rgba(168,110,230,0.30), transparent 55%), radial-gradient(ellipse 70% 50% at 90% 20%, rgba(99,190,255,0.18), transparent 60%), #110D1C !important; }
+        .dark #about { background: radial-gradient(ellipse 80% 60% at 80% 30%, rgba(255,140,60,0.14), transparent 60%), #1B130F !important; }
+        .dark #works { background: radial-gradient(ellipse 90% 60% at 30% 20%, rgba(124,242,156,0.16), transparent 60%), radial-gradient(ellipse 70% 50% at 90% 70%, rgba(124,242,156,0.10), transparent 55%), #0E1A14 !important; }
+        .dark #approach, .dark #experience { background: radial-gradient(ellipse 80% 60% at 70% 10%, rgba(255,122,61,0.14), transparent 60%), #19120F !important; }
+        .dark #skills, .dark #resume { background: radial-gradient(ellipse 80% 60% at 25% 20%, rgba(111,216,232,0.16), transparent 60%), radial-gradient(ellipse 70% 50% at 90% 80%, rgba(255,143,184,0.12), transparent 55%), #0E1420 !important; }
+        .dark #showcase, .dark #blog { background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(185,140,255,0.14), transparent 60%), #110D1A !important; }
 
         /* Scanline Overlay for Game UI Feel */
         .scanlines {
@@ -117,20 +138,20 @@
             border-color: var(--border-color);
         }
 
-        /* Modern Custom Scrollbar (NTE/ZZZ Style) */
+        /* Modern Custom Scrollbar */
         :root {
             --sb-track: var(--bg-color);
-            --sb-thumb-color: #FF003C; /* Red */
-            --sb-thumb-hover: #D60032;
-            --sb-arrow-up: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF003C' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M6 14l6-6 6 6'/></svg>");
-            --sb-arrow-down: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF003C' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M6 10l6 6 6-6'/></svg>");
+            --sb-thumb-color: #E8821A;
+            --sb-thumb-hover: #C96E12;
+            --sb-arrow-up: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E8821A' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M6 14l6-6 6 6'/></svg>");
+            --sb-arrow-down: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E8821A' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M6 10l6 6 6-6'/></svg>");
         }
         .dark {
-            --sb-track: #1A1A1A;
-            --sb-thumb-color: #CCFF00; /* Neon mint */
-            --sb-thumb-hover: #B8E600;
-            --sb-arrow-up: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23CCFF00' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M6 14l6-6 6 6'/></svg>");
-            --sb-arrow-down: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23CCFF00' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M6 10l6 6 6-6'/></svg>");
+            --sb-track: #15111C;
+            --sb-thumb-color: #FFB23E;
+            --sb-thumb-hover: #FFC766;
+            --sb-arrow-up: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FFB23E' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M6 14l6-6 6 6'/></svg>");
+            --sb-arrow-down: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FFB23E' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M6 10l6 6 6-6'/></svg>");
         }
 
         ::-webkit-scrollbar {
@@ -763,11 +784,11 @@
         section h3 span:first-child { color: var(--accent-primary) !important; -webkit-text-stroke: 0 !important; }
         #approach h3 span:first-child, #resume h3 span:first-child, #showcase h3 span:first-child { color: var(--c-green) !important; }
 
-        /* 6. Project / content cards — clean Figma panels */
+        /* 6. Project / content cards — glowing lantern-lit panels */
         .game-card {
             border: 1.5px solid var(--border-color) !important;
             background: var(--surface-card) !important;
-            box-shadow: 0 10px 30px -16px rgba(0,0,0,0.35) !important;
+            box-shadow: 0 10px 36px -14px rgba(0,0,0,0.55) !important;
             transform: none !important;
             margin: 1.5rem 0 !important;
             border-radius: 20px !important;
@@ -780,7 +801,7 @@
         .game-card:nth-child(even) { transform: none !important; }
         .game-card:hover {
             transform: translateY(-6px) !important;
-            box-shadow: 0 26px 50px -20px rgba(0,0,0,0.45) !important;
+            box-shadow: 0 30px 60px -20px rgba(0,0,0,0.65), 0 0 40px -8px var(--accent-primary) !important;
             border-color: var(--accent-primary) !important;
             z-index: 50;
         }
@@ -820,13 +841,13 @@
             letter-spacing: 0.04em;
         }
 
-        /* 9. Hero title — heavy rounded, readable on dark canvas */
+        /* 9. Hero title — bold, glowing on the dark atmospheric canvas */
         .editorial-title {
             font-family: 'Fredoka', sans-serif !important;
             font-size: clamp(4rem, 14vw, 13rem) !important;
             font-weight: 700 !important;
             transform: none;
-            text-shadow: 0 6px 30px rgba(0,0,0,0.45);
+            text-shadow: 0 6px 40px rgba(0,0,0,0.6), 0 0 60px rgba(255,178,62,0.18);
             -webkit-text-stroke: 0 !important;
             color: var(--canvas-ink) !important;
             line-height: 0.9 !important;
@@ -835,7 +856,7 @@
         }
         .text-outline {
             -webkit-text-stroke: 2.5px var(--c-green) !important;
-            text-shadow: none !important;
+            text-shadow: 0 0 24px rgba(124,242,156,0.35) !important;
             color: transparent !important;
         }
 

@@ -4189,5 +4189,321 @@
         // Initialize dashboard triggers
         setupAdminDashboard();
     </script>
+<!-- ============================================================
+     PASTE THIS WHOLE BLOCK RIGHT BEFORE </body>
+     Only changes COLORS. No HTML structure, classes, or IDs
+     are touched. It works by overriding the CSS custom
+     properties your page already reads from
+     (--bg-color, --text-color, --accent-primary, etc.) and by
+     syncing a data-theme attribute to your existing .dark
+     toggle so the [data-theme="dark"|"light"] rules apply.
+     ============================================================ -->
+<style>
+  /* ---------- DARK THEME : 60 / 30 / 10 ---------- */
+  html[data-theme="dark"] {
+    /* raw palette tokens */
+    --heritage-canvas:  #0B0E14;   /* 60% background            */
+    --heritage-surface: #3B2D54;   /* 30% containers/structure  */
+    --heritage-gold:    #E5C158;   /* 10% accents/interactive   */
+    --heritage-cyan:    #7DF9FF;   /* technical labels/badges   */
+    --heritage-text:    #E2E8F0;   /* primary text              */
+
+    /* map onto the variables your existing markup already consumes */
+    --bg-color:        var(--heritage-canvas)  !important;
+    --text-color:      var(--heritage-text)    !important;
+    --accent-primary:  var(--heritage-gold)    !important;
+    --accent-secondary:var(--heritage-cyan)    !important;
+    --nav-edge-color:  var(--heritage-gold)    !important;
+    --border-color:    rgba(229,193,88,0.22)   !important;
+    --hover-bg:        rgba(59,45,84,0.45)     !important;
+    --pattern-color:   rgba(229,193,88,0.06)   !important;
+    --surface-card:    var(--heritage-surface) !important;
+    --canvas:          var(--heritage-canvas)  !important;
+    --canvas-ink:      var(--heritage-text)    !important;
+
+    --c-yellow: var(--heritage-gold) !important;
+    --c-blue:   var(--heritage-cyan) !important;
+    --c-green:  var(--heritage-cyan) !important;
+    --c-purple: var(--heritage-surface) !important;
+    --c-pink:   var(--heritage-gold) !important;
+    --c-orange: var(--heritage-gold) !important;
+
+    --sb-track: var(--heritage-canvas) !important;
+    --sb-thumb-color: var(--heritage-gold) !important;
+    --sb-thumb-hover: #F2D488 !important;
+  }
+
+  /* ---------- LIGHT THEME : 60 / 30 / 10 ---------- */
+  html[data-theme="light"] {
+    --heritage-canvas:  #FFFDF0;   /* 60% background            */
+    --heritage-surface: #D29A32;   /* 30% containers/structure  */
+    --heritage-ink:     #1E2530;   /* 10% accents/interactive   */
+    --heritage-text:    #2C3E50;   /* primary text              */
+
+    --bg-color:        var(--heritage-canvas) !important;
+    --text-color:      var(--heritage-text)   !important;
+    --accent-primary:  var(--heritage-ink)    !important;
+    --accent-secondary:var(--heritage-surface)!important;
+    --nav-edge-color:  var(--heritage-ink)    !important;
+    --border-color:    rgba(30,37,48,0.18)    !important;
+    --hover-bg:        rgba(210,154,50,0.14)  !important;
+    --pattern-color:   rgba(30,37,48,0.05)    !important;
+    --surface-card:    #FFFFFF                !important;
+    --canvas:          var(--heritage-canvas) !important;
+    --canvas-ink:      var(--heritage-text)   !important;
+
+    --c-yellow: var(--heritage-surface) !important;
+    --c-blue:   var(--heritage-ink)     !important;
+    --c-green:  var(--heritage-ink)     !important;
+    --c-purple: var(--heritage-ink)     !important;
+    --c-pink:   var(--heritage-surface) !important;
+    --c-orange: var(--heritage-surface) !important;
+
+    --sb-track: var(--heritage-canvas) !important;
+    --sb-thumb-color: var(--heritage-ink) !important;
+    --sb-thumb-hover: #3A4656 !important;
+  }
+
+  /* ---------- Re-tint the per-section paper/glow backgrounds ----------
+     Your file hardcodes a unique background per section (#home, #about,
+     #works, ...) with !important. These rules override those with the
+     same 60/30/10 palette, keyed to the same IDs — no HTML touched. */
+  html[data-theme="dark"] #home,
+  html[data-theme="dark"] #about,
+  html[data-theme="dark"] #works,
+  html[data-theme="dark"] #approach,
+  html[data-theme="dark"] #experience,
+  html[data-theme="dark"] #skills,
+  html[data-theme="dark"] #showcase,
+  html[data-theme="dark"] #blog {
+    background:
+      radial-gradient(ellipse 80% 60% at 25% 10%, rgba(229,193,88,0.08), transparent 60%),
+      radial-gradient(ellipse 70% 50% at 90% 80%, rgba(123,86,168,0.30), transparent 60%),
+      var(--heritage-canvas) !important;
+  }
+  html[data-theme="dark"] #home,
+  html[data-theme="dark"] #resume {
+    background-color: var(--heritage-surface) !important;
+  }
+
+  html[data-theme="light"] #home,
+  html[data-theme="light"] #about,
+  html[data-theme="light"] #works,
+  html[data-theme="light"] #approach,
+  html[data-theme="light"] #experience,
+  html[data-theme="light"] #skills,
+  html[data-theme="light"] #showcase,
+  html[data-theme="light"] #blog {
+    background:
+      radial-gradient(ellipse 80% 60% at 25% 10%, rgba(210,154,50,0.10), transparent 60%),
+      var(--heritage-canvas) !important;
+  }
+  html[data-theme="light"] #home,
+  html[data-theme="light"] #resume {
+    background-color: var(--heritage-surface) !important;
+  }
+
+  /* smooth color cross-fade when the theme flips */
+  html[data-theme] body,
+  html[data-theme] section,
+  html[data-theme] .game-card,
+  html[data-theme] button,
+  html[data-theme] a {
+    transition: background-color .4s ease, border-color .4s ease, color .4s ease;
+  }
+</style>
+
+<script>
+  /* Keeps the new data-theme attribute in sync with your existing
+     .dark class / toggleTheme() so the CSS above activates.
+     Does not add any buttons or touch your existing DOM. */
+  (function () {
+    var root = document.documentElement;
+
+    function syncAttr() {
+      root.setAttribute('data-theme', root.classList.contains('dark') ? 'dark' : 'light');
+    }
+
+    syncAttr(); // set on load, matching whatever .dark state your existing script applied
+
+    // if your existing toggleTheme() exists, wrap it so the attribute stays in sync
+    if (typeof window.toggleTheme === 'function') {
+      var original = window.toggleTheme;
+      window.toggleTheme = function () {
+        original();
+        syncAttr();
+      };
+    }
+
+    // fallback: watch for any other code toggling the .dark class directly
+    new MutationObserver(syncAttr).observe(root, { attributes: true, attributeFilter: ['class'] });
+  })();
+</script>
+
+<!-- ============================================================
+     ROYAL / INDIAN-HERITAGE DECORATIVE LAYER
+     Paste this whole block right after the theme-palette block
+     (or anywhere before </body>). It only ADDS new elements —
+     a decorative floral divider on every section boundary, a
+     dancing-Ganesha corner motif, and a floating lotus theme
+     toggle. Nothing in your existing HTML is modified.
+     ============================================================ -->
+<style>
+  :root {
+    --divider-gold: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%2764%27%20height%3D%2718%27%20viewBox%3D%270%200%2064%2018%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%23E5C158%27%20stroke-width%3D%271%27%3E%3Cpath%20d%3D%27M0%209%20L6%209%27/%3E%3Cpath%20d%3D%27M58%209%20L64%209%27/%3E%3Cpath%20d%3D%27M16%203%20L22%209%20L16%2015%20L10%209%20Z%27/%3E%3Ccircle%20cx%3D%2732%27%20cy%3D%279%27%20r%3D%273.2%27/%3E%3Cpath%20d%3D%27M48%203%20L54%209%20L48%2015%20L42%209%20Z%27/%3E%3Cpath%20d%3D%27M32%205.8%20L32%203%20M32%2012.2%20L32%2015%27%20stroke-width%3D%270.8%27/%3E%3C/g%3E%3C/svg%3E");
+    --divider-ink: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%2764%27%20height%3D%2718%27%20viewBox%3D%270%200%2064%2018%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%231E2530%27%20stroke-width%3D%271%27%3E%3Cpath%20d%3D%27M0%209%20L6%209%27/%3E%3Cpath%20d%3D%27M58%209%20L64%209%27/%3E%3Cpath%20d%3D%27M16%203%20L22%209%20L16%2015%20L10%209%20Z%27/%3E%3Ccircle%20cx%3D%2732%27%20cy%3D%279%27%20r%3D%273.2%27/%3E%3Cpath%20d%3D%27M48%203%20L54%209%20L48%2015%20L42%209%20Z%27/%3E%3Cpath%20d%3D%27M32%205.8%20L32%203%20M32%2012.2%20L32%2015%27%20stroke-width%3D%270.8%27/%3E%3C/g%3E%3C/svg%3E");
+  }
+  html[data-theme="dark"]  { --heritage-divider: var(--divider-gold); }
+  html[data-theme="light"] { --heritage-divider: var(--divider-ink); }
+
+  /* ---- Floral geometric divider strip at the bottom of every section ---- */
+  section[id]::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 14px;
+    background-image: var(--heritage-divider, var(--divider-gold));
+    background-repeat: repeat-x;
+    background-position: center;
+    background-size: auto 100%;
+    opacity: .55;
+    pointer-events: none;
+  }
+
+  /* ---- Dancing Ganesha corner motif (fixed, low-opacity, decorative) ---- */
+  #royal-ganesha-motif {
+    position: fixed;
+    right: -18px;
+    bottom: -26px;
+    width: 200px;
+    height: 270px;
+    color: var(--accent-primary, #E5C158);
+    opacity: .09;
+    pointer-events: none;
+    z-index: 1;
+    transition: color .4s ease, opacity .4s ease;
+  }
+  #royal-ganesha-motif svg { width: 100%; height: 100%; display: block; }
+  @media (max-width: 768px) {
+    #royal-ganesha-motif { width: 120px; height: 165px; opacity: .07; }
+  }
+
+  /* ---- Floating lotus theme-toggle button ---- */
+  #royal-lotus-toggle {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface-card, var(--bg-color));
+    border: 1.5px solid var(--accent-primary, #E5C158);
+    color: var(--accent-primary, #E5C158);
+    cursor: pointer;
+    z-index: 200;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.25);
+    transition: transform .3s ease, box-shadow .3s ease,
+                background-color .4s ease, color .4s ease, border-color .4s ease;
+  }
+  #royal-lotus-toggle:hover { transform: scale(1.08) rotate(6deg); }
+  #royal-lotus-toggle svg { width: 26px; height: 26px; }
+  #royal-lotus-toggle.bloom svg { animation: royal-lotus-bloom .5s ease; }
+  @keyframes royal-lotus-bloom {
+    0%   { transform: scale(.8) rotate(-10deg); }
+    60%  { transform: scale(1.2) rotate(6deg); }
+    100% { transform: scale(1) rotate(0deg); }
+  }
+  @media (max-width: 640px) {
+    #royal-lotus-toggle { bottom: 16px; right: 16px; width: 46px; height: 46px; }
+  }
+</style>
+
+<!-- Dancing Ganesha silhouette (original stylized line-art, purely decorative) -->
+<div id="royal-ganesha-motif" aria-hidden="true">
+  <svg viewBox="0 0 220 300" xmlns="http://www.w3.org/2000/svg" fill="none"
+       stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <!-- crown -->
+    <path d="M110 8 L118 24 L102 24 Z"/>
+    <circle cx="110" cy="6" r="3"/>
+    <!-- head -->
+    <ellipse cx="110" cy="55" rx="32" ry="27"/>
+    <!-- ears -->
+    <path d="M80 42 C50 30 44 66 66 78 C58 60 66 48 80 42 Z"/>
+    <path d="M140 42 C170 30 176 66 154 78 C162 60 154 48 140 42 Z"/>
+    <!-- trunk -->
+    <path d="M110 80 C104 102 122 112 116 132 C112 146 96 148 92 134"/>
+    <!-- torso -->
+    <path d="M92 88 C82 120 84 150 96 176 L124 176 C136 150 138 120 128 88"/>
+    <!-- dhoti flare -->
+    <path d="M96 176 C80 190 66 206 58 228"/>
+    <path d="M124 176 C140 190 154 206 162 228"/>
+    <!-- raised right arm + hand -->
+    <path d="M128 100 C150 90 168 72 172 50"/>
+    <circle cx="174" cy="46" r="5"/>
+    <!-- lower right arm + hand -->
+    <path d="M132 130 C154 132 170 148 176 168"/>
+    <circle cx="178" cy="172" r="5"/>
+    <!-- raised left arm + hand -->
+    <path d="M92 100 C70 90 52 72 48 50"/>
+    <circle cx="46" cy="46" r="5"/>
+    <!-- lower left arm + hand -->
+    <path d="M88 130 C66 132 50 148 44 168"/>
+    <circle cx="42" cy="172" r="5"/>
+    <!-- standing leg -->
+    <path d="M100 176 C98 210 100 240 96 268"/>
+    <path d="M84 268 L108 268"/>
+    <!-- raised dancing leg -->
+    <path d="M120 176 C142 186 158 176 168 158"/>
+    <path d="M160 150 L176 160"/>
+    <!-- mouse companion -->
+    <ellipse cx="150" cy="272" rx="14" ry="9"/>
+    <path d="M162 268 L172 262"/>
+    <path d="M138 268 L128 262"/>
+    <path d="M160 270 C168 276 176 274 180 268"/>
+  </svg>
+</div>
+
+<!-- Floating lotus theme toggle -->
+<button id="royal-lotus-toggle" type="button" aria-label="Toggle color theme" title="Toggle light / dark theme">
+  <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+    <path d="M24 44 C10 38 8 24 12 14 C16 22 20 28 24 30 C28 28 32 22 36 14 C40 24 38 38 24 44 Z"/>
+    <path d="M24 30 C18 20 14 10 16 2 C22 8 24 18 24 26 C24 18 26 8 32 2 C34 10 30 20 24 30 Z" opacity="0.85"/>
+    <path d="M6 20 C10 16 16 16 20 20 C16 24 10 24 6 20 Z" opacity="0.7"/>
+    <path d="M42 20 C38 16 32 16 28 20 C32 24 38 24 42 20 Z" opacity="0.7"/>
+  </svg>
+</button>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+
+    function syncAttr() {
+      root.setAttribute('data-theme', root.classList.contains('dark') ? 'dark' : 'light');
+    }
+    syncAttr();
+
+    var lotus = document.getElementById('royal-lotus-toggle');
+    if (lotus) {
+      lotus.addEventListener('click', function () {
+        if (typeof window.toggleTheme === 'function') {
+          window.toggleTheme(); // reuse your existing toggle logic + localStorage key
+        } else {
+          root.classList.toggle('dark');
+        }
+        syncAttr();
+        lotus.classList.remove('bloom');
+        void lotus.offsetWidth;
+        lotus.classList.add('bloom');
+      });
+    }
+
+    // stay in sync if the navbar toggle (or anything else) flips .dark directly
+    new MutationObserver(syncAttr).observe(root, { attributes: true, attributeFilter: ['class'] });
+  })();
+</script>
+
 </body>
 </html>

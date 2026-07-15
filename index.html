@@ -398,8 +398,8 @@
         }
         /* Style for tags with text-color background */
         .cyber-tag.tag-primary {
-            background: var(--text-color);
-            color: var(--bg-color);
+            background: var(--lime) !important;
+            color: #0A0A0A !important;
             border: none;
         }
         /* Style for tags with explicit border and background */
@@ -597,10 +597,9 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
+        /* Hover spotlight reveal disabled — it rendered as a solid blob over the marquee */
         .marquee-mask {
-            clip-path: circle(120px at var(--mouse-x, -150px) var(--mouse-y, -150px));
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            display: none !important;
         }
 
         /* Cinematic Sequence Effect */
@@ -835,7 +834,7 @@
             font-family: 'JetBrains Mono', monospace !important;
             display: inline-block;
         }
-        .cyber-tag.tag-primary { background: var(--accent-primary) !important; color: #0c0c0c !important; border-color: var(--accent-primary) !important; }
+        .cyber-tag.tag-primary { background: var(--lime) !important; color: #0A0A0A !important; border-color: var(--lime) !important; }
 
         /* 8. Works category dividers — Figma layer pills */
         #works .text-center.font-bold {
@@ -1889,7 +1888,7 @@
                 <!-- Mobile Spacer / Desktop Content Area -->
                 <div class="w-full md:w-1/2 pl-20 md:pl-0 md:pr-16 flex justify-start md:justify-end text-left md:text-right order-2 md:order-1">
                     <div class="ticket-box p-6 transform -rotate-1 group-hover:rotate-0 transition-transform w-full max-w-sm">
-                        <div class="absolute -top-5 right-4 md:right-auto md:left-4 bg-[var(--accent-secondary)] text-[var(--text-color)] px-3 py-1 border-[3px] border-[var(--text-color)] text-[10px] font-doto font-bold uppercase shadow-[2px_2px_0px_var(--text-color)] transform rotate-3">Contract</div>
+                        <div class="absolute -top-5 right-4 md:right-auto md:left-4 bg-[#CCFF00] text-[#0A0A0A] px-3 py-1 border-[3px] border-[var(--text-color)] text-[10px] font-doto font-bold uppercase shadow-[2px_2px_0px_var(--text-color)] transform rotate-3">Contract</div>
                         <h4 class="text-2xl font-heading font-black uppercase mb-1 mt-2">Vault Productions</h4>
                         <span class="text-[10px] font-doto font-bold text-[var(--accent-primary)] uppercase mb-4 block border-b-2 border-dashed border-[var(--border-color)] pb-2">Technical UI Designer</span>
                         <ul class="text-xs font-bold space-y-2 list-none text-left font-sans">
@@ -4319,16 +4318,20 @@
   }
 
   html[data-theme="light"] #about,
-  html[data-theme="light"] #approach,
   html[data-theme="light"] #experience,
-  html[data-theme="light"] #showcase,
   html[data-theme="light"] #blog {
     background: #F6F6F4 !important;
   }
   html[data-theme="light"] #works,
-  html[data-theme="light"] #skills,
-  html[data-theme="light"] #resume {
+  html[data-theme="light"] #skills {
     background: #EEEEEC !important;
+  }
+  /* Approach / Documentation / Showcase are always-dark "canvas" feature sections
+     (white text lives on them), so keep them dark in light mode too. */
+  html[data-theme="light"] #approach,
+  html[data-theme="light"] #resume,
+  html[data-theme="light"] #showcase {
+    background: #0B0B0B !important;
   }
   html[data-theme="light"] #home {
     background:

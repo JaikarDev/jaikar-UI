@@ -714,7 +714,9 @@
         #showcase p, #showcase h2, #showcase h3, #showcase h4, #showcase span, #showcase li {
             color: var(--canvas-ink) !important;
         }
-        #approach .text-accent, #resume .text-accent, #showcase .text-accent { color: var(--c-green) !important; }
+        /* These are always-dark canvas sections in both themes, so their accent
+           text must stay lime (not the theme accent, which is dark ink in light mode). */
+        #approach .text-accent, #resume .text-accent, #showcase .text-accent { color: var(--lime) !important; }
         /* Resume CTA — hand-drawn doodle-circle button (white scribble on the dark canvas) */
         #resume .btn-cyber {
             background: transparent !important;
@@ -803,7 +805,7 @@
             position: relative; z-index: 10;
         }
         section h3 span:first-child { color: var(--accent-primary) !important; -webkit-text-stroke: 0 !important; }
-        #approach h3 span:first-child, #resume h3 span:first-child, #showcase h3 span:first-child { color: var(--c-green) !important; }
+        #approach h3 span:first-child, #resume h3 span:first-child, #showcase h3 span:first-child { color: var(--lime) !important; }
 
         /* 6. Project / content cards — glowing lantern-lit panels */
         .game-card {
@@ -2124,7 +2126,7 @@
                     
                     <!-- Styled to match the uploaded reference exactly -->
                     <h3 class="text-4xl md:text-6xl lg:text-7xl font-doto font-bold tracking-widest uppercase leading-tight mb-8">
-                        <span class="text-[var(--accent-primary)] dark:text-[#CCFF00]">JAIKAR INTERACTIVE</span> <br>
+                        <span class="text-[#CCFF00]">JAIKAR INTERACTIVE</span> <br>
                         <span class="font-doto italic font-normal capitalize text-[var(--text-color)] dark:text-[#F8F8F8]">Systems Gallery</span>
                     </h3>
                     

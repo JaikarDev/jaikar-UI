@@ -597,9 +597,19 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        /* Hover spotlight reveal disabled — it rendered as a solid blob over the marquee */
+        /* Hover spotlight: a lime "magnifier" disc that follows the cursor and
+           reveals the marquee words in ink. Works identically on dark + light. */
         .marquee-mask {
-            display: none !important;
+            background: var(--lime) !important;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            clip-path: circle(95px at var(--mouse-x, -300px) var(--mouse-y, -300px));
+            -webkit-clip-path: circle(95px at var(--mouse-x, -300px) var(--mouse-y, -300px));
+        }
+        .marquee-mask span {
+            color: #0A0A0A !important;
+            -webkit-text-fill-color: #0A0A0A !important;
+            background: none !important;
         }
 
         /* Cinematic Sequence Effect */

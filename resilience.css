@@ -1,0 +1,2 @@
+/* Core content remains visible even if optional motion JavaScript is blocked. */
+.reveal{opacity:1;transform:none}

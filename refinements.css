@@ -1,0 +1,9 @@
+/* A quieter, project-led finish: fewer genre effects, more authored restraint. */
+.hero h1 em,.section-head em,.contact em{color:var(--gold);-webkit-text-stroke:0;text-shadow:none}
+.game-btn{clip-path:none}
+.cursor-glow{background:radial-gradient(circle,rgba(255,215,0,.035),transparent 65%)}
+.contact-word{position:absolute;font:700 32vw/.7 var(--display);letter-spacing:-2vw;color:transparent;-webkit-text-stroke:1px rgba(226,232,240,.055);user-select:none;transform:translateY(-2vh)}
+.noise{opacity:.022}
+.glyph{font-size:36px;color:var(--text);opacity:.8}
+.pipeline article:hover{transform:translateY(-4px)}
+.project-info h3{letter-spacing:-1px}

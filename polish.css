@@ -12,13 +12,11 @@ html[data-theme="light"] .hero{color:#fff!important}html[data-theme="light"] .he
 .resume-options{display:grid;grid-template-columns:1fr 1fr;gap:3px}
 .resume-card{min-height:330px;background:#0b0d0c;border:1px solid var(--r8-line);padding:34px;display:flex;flex-direction:column;color:#fff;transition:transform .3s ease,border-color .3s ease,background .3s ease}
 .resume-card:hover,.resume-card:focus-visible{border-color:var(--r8-green);transform:translateY(-4px)}
-.resume-card.preferred{border-top:4px solid var(--r8-green);background:linear-gradient(145deg,#11170e,#090b0a)}
 .resume-card span{font:700 9px var(--display);letter-spacing:1.5px;color:var(--r8-green)}
 .resume-card h4{font:650 32px/.95 Inter,sans-serif;margin:45px 0 18px}
 .resume-card p{color:#a8aca8;font-size:12px;line-height:1.7}
 .resume-card b{margin-top:auto;font:700 10px var(--display);letter-spacing:1.4px}
 html[data-theme="light"] .resume-card{background:#fff;color:#111;border-color:rgba(0,0,0,.16)}
-html[data-theme="light"] .resume-card.preferred{background:#f8fff4}
 html[data-theme="light"] .resume-intro h3 em{-webkit-text-stroke-color:#111}
 html[data-theme="light"] .resume-intro p,html[data-theme="light"] .resume-card p{color:#5c625c}
 @media(max-width:900px){.resume-vault{grid-template-columns:1fr}.resume-options{grid-template-columns:1fr 1fr}}

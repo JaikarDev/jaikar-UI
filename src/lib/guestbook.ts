@@ -43,7 +43,33 @@ export function rng(seed: number) {
   };
 }
 
+const LOCAL_STAMPS_KEY = "jp-guestbook-stamps";
+
+function hasSupabaseConfig() {
+  return Boolean(
+    import.meta.env["VITE_SUPABASE_URL"] &&
+      import.meta.env["VITE_SUPABASE_PUBLISHABLE_KEY"],
+  );
+}
+
+function readLocalStamps(): Stamp[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const parsed = JSON.parse(window.localStorage.getItem(LOCAL_STAMPS_KEY) ?? "[]");
+    return Array.isArray(parsed) ? (parsed as Stamp[]) : [];
+  } catch {
+    return [];
+  }
+}
+
+function writeLocalStamps(stamps: Stamp[]) {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem(LOCAL_STAMPS_KEY, JSON.stringify(stamps.slice(0, 200)));
+}
+
 export async function fetchStamps(): Promise<Stamp[]> {
+  if (!hasSupabaseConfig()) return readLocalStamps();
+
   const { data, error } = await supabase
     .from("guestbook_stamps")
     .select("id,name,note,shape,hue,seed,created_at")
@@ -59,6 +85,23 @@ export async function addStamp(input: {
   shape: number;
   hue: number;
 }): Promise<Stamp> {
+  if (!hasSupabaseConfig()) {
+    const stamp: Stamp = {
+      id:
+        typeof crypto !== "undefined" && "randomUUID" in crypto
+          ? crypto.randomUUID()
+          : `local-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+      name: input.name,
+      note: input.note,
+      shape: input.shape,
+      hue: input.hue,
+      seed: Math.floor(Math.random() * 100000),
+      created_at: new Date().toISOString(),
+    };
+    writeLocalStamps([stamp, ...readLocalStamps()]);
+    return stamp;
+  }
+
   const { data, error } = await supabase
     .from("guestbook_stamps")
     .insert({

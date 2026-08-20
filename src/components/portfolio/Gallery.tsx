@@ -168,7 +168,7 @@ export function Gallery() {
                 <img
                   src={t.src}
                   alt={t.alt}
-                  loading="lazy"
+                  loading="eager"
                   className="motion-media h-full w-full object-cover opacity-80 transition group-hover:scale-105 group-hover:opacity-100"
                 />
               </a>

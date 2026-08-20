@@ -1,14 +1,15 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useChat } from "@ai-sdk/react";
-import { DefaultChatTransport, type UIMessage } from "ai";
-import { useServerFn } from "@tanstack/react-start";
-import { toast } from "sonner";
+import type { UIMessage } from "ai";
 import crtHead from "@/assets/crt-head.png.asset.json";
-import { projects } from "@/data/portfolio";
 import {
-  clearAssistantHistory,
-  getAssistantHistory,
-} from "@/lib/assistant.functions";
+  articles,
+  capabilities,
+  contact,
+  dailyToolkit,
+  experience,
+  projects,
+  resumes,
+} from "@/data/portfolio";
 import { feedback } from "@/lib/ui-sound";
 import {
   Conversation,
@@ -26,11 +27,14 @@ import {
   PromptInputSubmit,
   PromptInputTextarea,
 } from "@/components/ai-elements/prompt-input";
-import { Shimmer } from "@/components/ai-elements/shimmer";
 
 export const ASSISTANT_EVENT = "jp-assistant-open";
 
-/** Open the assistant, optionally focused on a case study. */
+type LocalMessage = UIMessage & {
+  role: "user" | "assistant";
+  parts: [{ type: "text"; text: string }];
+};
+
 export function openAssistant(projectSlug?: string) {
   window.dispatchEvent(
     new CustomEvent(ASSISTANT_EVENT, { detail: { projectSlug: projectSlug ?? null } }),
@@ -40,45 +44,156 @@ export function openAssistant(projectSlug?: string) {
 const GENERAL_PROMPTS = [
   "What does Jaikar actually do?",
   "Show me his strongest shipped game UI work",
-  "I'm hiring for product / UX — what should I look at?",
+  "I'm hiring for product / UX - what should I look at?",
   "How does he take Figma into Unreal?",
 ];
 
-function sessionKey() {
-  const existing = localStorage.getItem("jp-assist-session");
-  if (existing) return existing;
-  const next = `s_${Math.random().toString(36).slice(2)}${Date.now().toString(36)}`;
-  localStorage.setItem("jp-assist-session", next);
-  return next;
+function message(role: "user" | "assistant", text: string): LocalMessage {
+  return {
+    id: `m_${Date.now().toString(36)}_${Math.random().toString(36).slice(2)}`,
+    role,
+    parts: [{ type: "text", text }],
+  } as LocalMessage;
 }
 
-function toUiMessages(
-  rows: { id: string; role: "user" | "assistant"; content: string }[],
-): UIMessage[] {
-  return rows.map((row) => ({
-    id: row.id,
-    role: row.role,
-    parts: [{ type: "text", text: row.content }],
-  })) as UIMessage[];
+function normalize(value: string) {
+  return value.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+}
+
+function projectByQuestion(question: string, focusSlug: string | null) {
+  const q = normalize(question);
+  const aliases: Record<string, string[]> = {
+    "the-dark-arrival": ["dark arrival", "steam", "journal", "investigator", "diegetic"],
+    "suite-13": ["suite 13", "suite", "thriller", "hud", "tension"],
+    "customized-angel": ["customized angel", "angel", "timeline", "deduction", "itch"],
+    "find-the-octopus": ["octopus", "play store", "live ops", "vip", "power up"],
+    "tale-of-ronin": ["ronin", "sumi", "ink"],
+    "find-the-dog": ["dog", "mobile progression"],
+    "coffee-bean": ["coffee", "ordering", "product ui"],
+    "smart-guardian": ["smart guardian", "elder", "fall", "health", "emergency"],
+  };
+  const direct = projects.find((project) =>
+    [project.title, project.id, ...(aliases[project.id] ?? [])].some((term) =>
+      q.includes(normalize(term)),
+    ),
+  );
+  return direct ?? projects.find((project) => project.id === focusSlug);
+}
+
+function projectAnswer(project: (typeof projects)[number]) {
+  return [
+    `${project.title} - ${project.kind} / ${project.status}`,
+    "",
+    project.description,
+    "",
+    `Problem: ${project.study.problem}`,
+    `Decision: ${project.study.decision}`,
+    `Outcome: ${project.study.outcome}`,
+    "",
+    `Role: ${project.details.role}`,
+    `Built with: ${project.details.engine}`,
+    "",
+    ...project.impact.map((impact) => `- ${impact.label}: ${impact.value} - ${impact.detail}`),
+    "",
+    ...project.links.map((link) => `${link.label}: ${link.href}`),
+  ].join("\n");
+}
+
+function answer(question: string, focusSlug: string | null) {
+  const q = normalize(question);
+  const focused = projectByQuestion(question, focusSlug);
+  if (focused) return projectAnswer(focused);
+
+  if (q.includes("product") || q.includes("ux")) {
+    const picks = projects.filter((project) => project.category === "product");
+    return [
+      "For product / UX roles, start with these:",
+      "",
+      ...picks.map(
+        (project) =>
+          `- ${project.title}: ${project.description} Proof: ${project.study.proof.join("; ")}`,
+      ),
+      "",
+      `Product resume: ${resumes.find((resume) => resume.title.includes("PRODUCT"))?.href}`,
+    ].join("\n");
+  }
+
+  if (q.includes("game") || q.includes("ui") || q.includes("shipped") || q.includes("strong")) {
+    const picks = projects.filter((project) => project.category === "game").slice(0, 4);
+    return [
+      "Strongest game UI work:",
+      "",
+      ...picks.map(
+        (project) =>
+          `- ${project.title}: ${project.kind}, ${project.status}. ${project.study.outcome}`,
+      ),
+      "",
+      `Game UI resume: ${resumes.find((resume) => resume.title.includes("GAME"))?.href}`,
+    ].join("\n");
+  }
+
+  if (q.includes("figma") || q.includes("unreal") || q.includes("engine") || q.includes("umg")) {
+    return [
+      "Jaikar works from Figma into engine by designing the flow and states first, then building modular UI systems in UE5 UMG / Blueprint or Unity uGUI.",
+      "The clearest proof is The Dark Arrival: a diegetic 3D Investigator Journal where menus, HUD, and journal share one UMG component system.",
+      "Suite 13 also shows HUD logic and motion specs captured in Figma for UE5 implementation.",
+    ].join("\n\n");
+  }
+
+  if (q.includes("experience") || q.includes("work history")) {
+    return experience
+      .map((item) =>
+        [
+          `${item.company} - ${item.role}`,
+          `${item.period} / ${item.meta}`,
+          item.summary,
+          ...item.bullets.slice(0, 3).map((bullet) => `- ${bullet}`),
+        ]
+          .filter(Boolean)
+          .join("\n"),
+      )
+      .join("\n\n");
+  }
+
+  if (q.includes("resume") || q.includes("contact") || q.includes("email") || q.includes("hire")) {
+    return [
+      `Email: ${contact.email}`,
+      `LinkedIn: ${contact.linkedin}`,
+      "",
+      ...resumes.map((resume) => `${resume.title}: ${resume.href}`),
+    ].join("\n");
+  }
+
+  if (q.includes("tool") || q.includes("software") || q.includes("skill")) {
+    return [
+      `Daily toolkit: ${dailyToolkit.join(", ")}`,
+      "",
+      ...capabilities.map((capability) => `- ${capability.title}: ${capability.chips.join(", ")}`),
+    ].join("\n");
+  }
+
+  if (q.includes("writing") || q.includes("article")) {
+    return articles
+      .map((article) => `${article.title} - ${article.body}\n${article.href}`)
+      .join("\n\n");
+  }
+
+  return [
+    "JP-01 reads from Jaikar's portfolio case files only.",
+    "Ask about The Dark Arrival, Suite 13, Customized Angel, Find the Octopus, Smart Guardian, product UX work, tools, resumes, or contact.",
+    `For direct contact: ${contact.email}`,
+  ].join("\n");
 }
 
 export function Assistant() {
   const [open, setOpen] = useState(false);
   const [focusSlug, setFocusSlug] = useState<string | null>(null);
-  const [session, setSession] = useState<string>("");
-  const [history, setHistory] = useState<UIMessage[] | null>(null);
+  const [messages, setMessages] = useState<LocalMessage[]>([]);
   const [input, setInput] = useState("");
-  const slugRef = useRef<string | null>(null);
-  const sessionRef = useRef("");
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-  const loadHistory = useServerFn(getAssistantHistory);
-  const wipeHistory = useServerFn(clearAssistantHistory);
-
-  slugRef.current = focusSlug;
-  sessionRef.current = session;
 
   const focusProject = focusSlug
-    ? projects.find((p) => p.id === focusSlug)
+    ? projects.find((project) => project.id === focusSlug)
     : undefined;
 
   const suggestions = useMemo(() => {
@@ -91,53 +206,6 @@ export function Assistant() {
     ];
   }, [focusProject]);
 
-  const transport = useMemo(
-    () =>
-      new DefaultChatTransport<UIMessage>({
-        api: "/api/chat",
-        prepareSendMessagesRequest: ({ messages, body }) => ({
-          body: {
-            ...body,
-            messages,
-            sessionId: sessionRef.current,
-            projectSlug: slugRef.current,
-          },
-        }),
-      }),
-    [],
-  );
-
-  const { messages, sendMessage, setMessages, status, stop } = useChat({
-    id: "jp-assistant",
-    transport,
-    onError: (error) =>
-      toast.error("ASSISTANT OFFLINE", {
-        description: error.message.slice(0, 180) || "The link dropped. Try again.",
-      }),
-  });
-
-  /* session + persisted history */
-  useEffect(() => {
-    setSession(sessionKey());
-  }, []);
-
-  useEffect(() => {
-    if (!session || history) return;
-    let cancelled = false;
-    void loadHistory({ data: { sessionId: session } })
-      .then((rows) => {
-        if (cancelled) return;
-        const restored = toUiMessages(rows);
-        setHistory(restored);
-        if (restored.length) setMessages(restored);
-      })
-      .catch(() => setHistory([]));
-    return () => {
-      cancelled = true;
-    };
-  }, [session, history, loadHistory, setMessages]);
-
-  /* open from anywhere */
   useEffect(() => {
     const onOpen = (event: Event) => {
       const detail = (event as CustomEvent<{ projectSlug: string | null }>).detail;
@@ -164,37 +232,32 @@ export function Assistant() {
     if (open) textareaRef.current?.focus();
   }, [open, focusSlug]);
 
-  const busy = status === "submitted" || status === "streaming";
-
-  useEffect(() => {
-    if (!busy) textareaRef.current?.focus();
-  }, [busy]);
-
   const submit = useCallback(
     (text: string) => {
       const value = text.trim();
-      if (!value || busy) return;
+      if (!value) return;
       setInput("");
       feedback("click");
-        void sendMessage({ text: value });
+      setMessages((current) => [
+        ...current,
+        message("user", value),
+        message("assistant", answer(value, focusSlug)),
+      ]);
     },
-    [busy, focusSlug, sendMessage],
+    [focusSlug],
   );
 
   const reset = useCallback(() => {
     setMessages([]);
-    setHistory([]);
-    if (sessionRef.current) void wipeHistory({ data: { sessionId: sessionRef.current } });
     feedback("close");
-  }, [setMessages, wipeHistory]);
+  }, []);
 
   return (
     <>
-      {/* launcher */}
       <button
         type="button"
         onClick={() => {
-          setOpen((v) => !v);
+          setOpen((value) => !value);
           feedback("open");
         }}
         aria-expanded={open}
@@ -214,7 +277,6 @@ export function Assistant() {
         <span className="hidden sm:inline">{open ? "CLOSE JP-01" : "ASK JP-01"}</span>
       </button>
 
-      {/* panel */}
       {open && (
         <div
           role="dialog"
@@ -237,7 +299,7 @@ export function Assistant() {
                 JP-01 · PORTFOLIO TERMINAL
               </p>
               <p className="mt-0.5 truncate font-mono text-[11px] uppercase tracking-[0.16em] text-foreground/85">
-                {focusProject ? `FOCUS · ${focusProject.title}` : "ASK ABOUT THE WORK"}
+                {focusProject ? `FOCUS · ${focusProject.title}` : "STATIC MODE · CASE FILES"}
               </p>
             </div>
             {focusProject && (
@@ -263,7 +325,7 @@ export function Assistant() {
               aria-label="Close the assistant"
               className="font-mono text-xs text-foreground/60 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/70"
             >
-              ✕
+              x
             </button>
           </header>
 
@@ -273,20 +335,20 @@ export function Assistant() {
                 <div className="space-y-3">
                   <p className="max-w-[34ch] font-mono text-[11px] leading-relaxed uppercase tracking-[0.14em] text-foreground/60">
                     {focusProject
-                      ? `Deep-dive mode on ${focusProject.title}. Ask about the problem, the decisions, the build, or the results.`
-                      : "I answer from Jaikar's real case files — projects, decisions, outcomes, tools, and experience. Tell me what you're hiring for and I'll point you at the right work."}
+                      ? `Deep-dive mode on ${focusProject.title}. Ask about the problem, decisions, build, or results.`
+                      : "I answer inside GitHub Pages from Jaikar's embedded case files. No server route."}
                   </p>
                 </div>
               )}
 
-              {messages.map((message) => {
-                const text = message.parts
+              {messages.map((item) => {
+                const text = item.parts
                   .map((part) => (part.type === "text" ? part.text : ""))
                   .join("");
                 if (!text) return null;
                 return (
-                  <Message from={message.role} key={message.id}>
-                    {message.role === "assistant" ? (
+                  <Message from={item.role} key={item.id}>
+                    {item.role === "assistant" ? (
                       <MessageResponse className="text-sm leading-relaxed text-foreground/90">
                         {text}
                       </MessageResponse>
@@ -298,12 +360,6 @@ export function Assistant() {
                   </Message>
                 );
               })}
-
-              {status === "submitted" && (
-                <Shimmer className="font-mono text-[10px] uppercase tracking-[0.28em]">
-                  READING CASE FILES...
-                </Shimmer>
-              )}
             </ConversationContent>
             <ConversationScrollButton />
           </Conversation>
@@ -340,11 +396,7 @@ export function Assistant() {
                 className="font-mono text-[12px]"
               />
               <PromptInputFooter className="justify-end">
-                <PromptInputSubmit
-                  status={status}
-                  disabled={!busy && input.trim().length === 0}
-                  onStop={() => void stop()}
-                />
+                <PromptInputSubmit disabled={input.trim().length === 0} />
               </PromptInputFooter>
             </PromptInput>
           </div>

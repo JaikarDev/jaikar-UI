@@ -1,0 +1,1 @@
+DELETE FROM public.assistant_messages WHERE session_id = 'test_sess_1';

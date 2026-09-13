@@ -4,7 +4,7 @@
 
   const link = document.createElement("a");
   link.id = id;
-  link.href = "/world/";
+  link.href = "/world/?portfolio-return=current-v2";
   link.setAttribute("aria-label", "Enter Jaikar Park, the 3D walkable portfolio");
   link.innerHTML = "<span>ENTER JAIKAR PARK</span><em>3D WALKABLE PORTFOLIO</em>";
 

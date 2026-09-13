@@ -24,7 +24,7 @@ export function Experience() {
           Current focus
         </h3>
         <p className="mt-4 max-w-3xl text-sm leading-relaxed text-muted-foreground">
-          UI/UX Designer with 2+ years designing interfaces across games and
+          UI/UX Designer with 3+ years designing interfaces across games and
           digital products — from Smart Guardian's health-monitoring UX to shipped
           UI on Steam and Google Play. Open to full-time Product Design, Technical
           UI, or Game UI roles.
